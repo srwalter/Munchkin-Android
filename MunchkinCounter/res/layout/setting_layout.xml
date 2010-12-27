@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical" >
+	<RelativeLayout
+		android:id="@+id/setting_max_line"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content" >
+		<TextView
+			android:id="@+id/setting_max_title"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Max Level"
+			android:layout_alignParentTop="true"
+			android:layout_alignParentLeft="true"
+			android:padding="5dip" />
+		<TextView
+			android:layout_below="@id/setting_max_title"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:padding="5dip"
+			android:text="Press to Change" />
+		<TextView 
+			android:id="@+id/setting_max_level"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Max Level: 10"
+			android:padding="10dip"/>
+	</RelativeLayout>
+	<View 
+		android:layout_width="fill_parent"
+		android:layout_height="1dip"
+		android:background="#AAAA"/>
+</LinearLayout>

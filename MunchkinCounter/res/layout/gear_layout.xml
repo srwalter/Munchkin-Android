@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	<LinearLayout
+		android:id="@+id/gear_title_layout"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:gravity="center_horizontal"
+		android:layout_alignParentTop="true">
+		<TextView 
+			style="@style/PrimaryText"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Gear List"/>
+		<TextView
+			style="@style/SecondaryText"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Click Gear Entry to Edit" />
+	</LinearLayout>
+	<ListView
+		android:id="@+id/gear_list"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:layout_below="@id/gear_title_layout"
+		android:layout_above="@+id/gear_bottom_layout" />
+	<LinearLayout
+		android:id="@+id/gear_bottom_layout"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:orientation="horizontal">
+		<Button
+			android:id="@+id/gear_add_gear"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Add Gear"
+			android:layout_weight="1" />
+		<Button
+			android:id="@+id/gear_clear_gear"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="Clear Gear" />
+	</LinearLayout>
+</RelativeLayout>
