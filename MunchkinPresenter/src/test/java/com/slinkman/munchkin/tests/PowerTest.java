@@ -43,9 +43,9 @@ public class PowerTest {
 	
 	@Test
 	public void powerWriteRecovery(){
-		view.listenerMap.get(PowerPresenter.LISTENER_UP_PLAYER).onAction();
-		view.listenerMap.get(PowerPresenter.LISTENER_UP_PLAYER).onAction();
-		view.listenerMap.get(PowerPresenter.LISTENER_UP_MONSTER).onAction();
+		view.listenerMap.get(PowerPresenter.LISTENER_UP_PLAYER).onAction(null);
+		view.listenerMap.get(PowerPresenter.LISTENER_UP_PLAYER).onAction(null);
+		view.listenerMap.get(PowerPresenter.LISTENER_UP_MONSTER).onAction(null);
 		presenter.onPause();
 		assertEquals(2, data.dataHash.get(Persistance.VAR_MONSTER_LAST));
 		assertEquals(3, data.dataHash.get(Persistance.VAR_PLAYER_POWER_LAST));

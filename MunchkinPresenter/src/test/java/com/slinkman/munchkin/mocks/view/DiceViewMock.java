@@ -9,20 +9,20 @@ import com.slinkman.munchkin.presenter.DicePresenter.DiceView;
 
 public class DiceViewMock implements DiceView {
 
-	public HashMap<Integer, Listener> listenerMap = new HashMap<Integer, Listener>();
+	public HashMap<Integer, Listener<Void>> listenerMap = new HashMap<Integer, Listener<Void>>();
 	public HashMap<Integer, Integer> resourceMap = new HashMap<Integer, Integer>();
 
 	public HashMap<Integer, Integer> clickCache = new HashMap<Integer, Integer>();
 	@Override
-	public void setListener(int objectID, final Listener inListener)
+	public void setListener(int objectID, final Listener<Void> inListener)
 			throws WidgetError {
 		switch (objectID) {
 		case DicePresenter.LISTENER_ROLL_CLICK:
-			Listener tempListener = new Listener() {
+			Listener<Void> tempListener = new Listener<Void>() {
 				
 				@Override
-				public void onAction() {
-					inListener.onAction();
+				public void onAction(Void in) {
+					inListener.onAction(null);
 					int tempCache = clickCache.get(DicePresenter.LISTENER_ROLL_CLICK);
 					clickCache.put(DicePresenter.LISTENER_ROLL_CLICK, ++tempCache);
 				}

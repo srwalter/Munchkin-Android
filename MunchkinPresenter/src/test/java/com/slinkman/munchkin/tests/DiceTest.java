@@ -40,7 +40,7 @@ public class DiceTest {
 	@Test
 	public void rollAction() {
 		int tempCache = view.clickCache.get(DicePresenter.LISTENER_ROLL_CLICK);
-		view.listenerMap.get(DicePresenter.LISTENER_ROLL_CLICK).onAction();
+		view.listenerMap.get(DicePresenter.LISTENER_ROLL_CLICK).onAction(null);
 		if (tempCache == view.clickCache.get(DicePresenter.LISTENER_ROLL_CLICK))
 			fail();
 		

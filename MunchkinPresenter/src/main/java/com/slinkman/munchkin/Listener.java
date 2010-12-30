@@ -1,5 +1,5 @@
 package com.slinkman.munchkin;
 
-public interface Listener {
-	public void onAction();
+public interface Listener<T> {
+	void onAction( T inObject);
 }

@@ -3,7 +3,6 @@ package com.slinkman.munchkin.widget;
 import com.slinkman.munchkin.Listener;
 import com.slinkman.munchkin.Persistance;
 import com.slinkman.munchkin.R;
-import com.slinkman.munchkin.ReturnListener;
 import com.slinkman.munchkin.error.WidgetError;
 import com.slinkman.munchkin.presenter.MaxLevelDialogPresenter;
 import com.slinkman.munchkin.presenter.MaxLevelDialogPresenter.MaxLevelDialogViewInterface;
@@ -17,7 +16,7 @@ import android.widget.TextView;
 
 public class LevelDialog extends Dialog implements MaxLevelDialogViewInterface {
 
-	ReturnListener myListener;
+	Listener<Integer> myListener;
 	int limit;
 	Button upButton;
 	Button downButton;
@@ -26,7 +25,7 @@ public class LevelDialog extends Dialog implements MaxLevelDialogViewInterface {
 	MaxLevelDialogPresenter presenter;
 
 	public LevelDialog(Context context, Persistance data,
-			ReturnListener returnListener) {
+			Listener<Integer> returnListener) {
 		super(context);
 		LayoutInflater inflator = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -44,14 +43,14 @@ public class LevelDialog extends Dialog implements MaxLevelDialogViewInterface {
 	}
 
 	@Override
-	public void setListener(int objectID, final Listener inListener)
+	public void setListener(int objectID, final Listener<Void> inListener)
 			throws WidgetError {
 		switch (objectID) {
 		case MaxLevelDialogPresenter.LISTENER_UP:
 			upButton.setOnClickListener(new View.OnClickListener() {
 
 				public void onClick(View v) {
-					inListener.onAction();
+					inListener.onAction(null);
 				}
 			});
 			break;
@@ -59,7 +58,7 @@ public class LevelDialog extends Dialog implements MaxLevelDialogViewInterface {
 			downButton.setOnClickListener(new View.OnClickListener() {
 
 				public void onClick(View v) {
-					inListener.onAction();
+					inListener.onAction(null);
 				}
 			});
 			break;
@@ -67,7 +66,7 @@ public class LevelDialog extends Dialog implements MaxLevelDialogViewInterface {
 			doneButton.setOnClickListener(new View.OnClickListener() {
 
 				public void onClick(View v) {
-					inListener.onAction();
+					inListener.onAction(null);
 					presenter.onPause();
 					dismiss();
 				}

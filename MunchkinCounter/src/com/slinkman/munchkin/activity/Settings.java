@@ -8,7 +8,6 @@ import com.slinkman.munchkin.Listener;
 import com.slinkman.munchkin.Persistance;
 import com.slinkman.munchkin.Presenter;
 import com.slinkman.munchkin.R;
-import com.slinkman.munchkin.ReturnListener;
 import com.slinkman.munchkin.data.BaseData;
 import com.slinkman.munchkin.error.WidgetError;
 import com.slinkman.munchkin.presenter.SettingPresenter;
@@ -53,14 +52,14 @@ public class Settings extends BaseActivity implements SettingView {
 	}
 
 	@Override
-	public void setListener(int objectID, final Listener inListener)
+	public void setListener(int objectID, final Listener<Void> inListener)
 			throws WidgetError {
 		switch (objectID) {
 		case SettingPresenter.LISTENER_MAX_ITEM:
 			itemSelection.setOnClickListener(new OnClickListener() {
 
 				public void onClick(View v) {
-					inListener.onAction();
+					inListener.onAction(null);
 				}
 			});
 			break;
@@ -71,7 +70,7 @@ public class Settings extends BaseActivity implements SettingView {
 	}
 
 	@Override
-	public void setDialogListener(int id, ReturnListener<Integer> dialogListener)
+	public void setDialogListener(int id, Listener<Integer> dialogListener)
 			throws WidgetError {
 		switch (id) {
 		case SettingPresenter.RETURN_CHANGE_DIALOG:

@@ -25,7 +25,7 @@ public class DicePresenter implements Presenter {
 	public final static int RESOURCE_SIX = 0x06;
 
 	public interface DiceView {
-		public void setListener(int objectID, Listener inListener) throws WidgetError;
+		public void setListener(int objectID, Listener<Void> inListener) throws WidgetError;
 		public void setWidgetResource(int objectID, int widgetState) throws WidgetError;
 	};
 
@@ -57,9 +57,9 @@ public class DicePresenter implements Presenter {
 	private int init() throws WidgetError {
 		view.setWidgetResource(RESOURCE_TARGET_DICE,
 				getResourceForValue(currentValue));
-		view.setListener(LISTENER_ROLL_CLICK, new Listener() {
+		view.setListener(LISTENER_ROLL_CLICK, new Listener<Void>() {
 
-			public void onAction() {
+			public void onAction(Void in) {
 				Random mRand = new Random(System.currentTimeMillis());
 				try {
 					view.setWidgetResource(RESOURCE_TARGET_DICE, mRand

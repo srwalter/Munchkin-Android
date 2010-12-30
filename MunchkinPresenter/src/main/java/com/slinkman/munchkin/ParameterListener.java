@@ -1,5 +1,5 @@
 package com.slinkman.munchkin;
 
-public interface ParameterReturn<T> {
+public interface ParameterListener<T> {
 	public void onAction(int parameter, T inObject);
 }

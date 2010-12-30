@@ -39,7 +39,7 @@ public class CounterTest {
 	public void testCounterSimpleIncriment() {
 		if (temp.enabledMap.get(CounterPresenter.ENABLED_UP) == CounterViewMock.TRUE)
 			temp.listenerMap.get(CounterPresenter.LISTENER_UP_BUTTON)
-					.onAction();
+					.onAction(null);
 		assertEquals("2", temp.textMap.get(CounterPresenter.TEXT_COUNTER));
 		assertEquals(CounterViewMock.TRUE, temp.enabledMap
 				.get(CounterPresenter.ENABLED_DOWN));
@@ -52,7 +52,7 @@ public class CounterTest {
 		int simpleCounter = 1;
 		for (; temp.enabledMap.get(CounterPresenter.ENABLED_UP) == CounterViewMock.TRUE;) {
 			temp.listenerMap.get(CounterPresenter.LISTENER_UP_BUTTON)
-					.onAction();
+					.onAction(null);
 			simpleCounter++;
 			assertEquals(Integer.toString(simpleCounter), (String) temp.textMap
 					.get(CounterPresenter.TEXT_COUNTER));
@@ -131,7 +131,7 @@ public class CounterTest {
 	public void testSave(){
 		temp = new CounterViewMock();
 		presenter = new CounterPresenter(temp, data);
-		temp.listenerMap.get(CounterPresenter.LISTENER_UP_BUTTON).onAction();
+		temp.listenerMap.get(CounterPresenter.LISTENER_UP_BUTTON).onAction(null);
 		presenter.onPause();
 		assertEquals(2, data.dataHash.get(Persistance.VAR_PLAYER_LEVEL_LAST));
 	}
@@ -141,7 +141,7 @@ public class CounterTest {
 		data.dataHash.put(Persistance.VAR_PLAYER_LEVEL_LAST, (Integer)2);
 		temp = new CounterViewMock();
 		presenter = new CounterPresenter(temp, data);
-		temp.listenerMap.get(CounterPresenter.LISTENER_UP_BUTTON).onAction();
+		temp.listenerMap.get(CounterPresenter.LISTENER_UP_BUTTON).onAction(null);
 		presenter.onPause();
 		assertEquals(3, data.dataHash.get(Persistance.VAR_PLAYER_LEVEL_LAST));
 	}

@@ -25,7 +25,7 @@ public class PowerPresenter implements Presenter {
 	public final static int TEMP_ID = 0x01;
 
 	public interface PowerView  {
-		public void setListener(int objectID, Listener inListener) throws WidgetError;
+		public void setListener(int objectID, Listener<Void> inListener) throws WidgetError;
 		public void setWidgetText(int objectID, String inText) throws WidgetError;
 	};
 
@@ -66,9 +66,9 @@ public class PowerPresenter implements Presenter {
 							.toString(playerPower));
 			view.setWidgetText(TEXT_MONSTER_LEVEL, Integer
 					.toString(monsterPower));
-			view.setListener(LISTENER_UP_PLAYER, new Listener() {
+			view.setListener(LISTENER_UP_PLAYER, new Listener<Void>() {
 
-				public void onAction() {
+				public void onAction(Void in) {
 					try {
 						view.setWidgetText(TEXT_PLAYER_DIFF,
 								getPlayerText(++playerPower));
@@ -79,9 +79,9 @@ public class PowerPresenter implements Presenter {
 					}
 				}
 			});
-			view.setListener(LISTENER_DOWN_PLAYER, new Listener() {
+			view.setListener(LISTENER_DOWN_PLAYER, new Listener<Void>() {
 
-				public void onAction() {
+				public void onAction(Void in) {
 					try {
 						view.setWidgetText(TEXT_PLAYER_DIFF,
 								getPlayerText(--playerPower));
@@ -92,9 +92,9 @@ public class PowerPresenter implements Presenter {
 					}
 				}
 			});
-			view.setListener(LISTENER_DOWN_MONSTER, new Listener() {
+			view.setListener(LISTENER_DOWN_MONSTER, new Listener<Void>() {
 
-				public void onAction() {
+				public void onAction(Void in) {
 					try {
 						view.setWidgetText(TEXT_MONSTER_LEVEL, Integer
 								.toString(--monsterPower));
@@ -103,9 +103,9 @@ public class PowerPresenter implements Presenter {
 					}
 				}
 			});
-			view.setListener(LISTENER_UP_MONSTER, new Listener() {
+			view.setListener(LISTENER_UP_MONSTER, new Listener<Void>() {
 
-				public void onAction() {
+				public void onAction(Void in) {
 					try {
 						view.setWidgetText(TEXT_MONSTER_LEVEL, Integer
 								.toString(++monsterPower));
@@ -114,9 +114,9 @@ public class PowerPresenter implements Presenter {
 					}
 				}
 			});
-			view.setListener(LISTENER_MONSTER_RESET, new Listener() {
+			view.setListener(LISTENER_MONSTER_RESET, new Listener<Void>() {
 
-				public void onAction() {
+				public void onAction(Void in) {
 					try {
 						monsterPower = 1;
 						view.setWidgetText(TEXT_MONSTER_LEVEL, Integer
@@ -126,9 +126,9 @@ public class PowerPresenter implements Presenter {
 					}
 				}
 			});
-			view.setListener(LISTENER_PLAYER_BASE, new Listener() {
+			view.setListener(LISTENER_PLAYER_BASE, new Listener<Void>() {
 
-				public void onAction() {
+				public void onAction(Void in) {
 					playerPower = playerLevel;
 					try {
 						view.setWidgetText(TEXT_PLAYER_DIFF,

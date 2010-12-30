@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import com.slinkman.munchkin.Listener;
 import com.slinkman.munchkin.Persistance;
-import com.slinkman.munchkin.ReturnListener;
 import com.slinkman.munchkin.error.WidgetError;
 
 public class MaxLevelDialogPresenter {
@@ -21,7 +20,7 @@ public class MaxLevelDialogPresenter {
 	public static final int TEXT_TOP_LEVEL = 0x01;
 
 	public interface MaxLevelDialogViewInterface {
-		public void setListener(int objectID, Listener inListener)
+		public void setListener(int objectID, Listener<Void> inListener)
 				throws WidgetError;
 
 		public void setWidgetText(int objectID, String inText)
@@ -36,7 +35,7 @@ public class MaxLevelDialogPresenter {
 	private int currentLevel = 10;
 
 	public MaxLevelDialogPresenter(MaxLevelDialogViewInterface inView,
-			Persistance inData, final ReturnListener<Integer> inListener) {
+			Persistance inData, final Listener<Integer> inListener) {
 		view = inView;
 		data = inData;
 		try {
@@ -44,15 +43,15 @@ public class MaxLevelDialogPresenter {
 				currentLevel = (Integer) inData.getSaveMap().get(
 						Persistance.VAR_TOPLEVEL);
 			view.setWidgetText(TEXT_TOP_LEVEL, Integer.toString(currentLevel));
-			view.setListener(LISTENER_DONE, new Listener() {
+			view.setListener(LISTENER_DONE, new Listener<Void>() {
 
-				public void onAction() {
+				public void onAction(Void in) {
 					inListener.onAction(currentLevel);
 				}
 			});
-			view.setListener(LISTENER_UP, new Listener() {
+			view.setListener(LISTENER_UP, new Listener<Void>() {
 
-				public void onAction() {
+				public void onAction(Void in) {
 					try {
 						view.setWidgetText(TEXT_TOP_LEVEL,
 								Integer.toString(++currentLevel));
@@ -61,9 +60,9 @@ public class MaxLevelDialogPresenter {
 					}
 				}
 			});
-			view.setListener(LISTENER_DOWN, new Listener() {
+			view.setListener(LISTENER_DOWN, new Listener<Void>() {
 
-				public void onAction() {
+				public void onAction(Void in) {
 					try {
 						view.setWidgetText(TEXT_TOP_LEVEL,
 								Integer.toString(--currentLevel));

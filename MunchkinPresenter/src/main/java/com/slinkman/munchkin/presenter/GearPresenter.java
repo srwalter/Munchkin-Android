@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.slinkman.munchkin.Listener;
-import com.slinkman.munchkin.ParameterReturn;
+import com.slinkman.munchkin.ParameterListener;
 import com.slinkman.munchkin.Persistance;
 import com.slinkman.munchkin.Presenter;
-import com.slinkman.munchkin.ReturnListener;
 import com.slinkman.munchkin.error.WidgetError;
 
 public class GearPresenter implements Presenter {
@@ -38,11 +37,11 @@ public class GearPresenter implements Presenter {
 	public final static int DATA_CAST_ARMOR_ARRAY = 0x02;
 
 	public interface GearView {
-		public void setReturnListener(int objectID, ReturnListener<Object[]> inListener) throws WidgetError;
-		public void setListener(int objectID, Listener inListener) throws WidgetError;
+		public void setReturnListener(int objectID, Listener<Object[]> inListener) throws WidgetError;
+		public void setListener(int objectID, Listener<Void> inListener) throws WidgetError;
 		//List Interface
-		public ReturnListener<Integer> refreshList();
-		public void setPopulator (ParameterReturn<GearItemView> inListener);
+		public Listener<Integer> refreshList();
+		public void setPopulator (ParameterListener<GearItemView> inListener);
 	};
 
 	public interface GearData {
@@ -57,7 +56,7 @@ public class GearPresenter implements Presenter {
 
 	public interface GearItemView {
 		public void setWidgetText(int objectID, String inText) throws WidgetError;
-		public void setListener(int objectID, Listener inListener) throws WidgetError;
+		public void setListener(int objectID, Listener<Void> inListener) throws WidgetError;
 	};
 
 	private GearView view;
@@ -111,18 +110,18 @@ public class GearPresenter implements Presenter {
 		data.saveMap(saveMap);
 	}
 
-	private class ClearGearListener implements Listener {
+	private class ClearGearListener implements Listener<Void> {
 
-		public void onAction() {
+		public void onAction(Void in) {
 			listArmor.clear();
 			listBonus.clear();
 			view.refreshList().onAction(listArmor.size());
 		}
 	}
 
-	private class NewGearListener implements Listener {
+	private class NewGearListener implements Listener<Void> {
 
-		public void onAction() {
+		public void onAction(Void in) {
 			try {
 				view.setReturnListener(RETURN_LISTENER_NEW_GEAR, new ReturnNewGear());
 			} catch (WidgetError ex) {
@@ -131,7 +130,7 @@ public class GearPresenter implements Presenter {
 		}
 	}
 
-	private class ReturnNewGear implements ReturnListener<Object[]> {
+	private class ReturnNewGear implements Listener<Object[]> {
 
 		@Override
 		public void onAction(Object[] inObject) {
@@ -142,7 +141,7 @@ public class GearPresenter implements Presenter {
 		}
 	}
 
-	private class EditGear implements Listener {
+	private class EditGear implements Listener<Void> {
 
 		private int myID;
 
@@ -150,7 +149,7 @@ public class GearPresenter implements Presenter {
 			myID = id;
 		}
 
-		public void onAction() {
+		public void onAction(Void in) {
 			try {
 				HashMap<String, Object> saveMap = new HashMap<String, Object>();
 				saveMap.put(Persistance.VAR_ITEM_EDIT_ARMOR,
@@ -166,7 +165,7 @@ public class GearPresenter implements Presenter {
 		}
 	}
 
-	private class ReturnEditGear implements ReturnListener<Object[]> {
+	private class ReturnEditGear implements Listener<Object[]> {
 		private int location;
 
 		public ReturnEditGear(int id) {
@@ -183,7 +182,7 @@ public class GearPresenter implements Presenter {
 		}
 	}
 
-	private class GearPopulator implements ParameterReturn<GearItemView> {
+	private class GearPopulator implements ParameterListener<GearItemView> {
 
 		public void onAction(int id, GearItemView inObject) {
 			try {
@@ -198,14 +197,14 @@ public class GearPresenter implements Presenter {
 		}
 	}
 
-	private class DeleteGear implements Listener {
+	private class DeleteGear implements Listener<Void> {
 		private int listID;
 
 		public DeleteGear(int inListID) {
 			listID = inListID;
 		}
 
-		public void onAction() {
+		public void onAction(Void in) {
 			listArmor.remove(listID);
 			listBonus.remove(listID);
 			view.refreshList().onAction(listArmor.size());

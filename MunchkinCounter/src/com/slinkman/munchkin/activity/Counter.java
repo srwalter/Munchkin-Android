@@ -36,14 +36,14 @@ public class Counter extends BaseActivity implements CounterPresenter.CountView 
 	}
 
 	@Override
-	public void setListener(int objectID, final Listener inListener)
+	public void setListener(int objectID, final Listener<Void> inListener)
 			throws WidgetError {
 		switch (objectID) {
 		case CounterPresenter.LISTENER_UP_BUTTON:
 			upButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					inListener.onAction();
+					inListener.onAction(null);
 				}
 			});
 			break;
@@ -51,7 +51,7 @@ public class Counter extends BaseActivity implements CounterPresenter.CountView 
 			downButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					inListener.onAction();
+					inListener.onAction(null);
 				}
 			});
 		case CounterPresenter.LISTENER_SWIPE_UP:

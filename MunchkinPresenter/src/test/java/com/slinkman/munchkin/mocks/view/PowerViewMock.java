@@ -8,11 +8,11 @@ import com.slinkman.munchkin.presenter.PowerPresenter;
 import com.slinkman.munchkin.presenter.PowerPresenter.PowerView;
 
 public class PowerViewMock implements PowerView {
-	public HashMap<Integer, Listener> listenerMap = new HashMap<Integer, Listener>();
+	public HashMap<Integer, Listener<Void>> listenerMap = new HashMap<Integer, Listener<Void>>();
 	public HashMap<Integer, String> textMap = new HashMap<Integer, String>();
 	public HashMap<Integer, Integer> stateMap = new HashMap<Integer, Integer>();
 
-	public void setListener(int objectID, Listener inListener)
+	public void setListener(int objectID, Listener<Void> inListener)
 			throws WidgetError {
 		switch(objectID){
 		case PowerPresenter.LISTENER_DOWN_MONSTER:

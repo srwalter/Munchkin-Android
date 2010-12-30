@@ -3,8 +3,7 @@ package com.slinkman.munchkin.mocks.view;
 import java.util.HashMap;
 
 import com.slinkman.munchkin.Listener;
-import com.slinkman.munchkin.ParameterReturn;
-import com.slinkman.munchkin.ReturnListener;
+import com.slinkman.munchkin.ParameterListener;
 import com.slinkman.munchkin.error.WidgetError;
 import com.slinkman.munchkin.mocks.view.subitem.GearItemMock;
 import com.slinkman.munchkin.presenter.GearPresenter;
@@ -13,15 +12,15 @@ import com.slinkman.munchkin.presenter.GearPresenter.GearView;
 
 public class GearViewMock implements GearView {
 
-	public HashMap<Integer, Listener> listenerMap = new HashMap<Integer, Listener>();
-	public HashMap<Integer, ReturnListener> returnMap = new HashMap<Integer, ReturnListener>();
+	public HashMap<Integer, Listener<Void>> listenerMap = new HashMap<Integer, Listener<Void>>();
+	public HashMap<Integer, Listener<Object[]>> returnMap = new HashMap<Integer, Listener<Object[]>>();
 	public HashMap<Integer, GearItemMock> viewMap = new HashMap<Integer, GearItemMock>();
 
-	public ParameterReturn<GearItemView> populator;
+	public ParameterListener<GearItemView> populator;
 
 	private int listCount;
 
-	public void setListener(int objectID, Listener inListener)
+	public void setListener(int objectID, Listener<Void> inListener)
 			throws WidgetError {
 		switch (objectID) {
 		case GearPresenter.LISTENER_CLEAR_GEAR:
@@ -34,7 +33,7 @@ public class GearViewMock implements GearView {
 
 	}
 
-	public void setReturnListener(int objectID, ReturnListener inListener)
+	public void setReturnListener(int objectID, Listener<Object[]> inListener)
 			throws WidgetError {
 		switch (objectID) {
 		case GearPresenter.RETURN_LISTENER_NEW_GEAR:
@@ -47,9 +46,9 @@ public class GearViewMock implements GearView {
 
 	}
 
-	public ReturnListener<Integer> refreshList() {
+	public Listener<Integer> refreshList() {
 
-		return new ReturnListener<Integer>() {
+		return new Listener<Integer>() {
 
 			@Override
 			public void onAction(Integer inObject) {
@@ -64,12 +63,12 @@ public class GearViewMock implements GearView {
 		};
 	}
 
-	public void setPopulator(ParameterReturn<GearItemView> inListener) {
+	public void setPopulator(ParameterListener<GearItemView> inListener) {
 		populator = inListener;
 	}
 
-	public ReturnListener<Integer> listCountReturn() {
-		return new ReturnListener<Integer>() {
+	public Listener<Integer> listCountReturn() {
+		return new Listener<Integer>() {
 			public void onAction(Integer inObject) {
 					listCount = inObject;
 			}

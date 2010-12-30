@@ -6,10 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 
-import com.slinkman.munchkin.Persistance;
 import com.slinkman.munchkin.Presenter;
-import com.slinkman.munchkin.ReturnListener;
-import com.slinkman.munchkin.mocks.data.BaseDataMock;
 import com.slinkman.munchkin.mocks.data.GearDataMock;
 import com.slinkman.munchkin.mocks.view.GearViewMock;
 import com.slinkman.munchkin.presenter.GearPresenter;
@@ -35,7 +32,7 @@ public class GearTest {
 
 	@Test
 	public void addGear(){
-		view.listenerMap.get(GearPresenter.LISTENER_NEW_GEAR).onAction();
+		view.listenerMap.get(GearPresenter.LISTENER_NEW_GEAR).onAction(null);
 		assertNotNull(view.returnMap.get(GearPresenter.RETURN_LISTENER_NEW_GEAR));
 		Object[] objectArray = {new Integer(2),"Hand"};
 		view.returnMap.get(GearPresenter.RETURN_LISTENER_NEW_GEAR).onAction(objectArray);
@@ -48,40 +45,40 @@ public class GearTest {
 	
 	@Test
 	public void removeGear(){
-		view.listenerMap.get(GearPresenter.LISTENER_NEW_GEAR).onAction();
+		view.listenerMap.get(GearPresenter.LISTENER_NEW_GEAR).onAction(null);
 		Object[] objectArray = {new Integer(2),"Hand"};
 		view.returnMap.get(GearPresenter.RETURN_LISTENER_NEW_GEAR).onAction(objectArray);
-		view.viewMap.get(0).listenerMap.get(GearPresenter.LIST_LISTENER_DELETE).onAction();
+		view.viewMap.get(0).listenerMap.get(GearPresenter.LIST_LISTENER_DELETE).onAction(null);
 		assertNull(view.viewMap.get(0));
 	}
 	
 	@Test
 	public void removeTopGear(){
-		view.listenerMap.get(GearPresenter.LISTENER_NEW_GEAR).onAction();
+		view.listenerMap.get(GearPresenter.LISTENER_NEW_GEAR).onAction(null);
 		Object[] objectArray = {new Integer(2),"Hand"};
 		view.returnMap.get(GearPresenter.RETURN_LISTENER_NEW_GEAR).onAction(objectArray);
 		Object[] objectArray2 = {new Integer(5),"2 Hand"};
 		view.returnMap.get(GearPresenter.RETURN_LISTENER_NEW_GEAR).onAction(objectArray2);
-		view.viewMap.get(0).listenerMap.get(GearPresenter.LIST_LISTENER_DELETE).onAction();
+		view.viewMap.get(0).listenerMap.get(GearPresenter.LIST_LISTENER_DELETE).onAction(null);
 		assertEquals("2 Hand", view.viewMap.get(0).textMap.get(GearPresenter.LIST_TEXT_ARMOR_TYPE));
 		assertEquals("5", view.viewMap.get(0).textMap.get(GearPresenter.LIST_TEXT_BONUS));
 	}
 	
 	@Test
 	public void clearGear(){
-		view.listenerMap.get(GearPresenter.LISTENER_NEW_GEAR).onAction();
+		view.listenerMap.get(GearPresenter.LISTENER_NEW_GEAR).onAction(null);
 		Object[] objectArray = {new Integer(2),"Hand"};
 		view.returnMap.get(GearPresenter.RETURN_LISTENER_NEW_GEAR).onAction(objectArray);
-		view.listenerMap.get(GearPresenter.LISTENER_CLEAR_GEAR).onAction();
+		view.listenerMap.get(GearPresenter.LISTENER_CLEAR_GEAR).onAction(null);
 		assertNull(view.viewMap.get(0));
 	}
 	
 	@Test
 	public void editItem(){
-		view.listenerMap.get(GearPresenter.LISTENER_NEW_GEAR).onAction();
+		view.listenerMap.get(GearPresenter.LISTENER_NEW_GEAR).onAction(null);
 		Object[] objectArray = {new Integer(2),"Hand"};
 		view.returnMap.get(GearPresenter.RETURN_LISTENER_NEW_GEAR).onAction(objectArray);
-		view.viewMap.get(0).listenerMap.get(GearPresenter.LIST_LISTENER_EDIT).onAction();
+		view.viewMap.get(0).listenerMap.get(GearPresenter.LIST_LISTENER_EDIT).onAction(null);
 		Object[] array2 = {new Integer(3), "Footgear"};
 		view.returnMap.get(GearPresenter.RETURN_LISTENER_GEAR_ITEM).onAction( array2);
 		assertNotNull(view.viewMap.get(0));
@@ -95,7 +92,7 @@ public class GearTest {
 	
 	@Test
 	public void infoSave(){
-		view.listenerMap.get(GearPresenter.LISTENER_NEW_GEAR).onAction();
+		view.listenerMap.get(GearPresenter.LISTENER_NEW_GEAR).onAction(null);
 		Object[] objectArray = {new Integer(2),"Hand"};
 		view.returnMap.get(GearPresenter.RETURN_LISTENER_NEW_GEAR).onAction(objectArray);
 		presenter.onPause();

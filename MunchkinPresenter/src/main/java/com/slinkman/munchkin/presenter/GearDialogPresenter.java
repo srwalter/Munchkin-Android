@@ -3,7 +3,6 @@ package com.slinkman.munchkin.presenter;
 import com.slinkman.munchkin.Listener;
 import com.slinkman.munchkin.Persistance;
 import com.slinkman.munchkin.Presenter;
-import com.slinkman.munchkin.ReturnListener;
 import com.slinkman.munchkin.error.WidgetError;
 
 public class GearDialogPresenter implements Presenter{
@@ -25,47 +24,45 @@ public class GearDialogPresenter implements Presenter{
 	public static final int OBJECT_ARMOR = 0x01;
 
 	public interface GearDialogViewInterface {
-		public void setListener(int objectID, Listener inListener) throws WidgetError;
+		public void setListener(int objectID, Listener<Void> inListener) throws WidgetError;
 		public void setWidgetText(int objectID, String inText) throws WidgetError;
-		public void setStringReturnListener(int objectID, ReturnListener<String> inListener) throws WidgetError;
-		public void setIntegerReturnListener(int objectID, ReturnListener<Integer> inListener) throws WidgetError;
+		public void setStringReturnListener(int objectID, Listener<String> inListener) throws WidgetError;
+		public void setIntegerReturnListener(int objectID, Listener<Integer> inListener) throws WidgetError;
 	};
 	
 	
 	private GearDialogViewInterface view;
-	private Persistance data;
 	private int currentBonus = 0;
 	private String armorType = "";
 
 	public GearDialogPresenter(GearDialogViewInterface inView,
-			Persistance inData, final ReturnListener<Object[]> inListener) {
+			Persistance inData, final Listener<Object[]> inListener) {
 		view = inView;
-		data = inData;
 
 		try {
-			view.setListener(LISTENER_ADD, new Listener() {
+			view.setListener(LISTENER_ADD, new Listener<Void>() {
 
-				public void onAction() {
+				public void onAction(Void in) {
 					inListener
 							.onAction(new Object[] { currentBonus, armorType });
 				}
 			});
 			view.setIntegerReturnListener(RETURN_LISTENER_BONUS,
-					new ReturnListener<Integer>() {
+					new Listener<Integer>() {
 						public void onAction(Integer inObject) {
 							currentBonus = inObject;
 						}
 					});
 			view.setStringReturnListener(RETURN_LISTENER_ARMORTYPE,
-					new ReturnListener<String>() {
+					new Listener<String>() {
 						public void onAction(String inObject) {
 							armorType = inObject;
 						}
 					});
-			view.setListener(LISTENER_CANCEL, new Listener() {
+			view.setListener(LISTENER_CANCEL, new Listener<Void>() {
 
 				@Override
-				public void onAction() {
+				public void onAction(Void in) {
 					// TODO Auto-generated method stub
 				}
 			});

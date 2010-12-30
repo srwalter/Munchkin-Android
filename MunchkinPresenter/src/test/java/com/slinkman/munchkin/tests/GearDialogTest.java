@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.slinkman.munchkin.Presenter;
-import com.slinkman.munchkin.ReturnListener;
+import com.slinkman.munchkin.Listener;
 import com.slinkman.munchkin.mocks.data.GearDataMock;
 import com.slinkman.munchkin.mocks.view.GearDialogMock;
 import com.slinkman.munchkin.presenter.GearDialogPresenter;
@@ -15,7 +15,7 @@ public class GearDialogTest {
 	GearDataMock data;
 	GearDialogMock temp;
 	Presenter presenter;
-	class ReturnAccess implements ReturnListener<Object[]>{
+	class ReturnAccess implements Listener<Object[]>{
 		Object[] accessVar;
 		@Override
 		public void onAction(Object[] inObject) {
@@ -23,13 +23,6 @@ public class GearDialogTest {
 		}
 	}
 	ReturnAccess returnObject = new ReturnAccess();
-	ReturnListener<Void> testReturn = new ReturnListener<Void>() {
-		@Override
-		public void onAction(Void inObject) {
-			// TODO Auto-generated method stub
-
-		}
-	};
 
 	@Before
 	public void setup() {
@@ -44,7 +37,7 @@ public class GearDialogTest {
 				.onAction(3);
 		temp.stringReturnMap.get(GearDialogPresenter.RETURN_LISTENER_ARMORTYPE)
 				.onAction("Armor");
-		temp.listenerMap.get(GearDialogPresenter.LISTENER_ADD).onAction();
+		temp.listenerMap.get(GearDialogPresenter.LISTENER_ADD).onAction(null);
 		assertEquals( 3, returnObject.accessVar[0] );
 		assertEquals("Armor", returnObject.accessVar[1]);
 	}

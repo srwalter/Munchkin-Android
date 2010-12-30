@@ -5,7 +5,6 @@ import java.util.HashMap;
 import com.slinkman.munchkin.Listener;
 import com.slinkman.munchkin.Persistance;
 import com.slinkman.munchkin.Presenter;
-import com.slinkman.munchkin.ReturnListener;
 import com.slinkman.munchkin.error.WidgetError;
 
 public class SettingPresenter implements Presenter {
@@ -20,9 +19,9 @@ public class SettingPresenter implements Presenter {
 	public final static int RETURN_CHANGE_DIALOG = 0x01;
 
 	public interface SettingView  {
-		public void setDialogListener(int id, ReturnListener<Integer> dialogListener) throws WidgetError;
+		public void setDialogListener(int id, Listener<Integer> dialogListener) throws WidgetError;
 		public void setWidgetText(int objectID, String inText) throws WidgetError;
-		public void setListener(int objectID, Listener inListener) throws WidgetError;
+		public void setListener(int objectID, Listener<Void> inListener) throws WidgetError;
 	};
 
 	SettingView view;
@@ -38,10 +37,10 @@ public class SettingPresenter implements Presenter {
 					.get(Persistance.VAR_TOPLEVEL);
 		try {
 			view.setWidgetText(TEXT_LEVEL_LIMIT, Integer.toString(topLevel));
-			view.setListener(LISTENER_MAX_ITEM, new Listener() {
+			view.setListener(LISTENER_MAX_ITEM, new Listener<Void>() {
 
 				@Override
-				public void onAction() {
+				public void onAction(Void in) {
 					try {
 						view.setDialogListener(RETURN_CHANGE_DIALOG,
 								dialogReturn);
@@ -62,7 +61,7 @@ public class SettingPresenter implements Presenter {
 		data.saveMap(saveMap);
 	}
 
-	ReturnListener<Integer> dialogReturn = new ReturnListener<Integer>() {
+	Listener<Integer> dialogReturn = new Listener<Integer>() {
 		public void onAction(Integer inObject) {
 				try {
 					topLevel = (Integer) inObject;

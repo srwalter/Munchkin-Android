@@ -26,7 +26,7 @@ public class CounterPresenter implements Presenter {
 	public interface CountView {
 		public void setWidgetEnabled(int objectID, boolean inEnabled)
 		throws WidgetError;
-		public void setListener(int objectID, Listener inListener) throws WidgetError;
+		public void setListener(int objectID, Listener<Void> inListener) throws WidgetError;
 		public void setWidgetText(int objectID, String inText) throws WidgetError;
 	};
 
@@ -53,9 +53,9 @@ public class CounterPresenter implements Presenter {
 			viewHandle.setWidgetText(TEXT_COUNTER, Integer
 					.toString(currentCounter));
 			setupEnabled();
-			viewHandle.setListener(LISTENER_UP_BUTTON, new Listener() {
+			viewHandle.setListener(LISTENER_UP_BUTTON, new Listener<Void>() {
 				@Override
-				public void onAction() {
+				public void onAction(Void in) {
 					try {
 						viewHandle.setWidgetText(TEXT_COUNTER, Integer
 								.toString(++currentCounter));
@@ -66,10 +66,10 @@ public class CounterPresenter implements Presenter {
 					;
 				}
 			});
-			viewHandle.setListener(LISTENER_DOWN_BUTTON, new Listener() {
+			viewHandle.setListener(LISTENER_DOWN_BUTTON, new Listener<Void>() {
 
 				@Override
-				public void onAction() {
+				public void onAction(Void in) {
 					try {
 						viewHandle.setWidgetText(TEXT_COUNTER, Integer
 								.toString(--currentCounter));

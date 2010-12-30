@@ -3,7 +3,6 @@ package com.slinkman.munchkin.mocks.view;
 import java.util.HashMap;
 
 import com.slinkman.munchkin.Listener;
-import com.slinkman.munchkin.ReturnListener;
 import com.slinkman.munchkin.error.WidgetError;
 import com.slinkman.munchkin.presenter.SettingPresenter;
 import com.slinkman.munchkin.presenter.SettingPresenter.SettingView;
@@ -11,8 +10,8 @@ import com.slinkman.munchkin.presenter.SettingPresenter.SettingView;
 public class SettingViewMock implements SettingView {
 
 	public HashMap<Integer, String> textMap = new HashMap<Integer, String>();
-	public HashMap<Integer, Listener> listenerMap = new HashMap<Integer, Listener>();
-	public HashMap<Integer, ReturnListener> returnMap = new HashMap<Integer, ReturnListener>();
+	public HashMap<Integer, Listener<Void>> listenerMap = new HashMap<Integer, Listener<Void>>();
+	public HashMap<Integer, Listener<Integer>> returnMap = new HashMap<Integer, Listener<Integer>>();
 
 	public void setWidgetText(int objectID, String inText) throws WidgetError {
 		switch (objectID){
@@ -24,7 +23,7 @@ public class SettingViewMock implements SettingView {
 		}
 	}
 
-	public void setListener(int objectID, Listener inListener)
+	public void setListener(int objectID, Listener<Void> inListener)
 			throws WidgetError {
 		switch(objectID){
 		case SettingPresenter.LISTENER_MAX_ITEM:
@@ -35,7 +34,7 @@ public class SettingViewMock implements SettingView {
 		}
 	}
 
-	public void setDialogListener(int objectID, ReturnListener inListener)
+	public void setDialogListener(int objectID, Listener<Integer> inListener)
 			throws WidgetError {
 		switch(objectID){
 		case SettingPresenter.RETURN_CHANGE_DIALOG:

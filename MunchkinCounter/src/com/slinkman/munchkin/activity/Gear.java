@@ -8,11 +8,10 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.slinkman.munchkin.Listener;
-import com.slinkman.munchkin.ParameterReturn;
+import com.slinkman.munchkin.ParameterListener;
 import com.slinkman.munchkin.Persistance;
 import com.slinkman.munchkin.Presenter;
 import com.slinkman.munchkin.R;
-import com.slinkman.munchkin.ReturnListener;
 import com.slinkman.munchkin.data.GearDataImpl;
 import com.slinkman.munchkin.error.WidgetError;
 import com.slinkman.munchkin.presenter.GearDialogPresenter;
@@ -34,7 +33,7 @@ public class Gear extends BaseActivity implements GearView {
 	// Presenter Handles
 	Presenter presenter;
 	GearDataImpl data;
-	ParameterReturn<GearItemView> populator;
+	ParameterListener<GearItemView> populator;
 	int listCount;
 
 	@Override
@@ -59,7 +58,7 @@ public class Gear extends BaseActivity implements GearView {
 	}
 
 	@Override
-	public void setReturnListener(int objectID, final ReturnListener<Object[]> inListener)
+	public void setReturnListener(int objectID, final Listener<Object[]> inListener)
 			throws WidgetError {
 		GearDialog temp;
 		switch (objectID) {
@@ -82,14 +81,14 @@ public class Gear extends BaseActivity implements GearView {
 	}
 
 	@Override
-	public void setListener(int objectID, final Listener inListener)
+	public void setListener(int objectID, final Listener<Void> inListener)
 			throws WidgetError {
 		switch (objectID) {
 		case GearPresenter.LISTENER_CLEAR_GEAR:
 			clearGear.setOnClickListener(new OnClickListener() {
 
 				public void onClick(View v) {
-					inListener.onAction();
+					inListener.onAction(null);
 				}
 			});
 			break;
@@ -97,7 +96,7 @@ public class Gear extends BaseActivity implements GearView {
 			addGear.setOnClickListener(new OnClickListener() {
 
 				public void onClick(View v) {
-					inListener.onAction();
+					inListener.onAction(null);
 				}
 			});
 		}
@@ -105,8 +104,8 @@ public class Gear extends BaseActivity implements GearView {
 	}
 
 	@Override
-	public ReturnListener<Integer> refreshList() {
-		return new ReturnListener<Integer>() {
+	public Listener<Integer> refreshList() {
+		return new Listener<Integer>() {
 
 			@Override
 			public void onAction(Integer inObject) {
@@ -121,7 +120,7 @@ public class Gear extends BaseActivity implements GearView {
 	}
 
 	@Override
-	public void setPopulator(ParameterReturn<GearItemView> inListener) {
+	public void setPopulator(ParameterListener<GearItemView> inListener) {
 		populator = inListener;
 
 	}

@@ -13,7 +13,7 @@ public class CounterViewMock implements CountView {
 
 	public HashMap<Integer, Integer> enabledMap = new HashMap<Integer, Integer>();
 	public HashMap<Integer, String> textMap = new HashMap<Integer, String>();
-	public HashMap<Integer, Listener> listenerMap = new HashMap<Integer, Listener>();
+	public HashMap<Integer, Listener<Void>> listenerMap = new HashMap<Integer, Listener<Void>>();
 	public HashMap<String, Object> saveMap = new HashMap<String, Object>();
 
 	@Override
@@ -30,7 +30,7 @@ public class CounterViewMock implements CountView {
 	}
 
 	@Override
-	public void setListener(int objectID, Listener inListener)
+	public void setListener(int objectID, Listener<Void> inListener)
 			throws WidgetError {
 		switch (objectID){
 		case CounterPresenter.LISTENER_DOWN_BUTTON:

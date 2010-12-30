@@ -3,7 +3,6 @@ package com.slinkman.munchkin.widget;
 import com.slinkman.munchkin.Listener;
 import com.slinkman.munchkin.Persistance;
 import com.slinkman.munchkin.R;
-import com.slinkman.munchkin.ReturnListener;
 import com.slinkman.munchkin.error.WidgetError;
 import com.slinkman.munchkin.presenter.GearDialogPresenter;
 import com.slinkman.munchkin.presenter.GearDialogPresenter.GearDialogViewInterface;
@@ -32,19 +31,19 @@ public class GearDialog extends Dialog implements GearDialogViewInterface {
 	int targetID;
 
 	public GearDialog(Context context, Persistance data,
-			ReturnListener<Object[]> returnListener, int id) {
+			Listener<Object[]> returnListener, int id) {
 		super(context);
 		targetID = id;
 		init(data, returnListener);
 	}
 
 	public GearDialog(Context context, Persistance data,
-			ReturnListener<Object[]> returnListener) {
+			Listener<Object[]> returnListener) {
 		super(context);
 		init(data, returnListener);
 	}
 
-	public void init(Persistance data, ReturnListener<Object[]> returnListener) {
+	public void init(Persistance data, Listener<Object[]> returnListener) {
 		LayoutInflater inflator = (LayoutInflater) getContext()
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View dialogView = inflator.inflate(R.layout.gear_dialog, null);
@@ -67,14 +66,14 @@ public class GearDialog extends Dialog implements GearDialogViewInterface {
 	}
 
 	@Override
-	public void setListener(int objectID, final Listener inListener)
+	public void setListener(int objectID, final Listener<Void> inListener)
 			throws WidgetError {
 		switch (objectID) {
 		case GearDialogPresenter.LISTENER_ADD:
 			addButton.setOnClickListener(new View.OnClickListener() {
 
 				public void onClick(View v) {
-					inListener.onAction();
+					inListener.onAction(null);
 					dismiss();
 				}
 			});
@@ -83,7 +82,7 @@ public class GearDialog extends Dialog implements GearDialogViewInterface {
 			cancelButton.setOnClickListener(new View.OnClickListener() {
 
 				public void onClick(View v) {
-					inListener.onAction();
+					inListener.onAction(null);
 					dismiss();
 				}
 			});
@@ -112,7 +111,7 @@ public class GearDialog extends Dialog implements GearDialogViewInterface {
 
 	@Override
 	public void setStringReturnListener(int objectID,
-			final ReturnListener<String> inListener) throws WidgetError {
+			final Listener<String> inListener) throws WidgetError {
 		switch (objectID) {
 		case GearDialogPresenter.RETURN_LISTENER_ARMORTYPE:
 			armorText.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -139,7 +138,7 @@ public class GearDialog extends Dialog implements GearDialogViewInterface {
 
 	@Override
 	public void setIntegerReturnListener(int objectID,
-			final ReturnListener<Integer> inListener) throws WidgetError {
+			final Listener<Integer> inListener) throws WidgetError {
 		switch (objectID) {
 		case GearDialogPresenter.RETURN_LISTENER_BONUS:
 			bonusText.addTextChangedListener(new TextWatcher() {

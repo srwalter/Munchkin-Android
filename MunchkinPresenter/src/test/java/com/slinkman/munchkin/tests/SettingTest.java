@@ -7,7 +7,6 @@ import org.junit.Test;
 
 import com.slinkman.munchkin.Persistance;
 import com.slinkman.munchkin.Presenter;
-import com.slinkman.munchkin.ReturnListener;
 import com.slinkman.munchkin.mocks.data.BaseDataMock;
 import com.slinkman.munchkin.mocks.view.SettingViewMock;
 import com.slinkman.munchkin.presenter.SettingPresenter;
@@ -44,14 +43,14 @@ public class SettingTest {
 
 	@Test
 	public void itemTouch() {
-		view.listenerMap.get(SettingPresenter.LISTENER_MAX_ITEM).onAction();
+		view.listenerMap.get(SettingPresenter.LISTENER_MAX_ITEM).onAction(null);
 		assertNotNull(view.returnMap.get(SettingPresenter.RETURN_CHANGE_DIALOG));
 	}
 
 	@Test
 	public void limitChange() {
 		// Setup Return Listener
-		view.listenerMap.get(SettingPresenter.LISTENER_MAX_ITEM).onAction();
+		view.listenerMap.get(SettingPresenter.LISTENER_MAX_ITEM).onAction(null);
 		view.returnMap.get(SettingPresenter.RETURN_CHANGE_DIALOG).onAction(limitChange);
 		assertEquals(Integer.toString(limitChange), view.textMap.get(SettingPresenter.TEXT_LEVEL_LIMIT));
 	}
@@ -59,7 +58,7 @@ public class SettingTest {
 	@Test
 	public void limtChangeSave(){
 		// Setup Return Listener
-		view.listenerMap.get(SettingPresenter.LISTENER_MAX_ITEM).onAction();
+		view.listenerMap.get(SettingPresenter.LISTENER_MAX_ITEM).onAction(null);
 		view.returnMap.get(SettingPresenter.RETURN_CHANGE_DIALOG).onAction(limitChange);
 		presenter.onPause();
 		assertEquals(limitChange, data.getSaveMap().get(Persistance.VAR_TOPLEVEL));

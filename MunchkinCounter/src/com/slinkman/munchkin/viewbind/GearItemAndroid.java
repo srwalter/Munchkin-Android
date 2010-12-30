@@ -24,14 +24,14 @@ public class GearItemAndroid implements GearItemView{
 		myView = inView;
 	}
 
-	public void setListener(int objectID, final Listener inListener)
+	public void setListener(int objectID, final Listener<Void> inListener)
 			throws WidgetError {
 		switch (objectID){
 		case GearPresenter.LIST_LISTENER_EDIT:
 			myView.setOnClickListener(new OnClickListener() {
 				
 				public void onClick(View v) {
-					inListener.onAction();
+					inListener.onAction(null);
 				}
 			});
 			break;
@@ -40,7 +40,7 @@ public class GearItemAndroid implements GearItemView{
 				
 				@Override
 				public void onClick(View v) {
-					inListener.onAction();
+					inListener.onAction(null);
 				}
 			});
 			break;

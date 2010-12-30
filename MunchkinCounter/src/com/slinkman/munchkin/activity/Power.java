@@ -56,41 +56,41 @@ public class Power extends BaseActivity implements PowerView {
 		return inflator.inflate(R.layout.power_layout, null);
 	}
 
-	public void setListener(int objectID, final Listener inListener)
+	public void setListener(int objectID, final Listener<Void> inListener)
 			throws WidgetError {
 		switch (objectID) {
 		case PowerPresenter.LISTENER_DOWN_MONSTER:
 			monsterDown.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
-					inListener.onAction();
+					inListener.onAction(null);
 				}
 			});
 			break;
 		case PowerPresenter.LISTENER_DOWN_PLAYER:
 			playerDown.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
-					inListener.onAction();
+					inListener.onAction(null);
 				}
 			});
 			break;
 		case PowerPresenter.LISTENER_MONSTER_RESET:
 			monsterReset.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
-					inListener.onAction();
+					inListener.onAction(null);
 				}
 			});
 			break;
 		case PowerPresenter.LISTENER_PLAYER_BASE:
 			playerTemp.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
-					inListener.onAction();
+					inListener.onAction(null);
 				}
 			});
 			break;
 		case PowerPresenter.LISTENER_UP_MONSTER:
 			monsterUp.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
-					inListener.onAction();
+					inListener.onAction(null);
 				}
 			});
 			break;
@@ -98,7 +98,7 @@ public class Power extends BaseActivity implements PowerView {
 		case PowerPresenter.LISTENER_UP_PLAYER:
 			playerUp.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
-					inListener.onAction();
+					inListener.onAction(null);
 				}
 			});
 			break;

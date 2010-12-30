@@ -27,7 +27,7 @@ public class Dice extends BaseActivity implements DiceView {
 	private Persistance data;
 	private AlphaAnimation rollingAnimation;
 
-	public void setListener(int objectID, final Listener inListener)
+	public void setListener(int objectID, final Listener<Void> inListener)
 			throws WidgetError {
 		switch (objectID) {
 		case DicePresenter.LISTENER_ROLL_CLICK:
@@ -37,7 +37,7 @@ public class Dice extends BaseActivity implements DiceView {
 					rollingAnimation.setDuration(200);
 					rollingAnimation.setAnimationListener(new Fadein());
 					rollingDisplay.setAnimation(rollingAnimation);
-					inListener.onAction();
+					inListener.onAction(null);
 				}
 			});
 			break;
