@@ -3,11 +3,9 @@ package com.slinkman.munchkin.presenter;
 import java.util.HashMap;
 import java.util.Random;
 
-import com.slinkman.munchkin.baseinterface.Listener;
-import com.slinkman.munchkin.baseinterface.ListenerInterface;
-import com.slinkman.munchkin.baseinterface.Persistance;
-import com.slinkman.munchkin.baseinterface.Presenter;
-import com.slinkman.munchkin.baseinterface.ResourceInterface;
+import com.slinkman.munchkin.Listener;
+import com.slinkman.munchkin.Persistance;
+import com.slinkman.munchkin.Presenter;
 import com.slinkman.munchkin.error.WidgetError;
 
 public class DicePresenter implements Presenter {

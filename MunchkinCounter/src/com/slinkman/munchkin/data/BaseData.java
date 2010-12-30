@@ -6,7 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.slinkman.munchkin.baseinterface.Persistance;
+import com.slinkman.munchkin.Persistance;
 import com.slinkman.munchkin.widget.BaseActivity;
 
 public class BaseData implements Persistance {

@@ -2,9 +2,9 @@ package com.slinkman.munchkin.mocks.view;
 
 import java.util.HashMap;
 
-import com.slinkman.munchkin.baseinterface.Listener;
-import com.slinkman.munchkin.baseinterface.ParameterReturn;
-import com.slinkman.munchkin.baseinterface.ReturnListener;
+import com.slinkman.munchkin.Listener;
+import com.slinkman.munchkin.ParameterReturn;
+import com.slinkman.munchkin.ReturnListener;
 import com.slinkman.munchkin.error.WidgetError;
 import com.slinkman.munchkin.mocks.view.subitem.GearItemMock;
 import com.slinkman.munchkin.presenter.GearPresenter;

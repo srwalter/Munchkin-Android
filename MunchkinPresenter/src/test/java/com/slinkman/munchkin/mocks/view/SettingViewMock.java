@@ -2,8 +2,8 @@ package com.slinkman.munchkin.mocks.view;
 
 import java.util.HashMap;
 
-import com.slinkman.munchkin.baseinterface.Listener;
-import com.slinkman.munchkin.baseinterface.ReturnListener;
+import com.slinkman.munchkin.Listener;
+import com.slinkman.munchkin.ReturnListener;
 import com.slinkman.munchkin.error.WidgetError;
 import com.slinkman.munchkin.presenter.SettingPresenter;
 import com.slinkman.munchkin.presenter.SettingPresenter.SettingView;

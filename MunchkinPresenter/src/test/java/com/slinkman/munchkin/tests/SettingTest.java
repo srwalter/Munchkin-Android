@@ -5,9 +5,9 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.slinkman.munchkin.baseinterface.Persistance;
-import com.slinkman.munchkin.baseinterface.Presenter;
-import com.slinkman.munchkin.baseinterface.ReturnListener;
+import com.slinkman.munchkin.Persistance;
+import com.slinkman.munchkin.Presenter;
+import com.slinkman.munchkin.ReturnListener;
 import com.slinkman.munchkin.mocks.data.BaseDataMock;
 import com.slinkman.munchkin.mocks.view.SettingViewMock;
 import com.slinkman.munchkin.presenter.SettingPresenter;

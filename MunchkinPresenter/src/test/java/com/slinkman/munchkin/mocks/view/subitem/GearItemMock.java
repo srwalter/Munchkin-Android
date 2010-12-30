@@ -2,7 +2,7 @@ package com.slinkman.munchkin.mocks.view.subitem;
 
 import java.util.HashMap;
 
-import com.slinkman.munchkin.baseinterface.Listener;
+import com.slinkman.munchkin.Listener;
 import com.slinkman.munchkin.error.WidgetError;
 import com.slinkman.munchkin.presenter.GearPresenter;
 import com.slinkman.munchkin.presenter.GearPresenter.GearItemView;

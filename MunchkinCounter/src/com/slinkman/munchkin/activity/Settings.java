@@ -4,11 +4,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 
+import com.slinkman.munchkin.Listener;
+import com.slinkman.munchkin.Persistance;
+import com.slinkman.munchkin.Presenter;
 import com.slinkman.munchkin.R;
-import com.slinkman.munchkin.baseinterface.Listener;
-import com.slinkman.munchkin.baseinterface.Persistance;
-import com.slinkman.munchkin.baseinterface.Presenter;
-import com.slinkman.munchkin.baseinterface.ReturnListener;
+import com.slinkman.munchkin.ReturnListener;
 import com.slinkman.munchkin.data.BaseData;
 import com.slinkman.munchkin.error.WidgetError;
 import com.slinkman.munchkin.presenter.SettingPresenter;

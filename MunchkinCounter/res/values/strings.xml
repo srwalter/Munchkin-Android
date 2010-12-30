@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, Counter!</string>
-    <string name="app_name">Munchkin Android</string>
-    <string name="armortype">ArmorType: </string>
-    <string name="bonus">Bonus: </string>
-    <string name="armor_prompt">Choose Armor Type </string>
-    <string-array name="armor_array">
-	<item>Head</item>
-	<item>2 Hand</item>
-	<item>1 Hand</item>
-	<item>Armor</item>	
-	<item>Footgear</item>
-	<item>Steed</item>
-	<item>Hireling</item>
-	<item>General</item>
-    </string-array>
+	<string name="hello">Hello World, Counter!</string>
+	<string name="app_name">Munchkin Android</string>
+	<string name="armortype">ArmorType: </string>
+	<string name="bonus">Bonus: </string>
+	<string name="armor_prompt">Choose Armor Type </string>
+	<string-array name="armor_array">
+		<item>Head</item>
+		<item>2 Hand</item>
+		<item>1 Hand</item>
+		<item>Armor</item>
+		<item>Footgear</item>
+		<item>Steed</item>
+		<item>Hireling</item>
+		<item>General</item>
+	</string-array>
 </resources>

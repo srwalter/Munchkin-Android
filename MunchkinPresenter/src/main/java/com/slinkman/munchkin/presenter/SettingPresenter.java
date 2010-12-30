@@ -2,13 +2,10 @@ package com.slinkman.munchkin.presenter;
 
 import java.util.HashMap;
 
-import com.slinkman.munchkin.baseinterface.Listener;
-import com.slinkman.munchkin.baseinterface.ListenerInterface;
-import com.slinkman.munchkin.baseinterface.Persistance;
-import com.slinkman.munchkin.baseinterface.Presenter;
-import com.slinkman.munchkin.baseinterface.ReturnListener;
-import com.slinkman.munchkin.baseinterface.ReturnListenerInterface;
-import com.slinkman.munchkin.baseinterface.TextInterface;
+import com.slinkman.munchkin.Listener;
+import com.slinkman.munchkin.Persistance;
+import com.slinkman.munchkin.Presenter;
+import com.slinkman.munchkin.ReturnListener;
 import com.slinkman.munchkin.error.WidgetError;
 
 public class SettingPresenter implements Presenter {

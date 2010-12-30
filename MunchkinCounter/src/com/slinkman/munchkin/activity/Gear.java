@@ -7,12 +7,12 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.slinkman.munchkin.Listener;
+import com.slinkman.munchkin.ParameterReturn;
+import com.slinkman.munchkin.Persistance;
+import com.slinkman.munchkin.Presenter;
 import com.slinkman.munchkin.R;
-import com.slinkman.munchkin.baseinterface.Listener;
-import com.slinkman.munchkin.baseinterface.ParameterReturn;
-import com.slinkman.munchkin.baseinterface.Persistance;
-import com.slinkman.munchkin.baseinterface.Presenter;
-import com.slinkman.munchkin.baseinterface.ReturnListener;
+import com.slinkman.munchkin.ReturnListener;
 import com.slinkman.munchkin.data.GearDataImpl;
 import com.slinkman.munchkin.error.WidgetError;
 import com.slinkman.munchkin.presenter.GearDialogPresenter;

@@ -5,8 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.slinkman.munchkin.baseinterface.Persistance;
-import com.slinkman.munchkin.baseinterface.Presenter;
+import com.slinkman.munchkin.Persistance;
+import com.slinkman.munchkin.Presenter;
 import com.slinkman.munchkin.mocks.data.PowerDataMock;
 import com.slinkman.munchkin.mocks.view.PowerViewMock;
 import com.slinkman.munchkin.presenter.PowerPresenter;

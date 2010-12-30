@@ -1,11 +1,12 @@
 package com.slinkman.munchkin.presenter;
 
-import com.slinkman.munchkin.baseinterface.Listener;
-import com.slinkman.munchkin.baseinterface.Persistance;
-import com.slinkman.munchkin.baseinterface.ReturnListener;
+import com.slinkman.munchkin.Listener;
+import com.slinkman.munchkin.Persistance;
+import com.slinkman.munchkin.Presenter;
+import com.slinkman.munchkin.ReturnListener;
 import com.slinkman.munchkin.error.WidgetError;
 
-public class GearDialogPresenter {
+public class GearDialogPresenter implements Presenter{
 
 	// Return Listner
 	public static final int RETURN_LISTENER_ARMORTYPE = 0x01;
@@ -88,6 +89,12 @@ public class GearDialogPresenter {
 		} catch (WidgetError ex) {
 			ex.printStackTrace();
 		}
+	}
+
+	@Override
+	public void onPause() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

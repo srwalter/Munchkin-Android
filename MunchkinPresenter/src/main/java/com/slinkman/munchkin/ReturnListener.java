@@ -1,4 +1,4 @@
-package com.slinkman.munchkin.baseinterface;
+package com.slinkman.munchkin;
 
 public interface ReturnListener<T> {
 	public final static int VAR_STRING = 0x01;

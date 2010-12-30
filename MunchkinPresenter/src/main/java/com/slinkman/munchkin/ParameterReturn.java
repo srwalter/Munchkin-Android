@@ -1,4 +1,4 @@
-package com.slinkman.munchkin.baseinterface;
+package com.slinkman.munchkin;
 
 public interface ParameterReturn<T> {
 	public void onAction(int parameter, T inObject);

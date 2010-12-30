@@ -2,7 +2,7 @@ package com.slinkman.munchkin.mocks.data;
 
 import java.util.HashMap;
 
-import com.slinkman.munchkin.baseinterface.Persistance;
+import com.slinkman.munchkin.Persistance;
 
 public class CountDataMock implements Persistance {
 

@@ -1,9 +1,9 @@
 package com.slinkman.munchkin.widget;
 
+import com.slinkman.munchkin.Listener;
+import com.slinkman.munchkin.Persistance;
 import com.slinkman.munchkin.R;
-import com.slinkman.munchkin.baseinterface.Listener;
-import com.slinkman.munchkin.baseinterface.Persistance;
-import com.slinkman.munchkin.baseinterface.ReturnListener;
+import com.slinkman.munchkin.ReturnListener;
 import com.slinkman.munchkin.error.WidgetError;
 import com.slinkman.munchkin.presenter.MaxLevelDialogPresenter;
 import com.slinkman.munchkin.presenter.MaxLevelDialogPresenter.MaxLevelDialogViewInterface;

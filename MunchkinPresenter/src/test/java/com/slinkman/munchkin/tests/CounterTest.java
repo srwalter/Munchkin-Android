@@ -6,8 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 
-import com.slinkman.munchkin.baseinterface.Persistance;
-import com.slinkman.munchkin.baseinterface.Presenter;
+import com.slinkman.munchkin.Persistance;
+import com.slinkman.munchkin.Presenter;
 import com.slinkman.munchkin.mocks.data.CountDataMock;
 import com.slinkman.munchkin.mocks.view.CounterViewMock;
 import com.slinkman.munchkin.presenter.CounterPresenter;

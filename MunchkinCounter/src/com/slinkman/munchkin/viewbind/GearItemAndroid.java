@@ -1,7 +1,7 @@
 package com.slinkman.munchkin.viewbind;
 
+import com.slinkman.munchkin.Listener;
 import com.slinkman.munchkin.R;
-import com.slinkman.munchkin.baseinterface.Listener;
 import com.slinkman.munchkin.error.WidgetError;
 import com.slinkman.munchkin.presenter.GearPresenter;
 import com.slinkman.munchkin.presenter.GearPresenter.GearItemView;

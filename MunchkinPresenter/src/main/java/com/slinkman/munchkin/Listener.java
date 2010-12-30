@@ -1,4 +1,4 @@
-package com.slinkman.munchkin.baseinterface;
+package com.slinkman.munchkin;
 
 public interface Listener {
 	public void onAction();
