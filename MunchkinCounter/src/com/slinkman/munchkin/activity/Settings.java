@@ -71,15 +71,16 @@ public class Settings extends BaseActivity implements SettingView {
 	}
 
 	@Override
-	public void setListener(int objectID, final ReturnListener inListener)
+	public void setDialogListener(int id, ReturnListener<Integer> dialogListener)
 			throws WidgetError {
-		switch (objectID) {
+		switch (id) {
 		case SettingPresenter.RETURN_CHANGE_DIALOG:
-			new LevelDialog(this, data, inListener);
+			new LevelDialog(this, data, dialogListener);
 			break;
 		default:
 			throw new WidgetError();
 		}
+		
 	}
 
 }

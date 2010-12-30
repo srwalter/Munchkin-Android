@@ -26,7 +26,9 @@ public class DicePresenter implements Presenter {
 	public final static int RESOURCE_FIVE = 0x05;
 	public final static int RESOURCE_SIX = 0x06;
 
-	public interface DiceView extends ListenerInterface, ResourceInterface {
+	public interface DiceView {
+		public void setListener(int objectID, Listener inListener) throws WidgetError;
+		public void setWidgetResource(int objectID, int widgetState) throws WidgetError;
 	};
 
 	private DiceView view;

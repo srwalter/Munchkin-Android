@@ -9,10 +9,10 @@ import android.widget.ListView;
 
 import com.slinkman.munchkin.R;
 import com.slinkman.munchkin.baseinterface.Listener;
+import com.slinkman.munchkin.baseinterface.ParameterReturn;
 import com.slinkman.munchkin.baseinterface.Persistance;
 import com.slinkman.munchkin.baseinterface.Presenter;
 import com.slinkman.munchkin.baseinterface.ReturnListener;
-import com.slinkman.munchkin.data.BaseData;
 import com.slinkman.munchkin.data.GearDataImpl;
 import com.slinkman.munchkin.error.WidgetError;
 import com.slinkman.munchkin.presenter.GearDialogPresenter;
@@ -34,7 +34,7 @@ public class Gear extends BaseActivity implements GearView {
 	// Presenter Handles
 	Presenter presenter;
 	GearDataImpl data;
-	ReturnListener populator;
+	ParameterReturn<GearItemView> populator;
 	int listCount;
 
 	@Override
@@ -59,7 +59,7 @@ public class Gear extends BaseActivity implements GearView {
 	}
 
 	@Override
-	public void setListener(int objectID, final ReturnListener inListener)
+	public void setReturnListener(int objectID, final ReturnListener<Object[]> inListener)
 			throws WidgetError {
 		GearDialog temp;
 		switch (objectID) {
@@ -72,8 +72,9 @@ public class Gear extends BaseActivity implements GearView {
 			temp = new GearDialog(this, data, inListener);
 			temp.setWidgetText(GearDialogPresenter.TEXT_ARMOR, (String) data
 					.getSaveMap().get(Persistance.VAR_ITEM_EDIT_ARMOR));
-			temp.setWidgetText(GearDialogPresenter.TEXT_BONUS, Integer
-					.toString((Integer) data.getSaveMap().get(
+			temp.setWidgetText(
+					GearDialogPresenter.TEXT_BONUS,
+					Integer.toString((Integer) data.getSaveMap().get(
 							Persistance.VAR_ITEM_EDIT_BONUS)));
 			temp.show();
 			break;
@@ -104,13 +105,12 @@ public class Gear extends BaseActivity implements GearView {
 	}
 
 	@Override
-	public ReturnListener refreshList() {
-		return new ReturnListener() {
+	public ReturnListener<Integer> refreshList() {
+		return new ReturnListener<Integer>() {
 
 			@Override
-			public void onAction(int idType, Object inObject) {
-				if (idType == ReturnListener.VAR_INTEGER)
-					listCount = (Integer) inObject;
+			public void onAction(Integer inObject) {
+				listCount = inObject;
 				if (gearList.getAdapter() == null) {
 					adapter = new GearAdapter();
 					gearList.setAdapter(adapter);
@@ -121,7 +121,7 @@ public class Gear extends BaseActivity implements GearView {
 	}
 
 	@Override
-	public void setPopulator(ReturnListener inListener) {
+	public void setPopulator(ParameterReturn<GearItemView> inListener) {
 		populator = inListener;
 
 	}
@@ -151,11 +151,12 @@ public class Gear extends BaseActivity implements GearView {
 			if (convertView == null)
 				convertView = inflator.inflate(R.layout.gear_item, null);
 			GearItemAndroid item = new GearItemAndroid(convertView);
-			populator.onAction(position, item);
+			populator.onAction(position,item);
 
 			return convertView;
 		}
 	}
+
 	@Override
 	protected void onPause() {
 		super.onPause();

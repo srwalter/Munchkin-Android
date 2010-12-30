@@ -26,7 +26,9 @@ public class PowerPresenter implements Presenter {
 	// Widget ID
 	public final static int TEMP_ID = 0x01;
 
-	public interface PowerView extends ListenerInterface, TextInterface {
+	public interface PowerView  {
+		public void setListener(int objectID, Listener inListener) throws WidgetError;
+		public void setWidgetText(int objectID, String inText) throws WidgetError;
 	};
 
 	private Persistance data;

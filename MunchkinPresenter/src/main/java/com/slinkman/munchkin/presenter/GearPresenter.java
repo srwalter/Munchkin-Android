@@ -3,15 +3,11 @@ package com.slinkman.munchkin.presenter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.slinkman.munchkin.baseinterface.CastInterface;
-import com.slinkman.munchkin.baseinterface.ListInterface;
 import com.slinkman.munchkin.baseinterface.Listener;
-import com.slinkman.munchkin.baseinterface.ListenerInterface;
+import com.slinkman.munchkin.baseinterface.ParameterReturn;
 import com.slinkman.munchkin.baseinterface.Persistance;
 import com.slinkman.munchkin.baseinterface.Presenter;
 import com.slinkman.munchkin.baseinterface.ReturnListener;
-import com.slinkman.munchkin.baseinterface.ReturnListenerInterface;
-import com.slinkman.munchkin.baseinterface.TextInterface;
 import com.slinkman.munchkin.error.WidgetError;
 
 public class GearPresenter implements Presenter {
@@ -41,14 +37,27 @@ public class GearPresenter implements Presenter {
 	public final static int DATA_CAST_BONUS_ARRAY = 0x01;
 	public final static int DATA_CAST_ARMOR_ARRAY = 0x02;
 
-	public interface GearView extends ReturnListenerInterface,
-			ListenerInterface, ListInterface {
+	public interface GearView {
+		public void setReturnListener(int objectID, ReturnListener<Object[]> inListener) throws WidgetError;
+		public void setListener(int objectID, Listener inListener) throws WidgetError;
+		//List Interface
+		public ReturnListener<Integer> refreshList();
+		public void setPopulator (ParameterReturn<GearItemView> inListener);
 	};
 
-	public interface GearData extends Persistance, CastInterface {
+	public interface GearData {
+		// Persistence
+		public void saveMap(HashMap<String, Object> saveMap);
+		public HashMap<String, Object> getSaveMap();
+		
+		// Cast Interface
+		public Object getItem(int itemID, Object[] parms) throws WidgetError;
+		public void setItem(int itemID, Object inObject) throws WidgetError;
 	};
 
-	public interface GearItemView extends ListenerInterface, TextInterface {
+	public interface GearItemView {
+		public void setWidgetText(int objectID, String inText) throws WidgetError;
+		public void setListener(int objectID, Listener inListener) throws WidgetError;
 	};
 
 	private GearView view;
@@ -64,23 +73,22 @@ public class GearPresenter implements Presenter {
 		data = inData;
 
 		try {
-		listArmor = (ArrayList<String>) data.getItem(DATA_CAST_ARMOR_ARRAY,
-				null);
-		if (listArmor == null)
-			listArmor = new ArrayList<String>();
+			listArmor = (ArrayList<String>) data.getItem(DATA_CAST_ARMOR_ARRAY,
+					null);
+			if (listArmor == null)
+				listArmor = new ArrayList<String>();
 
-		listBonus = (ArrayList<Integer>) data.getItem(DATA_CAST_BONUS_ARRAY,
-				null);
-		if (listBonus == null)
-			listBonus = new ArrayList<Integer>();
-		if (listArmor.size() >0)
-			listCount = listArmor.size();
+			listBonus = (ArrayList<Integer>) data.getItem(
+					DATA_CAST_BONUS_ARRAY, null);
+			if (listBonus == null)
+				listBonus = new ArrayList<Integer>();
+			if (listArmor.size() > 0)
+				listCount = listArmor.size();
 			view.setPopulator(new GearPopulator());
 			view.setListener(LISTENER_NEW_GEAR, new NewGearListener());
 			view.setListener(LISTENER_CLEAR_GEAR, new ClearGearListener());
 			if (listCount > 0)
-				view.refreshList().onAction(ReturnListener.VAR_INTEGER,
-						(Integer) listCount);
+				view.refreshList().onAction(listCount);
 		} catch (WidgetError ex) {
 			ex.printStackTrace();
 		}
@@ -88,16 +96,15 @@ public class GearPresenter implements Presenter {
 
 	@Override
 	public void onPause() {
-		try{
-		data.setItem(DATA_CAST_ARMOR_ARRAY,
-				new Object[] { listArmor, listBonus });
-		} catch (WidgetError ex)
-		{
+		try {
+			data.setItem(DATA_CAST_ARMOR_ARRAY, new Object[] { listArmor,
+					listBonus });
+		} catch (WidgetError ex) {
 			ex.printStackTrace();
 			return;
 		}
 		int total = 0;
-		for(Integer c: listBonus)
+		for (Integer c : listBonus)
 			total += c;
 		HashMap<String, Object> saveMap = new HashMap<String, Object>();
 		saveMap.put(Persistance.VAR_TOTAL_GEAR, total);
@@ -109,8 +116,7 @@ public class GearPresenter implements Presenter {
 		public void onAction() {
 			listArmor.clear();
 			listBonus.clear();
-			view.refreshList().onAction(ReturnListener.VAR_INTEGER,
-					listArmor.size());
+			view.refreshList().onAction(listArmor.size());
 		}
 	}
 
@@ -118,24 +124,21 @@ public class GearPresenter implements Presenter {
 
 		public void onAction() {
 			try {
-				view.setListener(RETURN_LISTENER_NEW_GEAR, new ReturnNewGear());
+				view.setReturnListener(RETURN_LISTENER_NEW_GEAR, new ReturnNewGear());
 			} catch (WidgetError ex) {
 				ex.printStackTrace();
 			}
 		}
 	}
 
-	private class ReturnNewGear implements ReturnListener {
+	private class ReturnNewGear implements ReturnListener<Object[]> {
 
 		@Override
-		public void onAction(int idType, Object inObject) {
-			if (idType == ReturnListener.VAR_OBJECT_ARRAY) {
-				Object[] tempArray = (Object[]) inObject;
-				listArmor.add((String) tempArray[OBJECT_STRING]);
-				listBonus.add((Integer) tempArray[OBJECT_BONUS]);
-				view.refreshList().onAction(ReturnListener.VAR_INTEGER,
-						listArmor.size());
-			}
+		public void onAction(Object[] inObject) {
+			Object[] tempArray = (Object[]) inObject;
+			listArmor.add((String) tempArray[OBJECT_STRING]);
+			listBonus.add((Integer) tempArray[OBJECT_BONUS]);
+			view.refreshList().onAction(listArmor.size());
 		}
 	}
 
@@ -150,12 +153,12 @@ public class GearPresenter implements Presenter {
 		public void onAction() {
 			try {
 				HashMap<String, Object> saveMap = new HashMap<String, Object>();
-				saveMap.put(Persistance.VAR_ITEM_EDIT_ARMOR, listArmor
-						.get(myID));
-				saveMap.put(Persistance.VAR_ITEM_EDIT_BONUS, listBonus
-						.get(myID));
+				saveMap.put(Persistance.VAR_ITEM_EDIT_ARMOR,
+						listArmor.get(myID));
+				saveMap.put(Persistance.VAR_ITEM_EDIT_BONUS,
+						listBonus.get(myID));
 				data.saveMap(saveMap);
-				view.setListener(RETURN_LISTENER_GEAR_ITEM, new ReturnEditGear(
+				view.setReturnListener(RETURN_LISTENER_GEAR_ITEM, new ReturnEditGear(
 						myID));
 			} catch (WidgetError ex) {
 				ex.printStackTrace();
@@ -163,37 +166,32 @@ public class GearPresenter implements Presenter {
 		}
 	}
 
-	private class ReturnEditGear implements ReturnListener {
+	private class ReturnEditGear implements ReturnListener<Object[]> {
 		private int location;
 
 		public ReturnEditGear(int id) {
 			location = id;
 		}
 
-		public void onAction(int idType, Object inObject) {
-			if (idType == ReturnListener.VAR_OBJECT_ARRAY) {
-				Object[] tempArray = (Object[]) inObject;
-				listArmor.remove(location);
-				listBonus.remove(location);
-				listArmor.add(location, (String) tempArray[OBJECT_STRING]);
-				listBonus.add(location, (Integer) tempArray[OBJECT_BONUS]);
-				view.refreshList().onAction(ReturnListener.VAR_INTEGER,
-						listArmor.size());
-			}
+		public void onAction(Object[] inObject) {
+			Object[] tempArray = (Object[]) inObject;
+			listArmor.remove(location);
+			listBonus.remove(location);
+			listArmor.add(location, (String) tempArray[OBJECT_STRING]);
+			listBonus.add(location, (Integer) tempArray[OBJECT_BONUS]);
+			view.refreshList().onAction(listArmor.size());
 		}
 	}
 
-	private class GearPopulator implements ReturnListener {
+	private class GearPopulator implements ParameterReturn<GearItemView> {
 
-		public void onAction(int id, Object inObject) {
+		public void onAction(int id, GearItemView inObject) {
 			try {
-				GearItemView itemView = (GearItemView) inObject;
-				itemView.setListener(LIST_LISTENER_DELETE, new DeleteGear(
-						id));
-				itemView.setListener(LIST_LISTENER_EDIT, new EditGear(id));
-				itemView.setWidgetText(LIST_TEXT_ARMOR_TYPE, listArmor.get(id));
-				itemView.setWidgetText(LIST_TEXT_BONUS, Integer
-						.toString(listBonus.get(id)));
+				inObject.setListener(LIST_LISTENER_DELETE, new DeleteGear(id));
+				inObject.setListener(LIST_LISTENER_EDIT, new EditGear(id));
+				inObject.setWidgetText(LIST_TEXT_ARMOR_TYPE, listArmor.get(id));
+				inObject.setWidgetText(LIST_TEXT_BONUS,
+						Integer.toString(listBonus.get(id)));
 			} catch (WidgetError ex) {
 				ex.printStackTrace();
 			}
@@ -210,8 +208,7 @@ public class GearPresenter implements Presenter {
 		public void onAction() {
 			listArmor.remove(listID);
 			listBonus.remove(listID);
-			view.refreshList().onAction(ReturnListener.VAR_INTEGER,
-					listArmor.size());
+			view.refreshList().onAction(listArmor.size());
 		}
 
 	}

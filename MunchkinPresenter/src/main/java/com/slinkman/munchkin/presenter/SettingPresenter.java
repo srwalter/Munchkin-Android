@@ -22,8 +22,10 @@ public class SettingPresenter implements Presenter {
 	// Return Listener
 	public final static int RETURN_CHANGE_DIALOG = 0x01;
 
-	public interface SettingView extends TextInterface, ListenerInterface,
-			ReturnListenerInterface {
+	public interface SettingView  {
+		public void setDialogListener(int id, ReturnListener<Integer> dialogListener) throws WidgetError;
+		public void setWidgetText(int objectID, String inText) throws WidgetError;
+		public void setListener(int objectID, Listener inListener) throws WidgetError;
 	};
 
 	SettingView view;
@@ -44,7 +46,8 @@ public class SettingPresenter implements Presenter {
 				@Override
 				public void onAction() {
 					try {
-						view.setListener(RETURN_CHANGE_DIALOG, dialogReturn);
+						view.setDialogListener(RETURN_CHANGE_DIALOG,
+								dialogReturn);
 					} catch (WidgetError ex) {
 						ex.printStackTrace();
 					}
@@ -62,16 +65,15 @@ public class SettingPresenter implements Presenter {
 		data.saveMap(saveMap);
 	}
 
-	ReturnListener dialogReturn = new ReturnListener() {
-		public void onAction(int idType, Object inObject) {
-			if (idType == ReturnListener.VAR_INTEGER)
+	ReturnListener<Integer> dialogReturn = new ReturnListener<Integer>() {
+		public void onAction(Integer inObject) {
 				try {
 					topLevel = (Integer) inObject;
-					view.setWidgetText(TEXT_LEVEL_LIMIT, Integer
-							.toString((Integer) inObject));
+					view.setWidgetText(TEXT_LEVEL_LIMIT,
+							Integer.toString((Integer) inObject));
 				} catch (WidgetError ex) {
 					ex.printStackTrace();
-				} 
+				}
 		}
 	};
 }

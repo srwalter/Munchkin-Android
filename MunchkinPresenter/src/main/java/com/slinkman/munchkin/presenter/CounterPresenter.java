@@ -2,12 +2,9 @@ package com.slinkman.munchkin.presenter;
 
 import java.util.HashMap;
 
-import com.slinkman.munchkin.baseinterface.EnabledInterface;
 import com.slinkman.munchkin.baseinterface.Listener;
-import com.slinkman.munchkin.baseinterface.ListenerInterface;
 import com.slinkman.munchkin.baseinterface.Persistance;
 import com.slinkman.munchkin.baseinterface.Presenter;
-import com.slinkman.munchkin.baseinterface.TextInterface;
 import com.slinkman.munchkin.error.WidgetError;
 
 public class CounterPresenter implements Presenter {
@@ -26,8 +23,11 @@ public class CounterPresenter implements Presenter {
 
 
 
-	public interface CountView extends EnabledInterface, ListenerInterface,
-			TextInterface {
+	public interface CountView {
+		public void setWidgetEnabled(int objectID, boolean inEnabled)
+		throws WidgetError;
+		public void setListener(int objectID, Listener inListener) throws WidgetError;
+		public void setWidgetText(int objectID, String inText) throws WidgetError;
 	};
 
 	private CountView viewHandle;

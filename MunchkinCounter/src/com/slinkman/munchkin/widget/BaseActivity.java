@@ -6,10 +6,8 @@ import java.util.Map;
 
 import com.slinkman.munchkin.R;
 import com.slinkman.munchkin.activity.Bottom;
-import com.slinkman.munchkin.baseinterface.Persistance;
 import com.slinkman.munchkin.baseinterface.Presenter;
 import com.slinkman.munchkin.data.GearFileReader;
-import com.slinkman.munchkin.data.GearWriter;
 
 import android.app.Activity;
 import android.content.SharedPreferences;

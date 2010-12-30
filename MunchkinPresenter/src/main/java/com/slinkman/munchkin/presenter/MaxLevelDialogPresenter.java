@@ -23,16 +23,23 @@ public class MaxLevelDialogPresenter {
 	// Text
 	public static final int TEXT_TOP_LEVEL = 0x01;
 
-	public interface MaxLevelDialogViewInterface extends ListenerInterface,
-			EnabledInterface, TextInterface {
+	public interface MaxLevelDialogViewInterface {
+		public void setListener(int objectID, Listener inListener)
+				throws WidgetError;
+
+		public void setWidgetText(int objectID, String inText)
+				throws WidgetError;
+
+		public void setWidgetEnabled(int objectID, boolean inEnabled)
+				throws WidgetError;
 	};
 
 	private MaxLevelDialogViewInterface view;
 	private Persistance data;
 	private int currentLevel = 10;
 
-	public MaxLevelDialogPresenter(MaxLevelDialogViewInterface inView, Persistance inData,
-			final ReturnListener inListener) {
+	public MaxLevelDialogPresenter(MaxLevelDialogViewInterface inView,
+			Persistance inData, final ReturnListener<Integer> inListener) {
 		view = inView;
 		data = inData;
 		try {
@@ -43,16 +50,15 @@ public class MaxLevelDialogPresenter {
 			view.setListener(LISTENER_DONE, new Listener() {
 
 				public void onAction() {
-					inListener.onAction(ReturnListener.VAR_INTEGER,
-							currentLevel);
+					inListener.onAction(currentLevel);
 				}
 			});
 			view.setListener(LISTENER_UP, new Listener() {
 
 				public void onAction() {
 					try {
-						view.setWidgetText(TEXT_TOP_LEVEL, Integer
-								.toString(++currentLevel));
+						view.setWidgetText(TEXT_TOP_LEVEL,
+								Integer.toString(++currentLevel));
 					} catch (WidgetError ex) {
 						ex.printStackTrace();
 					}
@@ -62,8 +68,8 @@ public class MaxLevelDialogPresenter {
 
 				public void onAction() {
 					try {
-						view.setWidgetText(TEXT_TOP_LEVEL, Integer
-								.toString(--currentLevel));
+						view.setWidgetText(TEXT_TOP_LEVEL,
+								Integer.toString(--currentLevel));
 					} catch (WidgetError ex) {
 						ex.printStackTrace();
 					}
@@ -73,7 +79,8 @@ public class MaxLevelDialogPresenter {
 			ex.printStackTrace();
 		}
 	}
-	public void onPause(){
+
+	public void onPause() {
 		HashMap<String, Object> saveMap = new HashMap<String, Object>();
 		saveMap.put(Persistance.VAR_TOPLEVEL, currentLevel);
 		data.saveMap(saveMap);

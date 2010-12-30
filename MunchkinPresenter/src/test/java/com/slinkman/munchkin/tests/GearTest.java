@@ -38,8 +38,7 @@ public class GearTest {
 		view.listenerMap.get(GearPresenter.LISTENER_NEW_GEAR).onAction();
 		assertNotNull(view.returnMap.get(GearPresenter.RETURN_LISTENER_NEW_GEAR));
 		Object[] objectArray = {new Integer(2),"Hand"};
-		view.returnMap.get(GearPresenter.RETURN_LISTENER_NEW_GEAR).onAction(
-				ReturnListener.VAR_OBJECT_ARRAY, objectArray);
+		view.returnMap.get(GearPresenter.RETURN_LISTENER_NEW_GEAR).onAction(objectArray);
 		assertNotNull(view.viewMap.get(0));
 		assertNotNull(view.viewMap.get(0).listenerMap.get(GearPresenter.LIST_LISTENER_DELETE));
 		assertNotNull(view.viewMap.get(0).listenerMap.get(GearPresenter.LIST_LISTENER_EDIT));
@@ -51,8 +50,7 @@ public class GearTest {
 	public void removeGear(){
 		view.listenerMap.get(GearPresenter.LISTENER_NEW_GEAR).onAction();
 		Object[] objectArray = {new Integer(2),"Hand"};
-		view.returnMap.get(GearPresenter.RETURN_LISTENER_NEW_GEAR).onAction(
-				ReturnListener.VAR_OBJECT_ARRAY, objectArray);
+		view.returnMap.get(GearPresenter.RETURN_LISTENER_NEW_GEAR).onAction(objectArray);
 		view.viewMap.get(0).listenerMap.get(GearPresenter.LIST_LISTENER_DELETE).onAction();
 		assertNull(view.viewMap.get(0));
 	}
@@ -61,11 +59,9 @@ public class GearTest {
 	public void removeTopGear(){
 		view.listenerMap.get(GearPresenter.LISTENER_NEW_GEAR).onAction();
 		Object[] objectArray = {new Integer(2),"Hand"};
-		view.returnMap.get(GearPresenter.RETURN_LISTENER_NEW_GEAR).onAction(
-				ReturnListener.VAR_OBJECT_ARRAY, objectArray);
+		view.returnMap.get(GearPresenter.RETURN_LISTENER_NEW_GEAR).onAction(objectArray);
 		Object[] objectArray2 = {new Integer(5),"2 Hand"};
-		view.returnMap.get(GearPresenter.RETURN_LISTENER_NEW_GEAR).onAction(
-				ReturnListener.VAR_OBJECT_ARRAY, objectArray2);
+		view.returnMap.get(GearPresenter.RETURN_LISTENER_NEW_GEAR).onAction(objectArray2);
 		view.viewMap.get(0).listenerMap.get(GearPresenter.LIST_LISTENER_DELETE).onAction();
 		assertEquals("2 Hand", view.viewMap.get(0).textMap.get(GearPresenter.LIST_TEXT_ARMOR_TYPE));
 		assertEquals("5", view.viewMap.get(0).textMap.get(GearPresenter.LIST_TEXT_BONUS));
@@ -75,8 +71,7 @@ public class GearTest {
 	public void clearGear(){
 		view.listenerMap.get(GearPresenter.LISTENER_NEW_GEAR).onAction();
 		Object[] objectArray = {new Integer(2),"Hand"};
-		view.returnMap.get(GearPresenter.RETURN_LISTENER_NEW_GEAR).onAction(
-				ReturnListener.VAR_OBJECT_ARRAY, objectArray);
+		view.returnMap.get(GearPresenter.RETURN_LISTENER_NEW_GEAR).onAction(objectArray);
 		view.listenerMap.get(GearPresenter.LISTENER_CLEAR_GEAR).onAction();
 		assertNull(view.viewMap.get(0));
 	}
@@ -85,11 +80,10 @@ public class GearTest {
 	public void editItem(){
 		view.listenerMap.get(GearPresenter.LISTENER_NEW_GEAR).onAction();
 		Object[] objectArray = {new Integer(2),"Hand"};
-		view.returnMap.get(GearPresenter.RETURN_LISTENER_NEW_GEAR).onAction(
-				ReturnListener.VAR_OBJECT_ARRAY, objectArray);
+		view.returnMap.get(GearPresenter.RETURN_LISTENER_NEW_GEAR).onAction(objectArray);
 		view.viewMap.get(0).listenerMap.get(GearPresenter.LIST_LISTENER_EDIT).onAction();
 		Object[] array2 = {new Integer(3), "Footgear"};
-		view.returnMap.get(GearPresenter.RETURN_LISTENER_GEAR_ITEM).onAction(ReturnListener.VAR_OBJECT_ARRAY, array2);
+		view.returnMap.get(GearPresenter.RETURN_LISTENER_GEAR_ITEM).onAction( array2);
 		assertNotNull(view.viewMap.get(0));
 		assertNotNull(view.viewMap.get(0).listenerMap.get(GearPresenter.LIST_LISTENER_DELETE));
 		assertNotNull(view.viewMap.get(0).listenerMap.get(GearPresenter.LIST_LISTENER_EDIT));
@@ -103,8 +97,7 @@ public class GearTest {
 	public void infoSave(){
 		view.listenerMap.get(GearPresenter.LISTENER_NEW_GEAR).onAction();
 		Object[] objectArray = {new Integer(2),"Hand"};
-		view.returnMap.get(GearPresenter.RETURN_LISTENER_NEW_GEAR).onAction(
-				ReturnListener.VAR_OBJECT_ARRAY, objectArray);
+		view.returnMap.get(GearPresenter.RETURN_LISTENER_NEW_GEAR).onAction(objectArray);
 		presenter.onPause();
 		assertNotNull(data.objectMap.get(GearPresenter.DATA_CAST_ARMOR_ARRAY));
 		assertNotNull(data.objectMap.get(GearPresenter.DATA_CAST_BONUS_ARRAY));

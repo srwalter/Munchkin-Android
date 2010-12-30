@@ -1,11 +1,8 @@
 package com.slinkman.munchkin.presenter;
 
 import com.slinkman.munchkin.baseinterface.Listener;
-import com.slinkman.munchkin.baseinterface.ListenerInterface;
 import com.slinkman.munchkin.baseinterface.Persistance;
 import com.slinkman.munchkin.baseinterface.ReturnListener;
-import com.slinkman.munchkin.baseinterface.ReturnListenerInterface;
-import com.slinkman.munchkin.baseinterface.TextInterface;
 import com.slinkman.munchkin.error.WidgetError;
 
 public class GearDialogPresenter {
@@ -26,17 +23,21 @@ public class GearDialogPresenter {
 	public static final int OBJECT_BONUS = 0x00;
 	public static final int OBJECT_ARMOR = 0x01;
 
-	public interface GearDialogViewInterface extends ListenerInterface,
-			ReturnListenerInterface, TextInterface {
+	public interface GearDialogViewInterface {
+		public void setListener(int objectID, Listener inListener) throws WidgetError;
+		public void setWidgetText(int objectID, String inText) throws WidgetError;
+		public void setStringReturnListener(int objectID, ReturnListener<String> inListener) throws WidgetError;
+		public void setIntegerReturnListener(int objectID, ReturnListener<Integer> inListener) throws WidgetError;
 	};
-
+	
+	
 	private GearDialogViewInterface view;
 	private Persistance data;
 	private int currentBonus = 0;
 	private String armorType = "";
 
 	public GearDialogPresenter(GearDialogViewInterface inView,
-			Persistance inData, final ReturnListener inListener) {
+			Persistance inData, final ReturnListener<Object[]> inListener) {
 		view = inView;
 		data = inData;
 
@@ -44,24 +45,22 @@ public class GearDialogPresenter {
 			view.setListener(LISTENER_ADD, new Listener() {
 
 				public void onAction() {
-					inListener.onAction(ReturnListener.VAR_OBJECT_ARRAY,
-							new Object[] { currentBonus, armorType });
+					inListener
+							.onAction(new Object[] { currentBonus, armorType });
 				}
 			});
-			view.setListener(RETURN_LISTENER_BONUS, new ReturnListener() {
-
-				public void onAction(int idType, Object inObject) {
-					if (idType == ReturnListener.VAR_INTEGER)
-						currentBonus = (Integer) inObject;
-				}
-			});
-			view.setListener(RETURN_LISTENER_ARMORTYPE, new ReturnListener() {
-
-				public void onAction(int idType, Object inObject) {
-					if (idType == ReturnListener.VAR_STRING)
-						armorType = (String) inObject;
-				}
-			});
+			view.setIntegerReturnListener(RETURN_LISTENER_BONUS,
+					new ReturnListener<Integer>() {
+						public void onAction(Integer inObject) {
+							currentBonus = inObject;
+						}
+					});
+			view.setStringReturnListener(RETURN_LISTENER_ARMORTYPE,
+					new ReturnListener<String>() {
+						public void onAction(String inObject) {
+							armorType = inObject;
+						}
+					});
 			view.setListener(LISTENER_CANCEL, new Listener() {
 
 				@Override

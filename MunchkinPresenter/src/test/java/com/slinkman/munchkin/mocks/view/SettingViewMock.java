@@ -35,7 +35,7 @@ public class SettingViewMock implements SettingView {
 		}
 	}
 
-	public void setListener(int objectID, ReturnListener inListener)
+	public void setDialogListener(int objectID, ReturnListener inListener)
 			throws WidgetError {
 		switch(objectID){
 		case SettingPresenter.RETURN_CHANGE_DIALOG:

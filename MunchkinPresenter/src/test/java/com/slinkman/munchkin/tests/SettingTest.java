@@ -52,8 +52,7 @@ public class SettingTest {
 	public void limitChange() {
 		// Setup Return Listener
 		view.listenerMap.get(SettingPresenter.LISTENER_MAX_ITEM).onAction();
-		view.returnMap.get(SettingPresenter.RETURN_CHANGE_DIALOG).onAction(
-				ReturnListener.VAR_INTEGER, limitChange);
+		view.returnMap.get(SettingPresenter.RETURN_CHANGE_DIALOG).onAction(limitChange);
 		assertEquals(Integer.toString(limitChange), view.textMap.get(SettingPresenter.TEXT_LEVEL_LIMIT));
 	}
 	
@@ -61,8 +60,7 @@ public class SettingTest {
 	public void limtChangeSave(){
 		// Setup Return Listener
 		view.listenerMap.get(SettingPresenter.LISTENER_MAX_ITEM).onAction();
-		view.returnMap.get(SettingPresenter.RETURN_CHANGE_DIALOG).onAction(
-				ReturnListener.VAR_INTEGER, limitChange);
+		view.returnMap.get(SettingPresenter.RETURN_CHANGE_DIALOG).onAction(limitChange);
 		presenter.onPause();
 		assertEquals(limitChange, data.getSaveMap().get(Persistance.VAR_TOPLEVEL));
 	}

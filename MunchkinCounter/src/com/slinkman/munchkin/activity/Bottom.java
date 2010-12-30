@@ -62,7 +62,7 @@ public class Bottom {
 			travelText.setEnabled(false);
 	}
 	
-	public Intent generateBottonIntent(BaseActivity homeActivity,Class inClass){
+	public Intent generateBottonIntent(BaseActivity homeActivity,@SuppressWarnings("rawtypes") Class inClass){
 		Intent intentHolder = new Intent (homeActivity, inClass);
 		intentHolder.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 		return intentHolder;
