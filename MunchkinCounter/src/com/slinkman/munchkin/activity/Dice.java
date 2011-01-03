@@ -1,5 +1,9 @@
 package com.slinkman.munchkin.activity;
 
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,31 +23,49 @@ import com.slinkman.munchkin.presenter.DicePresenter;
 import com.slinkman.munchkin.presenter.DicePresenter.DiceView;
 import com.slinkman.munchkin.widget.BaseActivity;
 
-public class Dice extends BaseActivity implements DiceView {
+public class Dice extends BaseActivity implements DiceView, SensorEventListener {
 
 	private Button rollBotton;
 	private TextView diceImage;
 	private TextView rollingDisplay;
 	private Persistance data;
 	private AlphaAnimation rollingAnimation;
+	private static final int SHAKE_THRESHOLD = 500;
+	private boolean sensorRegistered = false;
+	private Listener<Void> rollAction;
+	private long lastUpdate = 0;
+	private float lastValues[];
+	private SensorManager sensorMgt;
 
 	public void setListener(int objectID, final Listener<Void> inListener)
 			throws WidgetError {
 		switch (objectID) {
 		case DicePresenter.LISTENER_ROLL_CLICK:
+			rollAction = inListener;
 			rollBotton.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
-					rollingAnimation = new AlphaAnimation(0, 1);
-					rollingAnimation.setDuration(200);
-					rollingAnimation.setAnimationListener(new Fadein());
-					rollingDisplay.setAnimation(rollingAnimation);
-					inListener.onAction(null);
+					rollDice();
 				}
 			});
+			sensorMgt = (SensorManager) getSystemService(SENSOR_SERVICE);
+			sensorRegistered = sensorMgt.registerListener(this, sensorMgt
+					.getDefaultSensor(SensorManager.SENSOR_ACCELEROMETER),
+					SensorManager.SENSOR_DELAY_NORMAL);
+			if (!sensorRegistered) {
+				sensorMgt.unregisterListener(this);
+			}
 			break;
 		default:
 			throw new WidgetError();
 		}
+	}
+	
+	private void rollDice(){
+		rollingAnimation = new AlphaAnimation(0, 1);
+		rollingAnimation.setDuration(200);
+		rollingAnimation.setAnimationListener(new Fadein());
+		rollingDisplay.setAnimation(rollingAnimation);
+		rollAction.onAction(null);
 	}
 
 	public void setWidgetResource(int objectID, final int widgetState)
@@ -70,6 +92,15 @@ public class Dice extends BaseActivity implements DiceView {
 		return new DicePresenter(this, data);
 	}
 
+	@Override
+	protected void onPause() {
+		super.onPause();
+		rollAction = null;
+		if (sensorRegistered) {
+			sensorMgt.unregisterListener(this);
+		}
+	}
+
 	public int getActivityID() {
 		return BaseActivity.ACTIVITY_DICE;
 	}
@@ -78,7 +109,7 @@ public class Dice extends BaseActivity implements DiceView {
 		return inflator.inflate(R.layout.dice_layout, null);
 
 	}
-	
+
 	private class Fadein implements AnimationListener {
 
 		public void onAnimationEnd(Animation arg0) {
@@ -99,4 +130,40 @@ public class Dice extends BaseActivity implements DiceView {
 
 	}
 
+	@Override
+	public void onAccuracyChanged(Sensor arg0, int arg1) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onSensorChanged(SensorEvent arg0) {
+		// TODO Auto-generated method stub
+		if (arg0.sensor.getType() == SensorManager.SENSOR_ACCELEROMETER) {
+			long curTime = System.currentTimeMillis();
+			if ((curTime - lastUpdate) > 1000) {
+				long diffTime = (curTime - lastUpdate);
+				lastUpdate = curTime;
+				float values[] = arg0.values;
+				float speed = getSpeed(values, diffTime);
+				if (speed > SHAKE_THRESHOLD && rollAction != null) {
+					rollDice();
+				}
+				lastValues = arg0.values.clone();
+			}
+		}
+	}
+
+	private float getSpeed(float[] inValues, long timeDiff) {
+		if (lastValues == null){
+			return 0;
+		}
+		return (float) Math.abs(inValues[SensorManager.DATA_X]
+				+ inValues[SensorManager.DATA_Y]
+				+ inValues[SensorManager.DATA_Z]
+				- lastValues[SensorManager.DATA_X]
+				- lastValues[SensorManager.DATA_Y]
+				- lastValues[SensorManager.DATA_Z])
+				/ timeDiff * 10000;
+	}
 }
