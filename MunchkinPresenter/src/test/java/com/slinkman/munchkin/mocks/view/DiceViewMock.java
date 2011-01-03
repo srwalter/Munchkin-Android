@@ -13,22 +13,40 @@ public class DiceViewMock implements DiceView {
 	public HashMap<Integer, Integer> resourceMap = new HashMap<Integer, Integer>();
 
 	public HashMap<Integer, Integer> clickCache = new HashMap<Integer, Integer>();
+
 	@Override
 	public void setListener(int objectID, final Listener<Void> inListener)
 			throws WidgetError {
 		switch (objectID) {
 		case DicePresenter.LISTENER_ROLL_CLICK:
 			Listener<Void> tempListener = new Listener<Void>() {
-				
+
 				@Override
 				public void onAction(Void in) {
 					inListener.onAction(null);
-					int tempCache = clickCache.get(DicePresenter.LISTENER_ROLL_CLICK);
-					clickCache.put(DicePresenter.LISTENER_ROLL_CLICK, ++tempCache);
+					int tempCache = clickCache
+							.get(DicePresenter.LISTENER_ROLL_CLICK);
+					clickCache.put(DicePresenter.LISTENER_ROLL_CLICK,
+							++tempCache);
 				}
 			};
 			clickCache.put(DicePresenter.LISTENER_ROLL_CLICK, 0);
 			listenerMap.put(objectID, tempListener);
+			break;
+		case DicePresenter.LISTENER_SHAKE:
+			Listener<Void> temp2Listener = new Listener<Void>() {
+
+				@Override
+				public void onAction(Void in) {
+					inListener.onAction(null);
+					int tempCache = clickCache
+							.get(DicePresenter.LISTENER_SHAKE);
+					clickCache.put(DicePresenter.LISTENER_SHAKE,
+							++tempCache);
+				}
+			};
+			clickCache.put(DicePresenter.LISTENER_SHAKE, 0);
+			listenerMap.put(objectID, temp2Listener);
 			break;
 		default:
 			throw new WidgetError();

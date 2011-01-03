@@ -11,7 +11,6 @@ import com.slinkman.munchkin.mocks.data.DiceDataMock;
 import com.slinkman.munchkin.mocks.view.DiceViewMock;
 import com.slinkman.munchkin.presenter.DicePresenter;
 
-
 public class DiceTest {
 
 	DiceViewMock view;
@@ -34,7 +33,8 @@ public class DiceTest {
 
 	@Test
 	public void coldLoad() {
-		assertEquals(DicePresenter.RESOURCE_ONE, (int)view.resourceMap.get(DicePresenter.RESOURCE_TARGET_DICE));
+		assertEquals(DicePresenter.RESOURCE_ONE,
+				(int) view.resourceMap.get(DicePresenter.RESOURCE_TARGET_DICE));
 	}
 
 	@Test
@@ -43,7 +43,7 @@ public class DiceTest {
 		view.listenerMap.get(DicePresenter.LISTENER_ROLL_CLICK).onAction(null);
 		if (tempCache == view.clickCache.get(DicePresenter.LISTENER_ROLL_CLICK))
 			fail();
-		
+
 		assertNotNull(view.listenerMap.get(DicePresenter.LISTENER_ROLL_CLICK));
 		assertNotNull(view.resourceMap.get(DicePresenter.RESOURCE_TARGET_DICE));
 	}
@@ -51,19 +51,31 @@ public class DiceTest {
 	@Test
 	public void coldLoadPause() {
 		presenter.onPause();
-		assertEquals(1,data.dataHash.get(Persistance.VAR_DICE_LAST));
+		assertEquals(1, data.dataHash.get(Persistance.VAR_DICE_LAST));
 	}
 
 	@Test
 	public void warmLoad() {
 		warmStart();
-		assertEquals(existingResource,(int)view.resourceMap.get(DicePresenter.RESOURCE_TARGET_DICE));
+		assertEquals(existingResource,
+				(int) view.resourceMap.get(DicePresenter.RESOURCE_TARGET_DICE));
 	}
 
 	@Test
 	public void warmRollAction() {
 		warmStart();
 		rollAction();
+	}
+
+	@Test
+	public void shakeAction() {
+		int temp = view.clickCache.get(DicePresenter.LISTENER_SHAKE);
+		assertNotNull(view.listenerMap.get(DicePresenter.LISTENER_SHAKE));
+		view.listenerMap.get(DicePresenter.LISTENER_SHAKE).onAction(null);
+		if (temp == view.clickCache.get(DicePresenter.LISTENER_SHAKE))
+			fail();
+		assertNotNull(view.listenerMap.get(DicePresenter.LISTENER_SHAKE));
+		assertNotNull(view.resourceMap.get(DicePresenter.RESOURCE_TARGET_DICE));
 	}
 
 }

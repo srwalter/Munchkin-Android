@@ -32,7 +32,7 @@ public class Dice extends BaseActivity implements DiceView, SensorEventListener 
 	private AlphaAnimation rollingAnimation;
 	private static final int SHAKE_THRESHOLD = 500;
 	private boolean sensorRegistered = false;
-	private Listener<Void> rollAction;
+	private Listener<Void> shakeAction;
 	private long lastUpdate = 0;
 	private float lastValues[];
 	private SensorManager sensorMgt;
@@ -41,31 +41,26 @@ public class Dice extends BaseActivity implements DiceView, SensorEventListener 
 			throws WidgetError {
 		switch (objectID) {
 		case DicePresenter.LISTENER_ROLL_CLICK:
-			rollAction = inListener;
 			rollBotton.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
-					rollDice();
+					rollAnimation();
+					inListener.onAction(null);
 				}
 			});
-			sensorMgt = (SensorManager) getSystemService(SENSOR_SERVICE);
-			sensorRegistered = sensorMgt.registerListener(this, sensorMgt
-					.getDefaultSensor(SensorManager.SENSOR_ACCELEROMETER),
-					SensorManager.SENSOR_DELAY_NORMAL);
-			if (!sensorRegistered) {
-				sensorMgt.unregisterListener(this);
-			}
+			break;
+		case DicePresenter.LISTENER_SHAKE:
+			shakeAction = inListener;
 			break;
 		default:
 			throw new WidgetError();
 		}
 	}
-	
-	private void rollDice(){
+
+	private void rollAnimation() {
 		rollingAnimation = new AlphaAnimation(0, 1);
 		rollingAnimation.setDuration(200);
 		rollingAnimation.setAnimationListener(new Fadein());
 		rollingDisplay.setAnimation(rollingAnimation);
-		rollAction.onAction(null);
 	}
 
 	public void setWidgetResource(int objectID, final int widgetState)
@@ -87,7 +82,13 @@ public class Dice extends BaseActivity implements DiceView, SensorEventListener 
 		rollBotton = (Button) findViewById(R.id.dice_roll_button);
 		diceImage = (TextView) findViewById(R.id.dice_roll_display);
 		rollingDisplay = (TextView) findViewById(R.id.dice_rolling_text);
-
+		sensorMgt = (SensorManager) getSystemService(SENSOR_SERVICE);
+		sensorRegistered = sensorMgt.registerListener(this,
+				sensorMgt.getDefaultSensor(SensorManager.SENSOR_ACCELEROMETER),
+				SensorManager.SENSOR_DELAY_NORMAL);
+		if (!sensorRegistered) {
+			sensorMgt.unregisterListener(this);
+		}
 		data = new BaseData(this);
 		return new DicePresenter(this, data);
 	}
@@ -95,10 +96,9 @@ public class Dice extends BaseActivity implements DiceView, SensorEventListener 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		rollAction = null;
-		if (sensorRegistered) {
+		shakeAction = null;
+		if (sensorRegistered) 
 			sensorMgt.unregisterListener(this);
-		}
 	}
 
 	public int getActivityID() {
@@ -146,8 +146,9 @@ public class Dice extends BaseActivity implements DiceView, SensorEventListener 
 				lastUpdate = curTime;
 				float values[] = arg0.values;
 				float speed = getSpeed(values, diffTime);
-				if (speed > SHAKE_THRESHOLD && rollAction != null) {
-					rollDice();
+				if (speed > SHAKE_THRESHOLD && shakeAction != null) {
+					rollAnimation();
+					shakeAction.onAction(null);
 				}
 				lastValues = arg0.values.clone();
 			}
@@ -155,7 +156,7 @@ public class Dice extends BaseActivity implements DiceView, SensorEventListener 
 	}
 
 	private float getSpeed(float[] inValues, long timeDiff) {
-		if (lastValues == null){
+		if (lastValues == null) {
 			return 0;
 		}
 		return (float) Math.abs(inValues[SensorManager.DATA_X]

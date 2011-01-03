@@ -12,6 +12,7 @@ public class DicePresenter implements Presenter {
 
 	// Listeners
 	public final static int LISTENER_ROLL_CLICK = 0x01;
+	public final static int LISTENER_SHAKE = 0x02;
 
 	// ResourceTarget
 	public final static int RESOURCE_TARGET_DICE = 0x01;
@@ -55,9 +56,7 @@ public class DicePresenter implements Presenter {
 	}
 
 	private int init() throws WidgetError {
-		view.setWidgetResource(RESOURCE_TARGET_DICE,
-				getResourceForValue(currentValue));
-		view.setListener(LISTENER_ROLL_CLICK, new Listener<Void>() {
+		Listener<Void> randomListener =new Listener<Void>() {
 
 			public void onAction(Void in) {
 				Random mRand = new Random(System.currentTimeMillis());
@@ -68,7 +67,12 @@ public class DicePresenter implements Presenter {
 					ex.printStackTrace();
 				}
 			}
-		});
+		};
+		view.setWidgetResource(RESOURCE_TARGET_DICE,
+				getResourceForValue(currentValue));
+		view.setListener(LISTENER_ROLL_CLICK, randomListener);
+		view.setListener(LISTENER_SHAKE, randomListener);
+		
 		return 0;
 	}
 
