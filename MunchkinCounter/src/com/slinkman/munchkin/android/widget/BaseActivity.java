@@ -1,13 +1,14 @@
-package com.slinkman.munchkin.widget;
+package com.slinkman.munchkin.android.widget;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 import com.slinkman.munchkin.Presenter;
 import com.slinkman.munchkin.R;
-import com.slinkman.munchkin.activity.Bottom;
-import com.slinkman.munchkin.data.GearFileReader;
+import com.slinkman.munchkin.android.activity.Bottom;
+import com.slinkman.munchkin.android.data.GearFileReader;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -37,9 +38,12 @@ public abstract class BaseActivity extends Activity {
 	private View bottomView;
 
 	private Presenter middlePresenter;
+	
+	protected GoogleAnalyticsTracker tracker;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		
 		inflator = LayoutInflater.from(this);
 		bottomView = getBottomView();
 		mainView = getMainView();
@@ -66,6 +70,8 @@ public abstract class BaseActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		tracker = GoogleAnalyticsTracker.getInstance();
+		tracker.start("UA-20579418-1", this);
 		middlePresenter = bindMainView(mainView);
 		bindBottomView(bottomView);
 	}
@@ -75,6 +81,8 @@ public abstract class BaseActivity extends Activity {
 		super.onPause();
 		if (middlePresenter != null)
 			middlePresenter.onPause();
+		tracker.dispatch();
+		tracker = null;
 	}
 
 	protected View getBottomView() {

@@ -1,4 +1,4 @@
-package com.slinkman.munchkin.widget;
+package com.slinkman.munchkin.android.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;

@@ -1,19 +1,18 @@
-package com.slinkman.munchkin.data;
+package com.slinkman.munchkin.android.data;
 
 import java.util.HashMap;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.slinkman.munchkin.Persistance;
-import com.slinkman.munchkin.widget.BaseActivity;
+import com.slinkman.munchkin.android.widget.BaseActivity;
 
 public class BaseData implements Persistance {
 
-	Activity activity;
+	Context activity;
 
-	public BaseData(Activity inActivity) {
+	public BaseData(Context inActivity) {
 		activity = inActivity;
 	}
 

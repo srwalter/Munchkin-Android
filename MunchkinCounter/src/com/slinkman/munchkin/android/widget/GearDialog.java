@@ -1,4 +1,4 @@
-package com.slinkman.munchkin.widget;
+package com.slinkman.munchkin.android.widget;
 
 import com.slinkman.munchkin.Listener;
 import com.slinkman.munchkin.Persistance;

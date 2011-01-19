@@ -1,4 +1,4 @@
-package com.slinkman.munchkin.activity;
+package com.slinkman.munchkin.android.activity;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,15 +12,15 @@ import com.slinkman.munchkin.ParameterListener;
 import com.slinkman.munchkin.Persistance;
 import com.slinkman.munchkin.Presenter;
 import com.slinkman.munchkin.R;
-import com.slinkman.munchkin.data.GearDataImpl;
+import com.slinkman.munchkin.android.data.GearDataImpl;
+import com.slinkman.munchkin.android.viewbind.GearItemAndroid;
+import com.slinkman.munchkin.android.widget.BaseActivity;
+import com.slinkman.munchkin.android.widget.GearDialog;
 import com.slinkman.munchkin.error.WidgetError;
 import com.slinkman.munchkin.presenter.GearDialogPresenter;
 import com.slinkman.munchkin.presenter.GearPresenter;
 import com.slinkman.munchkin.presenter.GearPresenter.GearItemView;
 import com.slinkman.munchkin.presenter.GearPresenter.GearView;
-import com.slinkman.munchkin.viewbind.GearItemAndroid;
-import com.slinkman.munchkin.widget.BaseActivity;
-import com.slinkman.munchkin.widget.GearDialog;
 
 public class Gear extends BaseActivity implements GearView {
 
@@ -104,7 +104,7 @@ public class Gear extends BaseActivity implements GearView {
 	}
 
 	@Override
-	public Listener<Integer> refreshList() {
+	public Listener<Integer> getRefreshList() {
 		return new Listener<Integer>() {
 
 			@Override

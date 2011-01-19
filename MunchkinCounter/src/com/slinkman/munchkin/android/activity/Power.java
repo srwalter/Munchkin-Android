@@ -1,4 +1,4 @@
-package com.slinkman.munchkin.activity;
+package com.slinkman.munchkin.android.activity;
 
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -10,11 +10,11 @@ import com.slinkman.munchkin.Listener;
 import com.slinkman.munchkin.Persistance;
 import com.slinkman.munchkin.Presenter;
 import com.slinkman.munchkin.R;
-import com.slinkman.munchkin.data.BaseData;
+import com.slinkman.munchkin.android.data.BaseData;
+import com.slinkman.munchkin.android.widget.BaseActivity;
 import com.slinkman.munchkin.error.WidgetError;
 import com.slinkman.munchkin.presenter.PowerPresenter;
 import com.slinkman.munchkin.presenter.PowerPresenter.PowerView;
-import com.slinkman.munchkin.widget.BaseActivity;
 
 public class Power extends BaseActivity implements PowerView {
 

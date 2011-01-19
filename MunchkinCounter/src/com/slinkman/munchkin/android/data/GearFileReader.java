@@ -1,4 +1,4 @@
-package com.slinkman.munchkin.data;
+package com.slinkman.munchkin.android.data;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -124,8 +124,10 @@ public class GearFileReader {
 			reader.setContentHandler(temp);
 			File root = Environment.getExternalStorageDirectory();
 			Log.i("Reader", "ParseStart");
-			reader.parse(new InputSource(new FileInputStream(new File(root,
-					"gear_list.xml"))));
+			File gearFile = new File(root,"gear_list.xml");
+			if (!gearFile.exists())
+				gearFile.createNewFile();
+			reader.parse(new InputSource(new FileInputStream(gearFile)));
 		} catch (Exception ex) {
 
 		}

@@ -1,4 +1,4 @@
-package com.slinkman.munchkin.data;
+package com.slinkman.munchkin.android.data;
 
 import java.io.File;
 import java.io.FileWriter;

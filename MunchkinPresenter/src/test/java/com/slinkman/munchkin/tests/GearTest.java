@@ -96,8 +96,8 @@ public class GearTest {
 		Object[] objectArray = {new Integer(2),"Hand"};
 		view.returnMap.get(GearPresenter.RETURN_LISTENER_NEW_GEAR).onAction(objectArray);
 		presenter.onPause();
-		assertNotNull(data.objectMap.get(GearPresenter.DATA_CAST_ARMOR_ARRAY));
-		assertNotNull(data.objectMap.get(GearPresenter.DATA_CAST_BONUS_ARRAY));
+		assertNotNull(data.stringMap.get(GearPresenter.DATA_CAST_ARMOR_ARRAY));
+		assertNotNull(data.intMap.get(GearPresenter.DATA_CAST_BONUS_ARRAY));
 	}
 	
 	

@@ -46,7 +46,7 @@ public class GearViewMock implements GearView {
 
 	}
 
-	public Listener<Integer> refreshList() {
+	public Listener<Integer> getRefreshList() {
 
 		return new Listener<Integer>() {
 

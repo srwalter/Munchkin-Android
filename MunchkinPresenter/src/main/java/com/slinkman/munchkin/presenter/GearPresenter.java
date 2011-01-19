@@ -2,108 +2,243 @@ package com.slinkman.munchkin.presenter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang.ArrayUtils;
 
 import com.slinkman.munchkin.Listener;
 import com.slinkman.munchkin.ParameterListener;
 import com.slinkman.munchkin.Persistance;
 import com.slinkman.munchkin.Presenter;
+import com.slinkman.munchkin.error.DataError;
 import com.slinkman.munchkin.error.WidgetError;
+import com.slinkman.munchkin.model.GearItemData;
 
+/**
+ * Presenter to control the view and data needed for the Gear Presenter.
+ * 
+ * @author SlinkKay
+ * 
+ */
 public class GearPresenter implements Presenter {
 
-	// List Text
-	public final static int LIST_TEXT_BONUS = 0x01;
-	public final static int LIST_TEXT_ARMOR_TYPE = 0x02;
-
-	// List Listener
-	public final static int LIST_LISTENER_DELETE = 0x01;
-	public final static int LIST_LISTENER_EDIT = 0x02;
-
-	// Listener
-	public final static int LISTENER_NEW_GEAR = 0x01;
-	public final static int LISTENER_CLEAR_GEAR = 0x02;
-
-	// Return Listener
-	public final static int RETURN_LISTENER_NEW_GEAR = 0x01;
-	public final static int RETURN_LISTENER_GEAR_ITEM = 0x02;
-
-	// Object Return Array
-	public final static int OBJECT_BONUS = 0x00;
-	public final static int OBJECT_STRING = 0x01;
-	public final static int OBJECT_LOCATION = 0x02;
-
-	// Data Cast
-	public final static int DATA_CAST_BONUS_ARRAY = 0x01;
-	public final static int DATA_CAST_ARMOR_ARRAY = 0x02;
-
 	public interface GearView {
-		public void setReturnListener(int objectID, Listener<Object[]> inListener) throws WidgetError;
-		public void setListener(int objectID, Listener<Void> inListener) throws WidgetError;
-		//List Interface
-		public Listener<Integer> refreshList();
-		public void setPopulator (ParameterListener<GearItemView> inListener);
+		public void setReturnListener(int objectID,
+				Listener<GearItemData> inListener);
+
+		public void setListener(int objectID, Listener<?> inListener);
+
+		/**
+		 * Show the edit gear screen with gearData if not null. Otherwise
+		 * display empty screen. When item is done call the handle to return the
+		 * object to the presenter.
+		 * 
+		 * @param gearData
+		 *            If not null the information will populate the window.
+		 * @param handle
+		 *            Handle to return the information to the presenter @ Thrown
+		 *            when targeted peice of the view doesn't exist
+		 */
+		public void displayEditGear(GearItemData gearData,
+				Listener<GearItemData> handle);
+
+		/**
+		 * Set the view handle for the action to clear the gear of a player
+		 * 
+		 * @param handle
+		 *            Handle to inform the presenter that action must be taken
+		 */
+		public void setClearGear(Listener<Void> handle);
+
+		/**
+		 * Set the view handle for the action to add a new gear to the player
+		 * 
+		 * @param handle
+		 *            Handle to inform the presenter that action must be taken
+		 */
+		public void setAddGear(Listener<Void> handle);
+
+		/**
+		 * Get a handle to the view to refresh the gear list
+		 * 
+		 * @return View handle to allow the presenter to update when the data
+		 *         has changed
+		 */
+		public Listener<Integer> getRefreshList();
+
+		/**
+		 * 
+		 * @param inListener
+		 */
+		public void setPopulator(ParameterListener<GearItemView> inListener);
+
 	};
 
+	/**
+	 * @author chrisslinkman
+	 * 
+	 */
 	public interface GearData {
 		// Persistence
 		public void saveMap(HashMap<String, Object> saveMap);
+
 		public HashMap<String, Object> getSaveMap();
-		
-		// Cast Interface
-		public Object getItem(int itemID, Object[] parms) throws WidgetError;
-		public void setItem(int itemID, Object inObject) throws WidgetError;
+
+		/**
+		 * Method is used to get the id's of all items in the database
+		 * 
+		 * @param callback
+		 *            Called when the total is ready
+		 * @throws DataError
+		 */
+		public void getGearIds(Listener<Integer[]> callback) throws DataError;
+
+		/**
+		 * Method is used to retrieve the armor of an item with the specified id
+		 * 
+		 * @param id
+		 *            ID of the item requested
+		 * @param callback
+		 *            Called when the variable is ready to be returned
+		 * @throws DataError
+		 */
+		public void getArmorType(int id, Listener<String> callback)
+				throws DataError;
+
+		/**
+		 * Method is used to retrieve the bonus of an item with the specified id
+		 * 
+		 * @param id
+		 *            Id of the item requested
+		 * @param callback
+		 *            Callback item used when information is ready to be
+		 *            returned
+		 * @throws DataError
+		 */
+		public void getBonus(int id, Listener<Integer> callback)
+				throws DataError;
+
+		/**
+		 * Method to add a new gear item to the data backend. The listener will
+		 * be called once the item is placed and has id to associate with the
+		 * new values
+		 * 
+		 * @param armorType
+		 * @param bonusAmount
+		 * @param callback
+		 * @throws DataError
+		 */
+		public void addGearItem(GearItemData inItem, Listener<Integer> callback)
+				throws DataError;
 	};
 
 	public interface GearItemView {
-		public void setWidgetText(int objectID, String inText) throws WidgetError;
-		public void setListener(int objectID, Listener<Void> inListener) throws WidgetError;
+		/**
+		 * Set the bonus text in the view
+		 * 
+		 * @param handle
+		 */
+		public void setBonusText(String inString);
+
+		/**
+		 * Set the armor text in a view
+		 * 
+		 * @param handle
+		 */
+		public void setArmorText(String inString);
+
+		/**
+		 * Set the action to edit the armor listener
+		 * 
+		 * @param handle
+		 */
+		public void setEditListner(Listener<Void> handle);
+
+		/**
+		 * Set the action to delete the gear
+		 * 
+		 * @param handle
+		 */
+		public void setDeleteListener(Listener<Void> handle);
 	};
 
 	private GearView view;
 	private GearData data;
-	private int listCount = 0;
+	private Integer[] idList;
 
-	ArrayList<String> listArmor;
-	ArrayList<Integer> listBonus;
+	Map<Integer, String> mapArmor;
+	Map<Integer, Integer> mapBonus;
 
-	@SuppressWarnings("unchecked")
 	public GearPresenter(GearView inView, GearData inData) {
 		view = inView;
 		data = inData;
 
 		try {
-			listArmor = (ArrayList<String>) data.getItem(DATA_CAST_ARMOR_ARRAY,
-					null);
-			if (listArmor == null)
-				listArmor = new ArrayList<String>();
+			data.getGearIds(new Listener<Integer[]>() {
+				@Override
+				public void onAction(Integer[] inObject) {
+					if (mapArmor == null)
+						mapArmor = new HashMap<Integer, String>();
 
-			listBonus = (ArrayList<Integer>) data.getItem(
-					DATA_CAST_BONUS_ARRAY, null);
-			if (listBonus == null)
-				listBonus = new ArrayList<Integer>();
-			if (listArmor.size() > 0)
-				listCount = listArmor.size();
-			view.setPopulator(new GearPopulator());
-			view.setListener(LISTENER_NEW_GEAR, new NewGearListener());
-			view.setListener(LISTENER_CLEAR_GEAR, new ClearGearListener());
-			if (listCount > 0)
-				view.refreshList().onAction(listCount);
-		} catch (WidgetError ex) {
+					if (mapBonus == null)
+						mapBonus = new HashMap<Integer, Integer>();
+
+					for (Integer i : inObject) {
+						try {
+							data.getArmorType(i, new AsyncGear<String>(i) {
+								public void onAction(String inObject) {
+									mapArmor.put(this.id, inObject);
+								}
+							});
+							data.getBonus(i, new AsyncGear<Integer>(i) {
+								public void onAction(Integer inObject) {
+									mapBonus.put(this.id, inObject);
+								}
+							});
+						} catch (DataError error) {
+							error.printStackTrace();
+						}
+					}
+					idList = inObject;
+					testPopulator();
+				}
+			});
+			view.setAddGear(new NewGearListener());
+			view.setClearGear(new ClearGearListener());
+		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+	}
+
+	private abstract class AsyncGear<T> implements Listener<T> {
+		int id;
+
+		public AsyncGear(int inId) {
+			id = inId;
+		}
+
+		@Override
+		public abstract void onAction(T inObject);
+	}
+
+	private void testPopulator() {
+		view.setPopulator(new GearPopulator());
+		if (idList.length > 0)
+			view.getRefreshList().onAction(idList.length);
 	}
 
 	@Override
 	public void onPause() {
 		try {
-			data.setItem(DATA_CAST_ARMOR_ARRAY, new Object[] { listArmor,
-					listBonus });
-		} catch (WidgetError ex) {
+			data.setStringArray(DATA_CAST_ARMOR_ARRAY, listArmor);
+			data.setIntArray(DATA_CAST_BONUS_ARRAY, listBonus);
+		} catch (DataError ex) {
 			ex.printStackTrace();
 			return;
 		}
 		int total = 0;
-		for (Integer c : listBonus)
+		for (Integer c : idList)
 			total += c;
 		HashMap<String, Object> saveMap = new HashMap<String, Object>();
 		saveMap.put(Persistance.VAR_TOTAL_GEAR, total);
@@ -113,31 +248,46 @@ public class GearPresenter implements Presenter {
 	private class ClearGearListener implements Listener<Void> {
 
 		public void onAction(Void in) {
-			listArmor.clear();
-			listBonus.clear();
-			view.refreshList().onAction(listArmor.size());
+			if (mapArmor != null)
+				mapArmor.clear();
+			if (mapBonus != null)
+				mapBonus.clear();
+			view.getRefreshList().onAction(0);
 		}
 	}
 
 	private class NewGearListener implements Listener<Void> {
 
 		public void onAction(Void in) {
+			view.displayEditGear(null, new ReturnGear());
+		}
+	}
+
+	private class ReturnGear implements Listener<GearItemData> {
+
+		@Override
+		public void onAction(GearItemData inItem) {
 			try {
-				view.setReturnListener(RETURN_LISTENER_NEW_GEAR, new ReturnNewGear());
-			} catch (WidgetError ex) {
-				ex.printStackTrace();
+				// TODO: Check to see if the gearID already exists. If it does
+				// it's an edit. Otherwise it's an add
+				data.addGearItem(inItem, new GearAddReturn());
+				data.getGearIds(new Listener<Integer[]>() {
+					@Override
+					public void onAction(Integer[] inObject) {
+						view.getRefreshList().onAction(inObject.length);
+					}
+				});
+			} catch (DataError e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 	}
 
-	private class ReturnNewGear implements Listener<Object[]> {
-
+	private class GearAddReturn implements Listener<Integer> {
 		@Override
-		public void onAction(Object[] inObject) {
-			Object[] tempArray = (Object[]) inObject;
-			listArmor.add((String) tempArray[OBJECT_STRING]);
-			listBonus.add((Integer) tempArray[OBJECT_BONUS]);
-			view.refreshList().onAction(listArmor.size());
+		public void onAction(Integer inObject) {
+
 		}
 	}
 
@@ -150,50 +300,20 @@ public class GearPresenter implements Presenter {
 		}
 
 		public void onAction(Void in) {
-			try {
-				HashMap<String, Object> saveMap = new HashMap<String, Object>();
-				saveMap.put(Persistance.VAR_ITEM_EDIT_ARMOR,
-						listArmor.get(myID));
-				saveMap.put(Persistance.VAR_ITEM_EDIT_BONUS,
-						listBonus.get(myID));
-				data.saveMap(saveMap);
-				view.setReturnListener(RETURN_LISTENER_GEAR_ITEM, new ReturnEditGear(
-						myID));
-			} catch (WidgetError ex) {
-				ex.printStackTrace();
-			}
-		}
-	}
-
-	private class ReturnEditGear implements Listener<Object[]> {
-		private int location;
-
-		public ReturnEditGear(int id) {
-			location = id;
-		}
-
-		public void onAction(Object[] inObject) {
-			Object[] tempArray = (Object[]) inObject;
-			listArmor.remove(location);
-			listBonus.remove(location);
-			listArmor.add(location, (String) tempArray[OBJECT_STRING]);
-			listBonus.add(location, (Integer) tempArray[OBJECT_BONUS]);
-			view.refreshList().onAction(listArmor.size());
+			GearItemData gearItem = new GearItemData();
+			gearItem.setArmorType(mapArmor.get(myID));
+			gearItem.setBonus(mapBonus.get(myID));
+			view.displayEditGear(gearItem, new ReturnGear());
 		}
 	}
 
 	private class GearPopulator implements ParameterListener<GearItemView> {
 
 		public void onAction(int id, GearItemView inObject) {
-			try {
-				inObject.setListener(LIST_LISTENER_DELETE, new DeleteGear(id));
-				inObject.setListener(LIST_LISTENER_EDIT, new EditGear(id));
-				inObject.setWidgetText(LIST_TEXT_ARMOR_TYPE, listArmor.get(id));
-				inObject.setWidgetText(LIST_TEXT_BONUS,
-						Integer.toString(listBonus.get(id)));
-			} catch (WidgetError ex) {
-				ex.printStackTrace();
-			}
+			inObject.setDeleteListener(new DeleteGear(id));
+			inObject.setEditListner(new EditGear(id));
+			inObject.setArmorText(mapArmor.get(id));
+			inObject.setBonusText(Integer.toString(mapBonus.get(id)));
 		}
 	}
 
@@ -205,9 +325,9 @@ public class GearPresenter implements Presenter {
 		}
 
 		public void onAction(Void in) {
-			listArmor.remove(listID);
-			listBonus.remove(listID);
-			view.refreshList().onAction(listArmor.size());
+			mapArmor.remove(listID);
+			mapBonus.remove(listID);
+			view.getRefreshList().onAction(mapArmor.size());
 		}
 
 	}

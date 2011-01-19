@@ -1,4 +1,4 @@
-package com.slinkman.munchkin.activity;
+package com.slinkman.munchkin.android.activity;
 
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -17,11 +17,11 @@ import com.slinkman.munchkin.Listener;
 import com.slinkman.munchkin.Persistance;
 import com.slinkman.munchkin.Presenter;
 import com.slinkman.munchkin.R;
-import com.slinkman.munchkin.data.BaseData;
+import com.slinkman.munchkin.android.data.BaseData;
+import com.slinkman.munchkin.android.widget.BaseActivity;
 import com.slinkman.munchkin.error.WidgetError;
 import com.slinkman.munchkin.presenter.DicePresenter;
 import com.slinkman.munchkin.presenter.DicePresenter.DiceView;
-import com.slinkman.munchkin.widget.BaseActivity;
 
 public class Dice extends BaseActivity implements DiceView, SensorEventListener {
 
@@ -43,6 +43,7 @@ public class Dice extends BaseActivity implements DiceView, SensorEventListener 
 		case DicePresenter.LISTENER_ROLL_CLICK:
 			rollBotton.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
+					tracker.trackEvent("Dice", "Click", "Roll", 0);
 					rollAnimation();
 					inListener.onAction(null);
 				}
@@ -79,6 +80,7 @@ public class Dice extends BaseActivity implements DiceView, SensorEventListener 
 	}
 
 	protected Presenter bindMainView(View inView) {
+		tracker.trackPageView("/Dice");
 		rollBotton = (Button) findViewById(R.id.dice_roll_button);
 		diceImage = (TextView) findViewById(R.id.dice_roll_display);
 		rollingDisplay = (TextView) findViewById(R.id.dice_rolling_text);

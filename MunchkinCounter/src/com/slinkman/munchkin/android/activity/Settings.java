@@ -1,4 +1,4 @@
-package com.slinkman.munchkin.activity;
+package com.slinkman.munchkin.android.activity;
 
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -8,12 +8,12 @@ import com.slinkman.munchkin.Listener;
 import com.slinkman.munchkin.Persistance;
 import com.slinkman.munchkin.Presenter;
 import com.slinkman.munchkin.R;
-import com.slinkman.munchkin.data.BaseData;
+import com.slinkman.munchkin.android.data.BaseData;
+import com.slinkman.munchkin.android.widget.BaseActivity;
+import com.slinkman.munchkin.android.widget.LevelDialog;
 import com.slinkman.munchkin.error.WidgetError;
 import com.slinkman.munchkin.presenter.SettingPresenter;
 import com.slinkman.munchkin.presenter.SettingPresenter.SettingView;
-import com.slinkman.munchkin.widget.BaseActivity;
-import com.slinkman.munchkin.widget.LevelDialog;
 
 public class Settings extends BaseActivity implements SettingView {
 

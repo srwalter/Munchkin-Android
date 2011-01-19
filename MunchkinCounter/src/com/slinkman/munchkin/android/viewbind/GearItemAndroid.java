@@ -1,4 +1,4 @@
-package com.slinkman.munchkin.viewbind;
+package com.slinkman.munchkin.android.viewbind;
 
 import com.slinkman.munchkin.Listener;
 import com.slinkman.munchkin.R;

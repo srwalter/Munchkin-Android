@@ -1,13 +1,13 @@
-package com.slinkman.munchkin.activity;
+package com.slinkman.munchkin.android.activity;
 
 import com.slinkman.munchkin.Listener;
 import com.slinkman.munchkin.Persistance;
 import com.slinkman.munchkin.Presenter;
 import com.slinkman.munchkin.R;
-import com.slinkman.munchkin.data.BaseData;
+import com.slinkman.munchkin.android.data.BaseData;
+import com.slinkman.munchkin.android.widget.BaseActivity;
 import com.slinkman.munchkin.error.WidgetError;
 import com.slinkman.munchkin.presenter.CounterPresenter;
-import com.slinkman.munchkin.widget.BaseActivity;
 
 import android.view.View;
 import android.view.View.OnClickListener;

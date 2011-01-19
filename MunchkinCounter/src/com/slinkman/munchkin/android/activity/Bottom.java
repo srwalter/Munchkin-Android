@@ -1,4 +1,4 @@
-package com.slinkman.munchkin.activity;
+package com.slinkman.munchkin.android.activity;
 
 import android.content.Intent;
 import android.view.View;
@@ -6,7 +6,7 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 import com.slinkman.munchkin.R;
-import com.slinkman.munchkin.widget.BaseActivity;
+import com.slinkman.munchkin.android.widget.BaseActivity;
 
 public class Bottom {
 	public Bottom(final BaseActivity inActivity) {
