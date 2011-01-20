@@ -1,18 +1,12 @@
 package com.slinkman.munchkin.presenter;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.lang.ArrayUtils;
 
 import com.slinkman.munchkin.Listener;
 import com.slinkman.munchkin.ParameterListener;
 import com.slinkman.munchkin.Persistance;
 import com.slinkman.munchkin.Presenter;
-import com.slinkman.munchkin.error.DataError;
-import com.slinkman.munchkin.error.WidgetError;
 import com.slinkman.munchkin.model.GearItemData;
 
 /**
@@ -24,11 +18,6 @@ import com.slinkman.munchkin.model.GearItemData;
 public class GearPresenter implements Presenter {
 
 	public interface GearView {
-		public void setReturnListener(int objectID,
-				Listener<GearItemData> inListener);
-
-		public void setListener(int objectID, Listener<?> inListener);
-
 		/**
 		 * Show the edit gear screen with gearData if not null. Otherwise
 		 * display empty screen. When item is done call the handle to return the
@@ -57,7 +46,7 @@ public class GearPresenter implements Presenter {
 		 * @param handle
 		 *            Handle to inform the presenter that action must be taken
 		 */
-		public void setAddGear(Listener<Void> handle);
+		public void setAddGear(Listener<GearItemData> handle);
 
 		/**
 		 * Get a handle to the view to refresh the gear list
@@ -76,23 +65,18 @@ public class GearPresenter implements Presenter {
 	};
 
 	/**
-	 * @author chrisslinkman
+	 * @author SlinkKay
 	 * 
 	 */
-	public interface GearData {
-		// Persistence
-		public void saveMap(HashMap<String, Object> saveMap);
-
-		public HashMap<String, Object> getSaveMap();
+	public interface GearData extends Persistance {
 
 		/**
 		 * Method is used to get the id's of all items in the database
 		 * 
 		 * @param callback
 		 *            Called when the total is ready
-		 * @throws DataError
 		 */
-		public void getGearIds(Listener<Integer[]> callback) throws DataError;
+		public void getGearIds(Listener<Integer[]> callback);
 
 		/**
 		 * Method is used to retrieve the armor of an item with the specified id
@@ -101,10 +85,8 @@ public class GearPresenter implements Presenter {
 		 *            ID of the item requested
 		 * @param callback
 		 *            Called when the variable is ready to be returned
-		 * @throws DataError
 		 */
-		public void getArmorType(int id, Listener<String> callback)
-				throws DataError;
+		public void getArmorType(int id, Listener<String> callback);
 
 		/**
 		 * Method is used to retrieve the bonus of an item with the specified id
@@ -114,10 +96,8 @@ public class GearPresenter implements Presenter {
 		 * @param callback
 		 *            Callback item used when information is ready to be
 		 *            returned
-		 * @throws DataError
 		 */
-		public void getBonus(int id, Listener<Integer> callback)
-				throws DataError;
+		public void getBonus(int id, Listener<Integer> callback);
 
 		/**
 		 * Method to add a new gear item to the data backend. The listener will
@@ -127,10 +107,8 @@ public class GearPresenter implements Presenter {
 		 * @param armorType
 		 * @param bonusAmount
 		 * @param callback
-		 * @throws DataError
 		 */
-		public void addGearItem(GearItemData inItem, Listener<Integer> callback)
-				throws DataError;
+		public void addGearItem(GearItemData inItem, Listener<Integer> callback);
 	};
 
 	public interface GearItemView {
@@ -173,42 +151,33 @@ public class GearPresenter implements Presenter {
 	public GearPresenter(GearView inView, GearData inData) {
 		view = inView;
 		data = inData;
+		data.getGearIds(new Listener<Integer[]>() {
+			@Override
+			public void onAction(Integer[] inObject) {
+				if (mapArmor == null)
+					mapArmor = new HashMap<Integer, String>();
 
-		try {
-			data.getGearIds(new Listener<Integer[]>() {
-				@Override
-				public void onAction(Integer[] inObject) {
-					if (mapArmor == null)
-						mapArmor = new HashMap<Integer, String>();
+				if (mapBonus == null)
+					mapBonus = new HashMap<Integer, Integer>();
 
-					if (mapBonus == null)
-						mapBonus = new HashMap<Integer, Integer>();
-
-					for (Integer i : inObject) {
-						try {
-							data.getArmorType(i, new AsyncGear<String>(i) {
-								public void onAction(String inObject) {
-									mapArmor.put(this.id, inObject);
-								}
-							});
-							data.getBonus(i, new AsyncGear<Integer>(i) {
-								public void onAction(Integer inObject) {
-									mapBonus.put(this.id, inObject);
-								}
-							});
-						} catch (DataError error) {
-							error.printStackTrace();
+				for (Integer i : inObject) {
+					data.getArmorType(i, new AsyncGear<String>(i) {
+						public void onAction(String inObject) {
+							mapArmor.put(this.id, inObject);
 						}
-					}
-					idList = inObject;
-					testPopulator();
+					});
+					data.getBonus(i, new AsyncGear<Integer>(i) {
+						public void onAction(Integer inObject) {
+							mapBonus.put(this.id, inObject);
+						}
+					});
 				}
-			});
-			view.setAddGear(new NewGearListener());
-			view.setClearGear(new ClearGearListener());
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
+				idList = inObject;
+				testPopulator();
+			}
+		});
+		view.setAddGear(new ReturnGear());
+		view.setClearGear(new ClearGearListener());
 	}
 
 	private abstract class AsyncGear<T> implements Listener<T> {
@@ -230,19 +199,10 @@ public class GearPresenter implements Presenter {
 
 	@Override
 	public void onPause() {
-		try {
-			data.setStringArray(DATA_CAST_ARMOR_ARRAY, listArmor);
-			data.setIntArray(DATA_CAST_BONUS_ARRAY, listBonus);
-		} catch (DataError ex) {
-			ex.printStackTrace();
-			return;
-		}
 		int total = 0;
-		for (Integer c : idList)
-			total += c;
-		HashMap<String, Object> saveMap = new HashMap<String, Object>();
-		saveMap.put(Persistance.VAR_TOTAL_GEAR, total);
-		data.saveMap(saveMap);
+		for (Integer c : mapBonus.keySet())
+			total += mapBonus.get(c);
+		data.setVariable(Persistance.VAR_TOTAL_GEAR, total);
 	}
 
 	private class ClearGearListener implements Listener<Void> {
@@ -256,31 +216,19 @@ public class GearPresenter implements Presenter {
 		}
 	}
 
-	private class NewGearListener implements Listener<Void> {
-
-		public void onAction(Void in) {
-			view.displayEditGear(null, new ReturnGear());
-		}
-	}
-
 	private class ReturnGear implements Listener<GearItemData> {
 
 		@Override
 		public void onAction(GearItemData inItem) {
-			try {
-				// TODO: Check to see if the gearID already exists. If it does
-				// it's an edit. Otherwise it's an add
-				data.addGearItem(inItem, new GearAddReturn());
-				data.getGearIds(new Listener<Integer[]>() {
-					@Override
-					public void onAction(Integer[] inObject) {
-						view.getRefreshList().onAction(inObject.length);
-					}
-				});
-			} catch (DataError e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			// TODO: Check to see if the gearID already exists. If it does
+			// it's an edit. Otherwise it's an add
+			data.addGearItem(inItem, new GearAddReturn());
+			data.getGearIds(new Listener<Integer[]>() {
+				@Override
+				public void onAction(Integer[] inObject) {
+					view.getRefreshList().onAction(inObject.length);
+				}
+			});
 		}
 	}
 
@@ -329,6 +277,12 @@ public class GearPresenter implements Presenter {
 			mapBonus.remove(listID);
 			view.getRefreshList().onAction(mapArmor.size());
 		}
+
+	}
+
+	@Override
+	public void onException(Exception ex) {
+		// TODO Auto-generated method stub
 
 	}
 

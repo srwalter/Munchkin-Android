@@ -1,7 +1,5 @@
 package com.slinkman.munchkin.presenter;
 
-import java.util.HashMap;
-
 import com.slinkman.munchkin.Listener;
 import com.slinkman.munchkin.Persistance;
 import com.slinkman.munchkin.Presenter;
@@ -24,56 +22,82 @@ public class PowerPresenter implements Presenter {
 	// Widget ID
 	public final static int TEMP_ID = 0x01;
 
-	public interface PowerView  {
-		public void setListener(int objectID, Listener<Void> inListener) throws WidgetError;
-		public void setWidgetText(int objectID, String inText) throws WidgetError;
+	public interface PowerView {
+		public void upPlayer(Listener<Void> handle);
+
+		public void downPlayer(Listener<Void> handle);
+
+		public void upMonster(Listener<Void> handle);
+
+		public void downMonster(Listener<Void> handle);
+
+		public void playerReset(Listener<Void> handle);
+
+		public void monsterReset(Listener<Void> handle);
+
+		public void setPlayerLevel(Integer inValue);
+
+		public void setMonsterLevel(Integer inValue);
+
+		public void setPlayerDiff(Integer inValue);
 	};
 
 	private Persistance data;
 
 	private PowerView view;
 
-	private int playerPower = 1;
+	private int playerPower = 0;
 
-	private int monsterPower = 1;
+	private int monsterPower = 0;
 
-	private int playerLevel = 1;
+	private int playerLevel = 0;
 
 	public PowerPresenter(PowerView inView, Persistance inData) {
 		view = inView;
 		data = inData;
 		try {
-			if (data.getSaveMap() != null) {
-				if (data.getSaveMap().containsKey(
-						Persistance.VAR_PLAYER_POWER_LAST))
-					playerPower = (Integer) data.getSaveMap().get(
-							Persistance.VAR_PLAYER_POWER_LAST);
-				if (data.getSaveMap().containsKey(Persistance.VAR_MONSTER_LAST))
-					monsterPower = (Integer) data.getSaveMap().get(
-							Persistance.VAR_MONSTER_LAST);
-				if (data.getSaveMap().containsKey(
-						Persistance.VAR_PLAYER_LEVEL_LAST))
-					playerLevel = (Integer) data.getSaveMap().get(
-							Persistance.VAR_PLAYER_LEVEL_LAST);
-				if (data.getSaveMap().containsKey(Persistance.VAR_TOTAL_GEAR))
-					playerLevel += (Integer) data.getSaveMap().get(
-							Persistance.VAR_TOTAL_GEAR);
-			}
+			data.getInt(Persistance.VAR_PLAYER_POWER_LAST,
+					new Listener<Integer>() {
+						@Override
+						public void onAction(Integer inObject) {
+							playerPower = inObject;
+
+						}
+					});
+			data.getInt(Persistance.VAR_MONSTER_LAST, new Listener<Integer>() {
+				@Override
+				public void onAction(Integer inObject) {
+					monsterPower = inObject;
+				}
+			});
+			data.getInt(Persistance.VAR_TOTAL_GEAR, new Listener<Integer>() {
+				@Override
+				public void onAction(Integer inObject) {
+					playerLevel += inObject;
+
+				}
+			});
+			data.getInt(Persistance.VAR_PLAYER_LEVEL_LAST,
+					new Listener<Integer>() {
+						@Override
+						public void onAction(Integer inObject) {
+							playerLevel += inObject;
+
+						}
+					});
 
 			view.setWidgetText(TEXT_PLAYER_DIFF, getPlayerText(playerPower));
-			view
-					.setWidgetText(TEXT_PLAYER_LEVEL, Integer
-							.toString(playerPower));
-			view.setWidgetText(TEXT_MONSTER_LEVEL, Integer
-					.toString(monsterPower));
+			view.setWidgetText(TEXT_PLAYER_LEVEL, Integer.toString(playerPower));
+			view.setWidgetText(TEXT_MONSTER_LEVEL,
+					Integer.toString(monsterPower));
 			view.setListener(LISTENER_UP_PLAYER, new Listener<Void>() {
 
 				public void onAction(Void in) {
 					try {
 						view.setWidgetText(TEXT_PLAYER_DIFF,
 								getPlayerText(++playerPower));
-						view.setWidgetText(TEXT_PLAYER_LEVEL, Integer
-								.toString(playerPower));
+						view.setWidgetText(TEXT_PLAYER_LEVEL,
+								Integer.toString(playerPower));
 					} catch (WidgetError ex) {
 						ex.printStackTrace();
 					}
@@ -85,8 +109,8 @@ public class PowerPresenter implements Presenter {
 					try {
 						view.setWidgetText(TEXT_PLAYER_DIFF,
 								getPlayerText(--playerPower));
-						view.setWidgetText(TEXT_PLAYER_LEVEL, Integer
-								.toString(playerPower));
+						view.setWidgetText(TEXT_PLAYER_LEVEL,
+								Integer.toString(playerPower));
 					} catch (WidgetError ex) {
 						ex.printStackTrace();
 					}
@@ -96,8 +120,8 @@ public class PowerPresenter implements Presenter {
 
 				public void onAction(Void in) {
 					try {
-						view.setWidgetText(TEXT_MONSTER_LEVEL, Integer
-								.toString(--monsterPower));
+						view.setWidgetText(TEXT_MONSTER_LEVEL,
+								Integer.toString(--monsterPower));
 					} catch (WidgetError ex) {
 						ex.printStackTrace();
 					}
@@ -107,8 +131,8 @@ public class PowerPresenter implements Presenter {
 
 				public void onAction(Void in) {
 					try {
-						view.setWidgetText(TEXT_MONSTER_LEVEL, Integer
-								.toString(++monsterPower));
+						view.setWidgetText(TEXT_MONSTER_LEVEL,
+								Integer.toString(++monsterPower));
 					} catch (WidgetError ex) {
 						ex.printStackTrace();
 					}
@@ -119,8 +143,8 @@ public class PowerPresenter implements Presenter {
 				public void onAction(Void in) {
 					try {
 						monsterPower = 1;
-						view.setWidgetText(TEXT_MONSTER_LEVEL, Integer
-								.toString(monsterPower));
+						view.setWidgetText(TEXT_MONSTER_LEVEL,
+								Integer.toString(monsterPower));
 					} catch (WidgetError ex) {
 						ex.printStackTrace();
 					}
@@ -133,8 +157,8 @@ public class PowerPresenter implements Presenter {
 					try {
 						view.setWidgetText(TEXT_PLAYER_DIFF,
 								getPlayerText(playerPower));
-						view.setWidgetText(TEXT_PLAYER_LEVEL, Integer
-								.toString(playerPower));
+						view.setWidgetText(TEXT_PLAYER_LEVEL,
+								Integer.toString(playerPower));
 					} catch (WidgetError ex) {
 						ex.printStackTrace();
 					}
@@ -153,10 +177,14 @@ public class PowerPresenter implements Presenter {
 
 	@Override
 	public void onPause() {
-		HashMap<String, Object> saveInfo = new HashMap<String, Object>();
-		saveInfo.put(Persistance.VAR_PLAYER_POWER_LAST, playerPower);
-		saveInfo.put(Persistance.VAR_MONSTER_LAST, monsterPower);
-		data.saveMap(saveInfo);
+		data.setVariable(Persistance.VAR_PLAYER_POWER_LAST, playerPower);
+		data.setVariable(Persistance.VAR_MONSTER_LAST, monsterPower);
+	}
+
+	@Override
+	public void onException(Exception ex) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

@@ -1,6 +1,5 @@
 package com.slinkman.munchkin;
 
-import java.util.HashMap;
 
 public interface Persistance {
 	// Variable Persistence
@@ -12,7 +11,9 @@ public interface Persistance {
 	public final static String VAR_ITEM_EDIT_ARMOR = "Gear Edit Armor";
 	public final static String VAR_ITEM_EDIT_BONUS = "Gear Edit Bonus";
 	public final static String VAR_TOTAL_GEAR = "Total Gear Score";
-	
-	public void saveMap(HashMap<String, Object> saveMap);
-	public HashMap<String, Object> getSaveMap();
+
+	public void setVariable(String targetVar, String inVar);
+	public void setVariable(String targetVar, Integer inVar);
+	public void getInt(String targetVar, Listener<Integer> handle);
+	public void getString(String targetVar, Listener<String> handle);
 }

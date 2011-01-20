@@ -1,10 +1,8 @@
 package com.slinkman.munchkin.presenter;
 
-import java.util.HashMap;
 
 import com.slinkman.munchkin.Listener;
 import com.slinkman.munchkin.Persistance;
-import com.slinkman.munchkin.error.WidgetError;
 
 public class MaxLevelDialogPresenter {
 
@@ -20,14 +18,16 @@ public class MaxLevelDialogPresenter {
 	public static final int TEXT_TOP_LEVEL = 0x01;
 
 	public interface MaxLevelDialogViewInterface {
-		public void setListener(int objectID, Listener<Void> inListener)
-				throws WidgetError;
+		public void setUp(Listener<Void> handle);
 
-		public void setWidgetText(int objectID, String inText)
-				throws WidgetError;
+		public void setDown(Listener<Void> handle);
 
-		public void setWidgetEnabled(int objectID, boolean inEnabled)
-				throws WidgetError;
+		public void setDone(Listener<Void> handle);
+
+		public void setListener(int objectID, Listener<Void> inListener);
+
+		public void setTopText(String handle);
+
 	};
 
 	private MaxLevelDialogViewInterface view;
@@ -38,47 +38,34 @@ public class MaxLevelDialogPresenter {
 			Persistance inData, final Listener<Integer> inListener) {
 		view = inView;
 		data = inData;
-		try {
-			if (inData.getSaveMap().containsKey(Persistance.VAR_TOPLEVEL))
-				currentLevel = (Integer) inData.getSaveMap().get(
-						Persistance.VAR_TOPLEVEL);
-			view.setWidgetText(TEXT_TOP_LEVEL, Integer.toString(currentLevel));
-			view.setListener(LISTENER_DONE, new Listener<Void>() {
+		data.getInt(Persistance.VAR_TOPLEVEL, new Listener<Integer>() {
+			@Override
+			public void onAction(Integer inObject) {
+				currentLevel = inObject;
+			}
+		});
+		view.setTopText(Integer.toString(currentLevel));
+		view.setListener(LISTENER_DONE, new Listener<Void>() {
 
-				public void onAction(Void in) {
-					inListener.onAction(currentLevel);
-				}
-			});
-			view.setListener(LISTENER_UP, new Listener<Void>() {
+			public void onAction(Void in) {
+				inListener.onAction(currentLevel);
+			}
+		});
+		view.setListener(LISTENER_UP, new Listener<Void>() {
 
-				public void onAction(Void in) {
-					try {
-						view.setWidgetText(TEXT_TOP_LEVEL,
-								Integer.toString(++currentLevel));
-					} catch (WidgetError ex) {
-						ex.printStackTrace();
-					}
-				}
-			});
-			view.setListener(LISTENER_DOWN, new Listener<Void>() {
+			public void onAction(Void in) {
+				view.setTopText(Integer.toString(++currentLevel));
+			}
+		});
+		view.setListener(LISTENER_DOWN, new Listener<Void>() {
 
-				public void onAction(Void in) {
-					try {
-						view.setWidgetText(TEXT_TOP_LEVEL,
-								Integer.toString(--currentLevel));
-					} catch (WidgetError ex) {
-						ex.printStackTrace();
-					}
-				}
-			});
-		} catch (WidgetError ex) {
-			ex.printStackTrace();
-		}
+			public void onAction(Void in) {
+				view.setTopText(Integer.toString(--currentLevel));
+			}
+		});
 	}
 
 	public void onPause() {
-		HashMap<String, Object> saveMap = new HashMap<String, Object>();
-		saveMap.put(Persistance.VAR_TOPLEVEL, currentLevel);
-		data.saveMap(saveMap);
+		data.setVariable(Persistance.VAR_TOPLEVEL, currentLevel);
 	}
 }
