@@ -1,57 +1,46 @@
 package com.slinkman.munchkin.mocks.view;
 
-import java.util.HashMap;
-
 import com.slinkman.munchkin.Listener;
-import com.slinkman.munchkin.error.WidgetError;
-import com.slinkman.munchkin.presenter.CounterPresenter;
 import com.slinkman.munchkin.presenter.CounterPresenter.CountView;
 
+/**
+ * Simple mock for the CountView interface. 
+ * All internal variable are public for access in integration tests
+ * @author chrisslinkman
+ *
+ */
 public class CounterViewMock implements CountView {
-	public static final Integer TRUE = 0x01;
-	public static final Integer FALSE = 0x02;
-
-	public HashMap<Integer, Integer> enabledMap = new HashMap<Integer, Integer>();
-	public HashMap<Integer, String> textMap = new HashMap<Integer, String>();
-	public HashMap<Integer, Listener<Void>> listenerMap = new HashMap<Integer, Listener<Void>>();
-	public HashMap<String, Object> saveMap = new HashMap<String, Object>();
+	
+	public String counterText;
+	public Listener<Void> upHandle;
+	public Listener<Void> downHandle;
+	public boolean upEnabled;
+	public boolean downEnabled;
 
 	@Override
-	public void setWidgetEnabled(int objectID, boolean inEnabled)
-			throws WidgetError {
-		switch (objectID) {
-		case CounterPresenter.ENABLED_DOWN:
-		case CounterPresenter.ENABLED_UP:
-			enabledMap.put(objectID, (inEnabled) ? TRUE : FALSE);
-			break;
-		default:
-			throw new WidgetError();
-		}
+	public void setCounterText(String inString) {
+		counterText = inString;
+
 	}
 
 	@Override
-	public void setListener(int objectID, Listener<Void> inListener)
-			throws WidgetError {
-		switch (objectID){
-		case CounterPresenter.LISTENER_DOWN_BUTTON:
-		case CounterPresenter.LISTENER_UP_BUTTON:
-		case CounterPresenter.LISTENER_SWIPE_DOWN:
-		case CounterPresenter.LISTENER_SWIPE_UP:
-			listenerMap.put(objectID, inListener);
-			break;
-		default:
-			throw new WidgetError();
-		}
+	public void setUpListener(Listener<Void> handle) {
+		upHandle = handle;
 	}
 
 	@Override
-	public void setWidgetText(int objectID, String inText) throws WidgetError {
-		switch (objectID) {
-		case CounterPresenter.TEXT_COUNTER:
-			textMap.put(objectID, inText);
-			break;
-		default:
-			throw new WidgetError();
-		}
+	public void setDownListener(Listener<Void> handle) {
+		downHandle = handle;
 	}
+
+	@Override
+	public void setUpEnabled(boolean enabled) {
+		upEnabled = enabled;
+	}
+
+	@Override
+	public void setDownEnabled(boolean enabled) {
+		downEnabled = enabled;
+	}
+
 }

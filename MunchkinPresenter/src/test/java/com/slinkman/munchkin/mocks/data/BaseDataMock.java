@@ -2,19 +2,37 @@ package com.slinkman.munchkin.mocks.data;
 
 import java.util.HashMap;
 
+import com.slinkman.munchkin.Listener;
 import com.slinkman.munchkin.Persistance;
 
 public class BaseDataMock implements Persistance {
 
-	public HashMap<String, Object> dataHash = new HashMap<String, Object>();
+	public HashMap<String, String> stringHash = new HashMap<String, String>();
 
-	public HashMap<String, Object> getSaveMap() {
-		return dataHash;
+	public HashMap<String, Integer> intHash = new HashMap<String, Integer>();
+
+	@Override
+	public void setVariable(String targetVar, String inVar) {
+		stringHash.put(targetVar, inVar);
+
 	}
 
-	public void saveMap(HashMap<String, Object> saveMap) {
-		for (String c: saveMap.keySet())
-			dataHash.put(c, saveMap.get(c));
+	@Override
+	public void setVariable(String targetVar, Integer inVar) {
+		intHash.put(targetVar, inVar);
+
+	}
+
+	@Override
+	public void getInt(String targetVar, Listener<Integer> handle) {
+		handle.onAction(intHash.get(targetVar));
+
+	}
+
+	@Override
+	public void getString(String targetVar, Listener<String> handle) {
+		handle.onAction(stringHash.get(targetVar));
+
 	}
 
 }

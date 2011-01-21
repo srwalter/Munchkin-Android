@@ -1,41 +1,38 @@
 package com.slinkman.munchkin.mocks.view;
 
-import java.util.HashMap;
-
 import com.slinkman.munchkin.Listener;
-import com.slinkman.munchkin.error.WidgetError;
+import com.slinkman.munchkin.model.GearItemData;
 import com.slinkman.munchkin.presenter.GearDialogPresenter.GearDialogViewInterface;
 
 public class GearDialogMock implements GearDialogViewInterface {
 
-	public HashMap<Integer, Listener<Void>> listenerMap = new HashMap<Integer, Listener<Void>>();
-	public HashMap<Integer, String> stringMap = new HashMap<Integer, String>();
-	public HashMap<Integer, Listener<String>> stringReturnMap = new HashMap<Integer, Listener<String>>();
-	public HashMap<Integer, Listener<Integer>> integerReturnMap = new HashMap<Integer, Listener<Integer>>();
+	public Listener<GearItemData> addListener;
+	public Listener<Void> cancelListener;
+	public String armorText;
+	public String bonusText;
+
 	@Override
-	public void setListener(int objectID, Listener<Void> inListener)
-			throws WidgetError {
-		listenerMap.put(objectID, inListener);
+	public void setAddListner(Listener<GearItemData> handle) {
+		addListener = handle;
 
 	}
 
 	@Override
-	public void setWidgetText(int objectID, String inText) throws WidgetError {
-		stringMap.put(objectID, inText);
+	public void setCancelListener(Listener<Void> handle) {
+		cancelListener = handle;
 
 	}
 
 	@Override
-	public void setStringReturnListener(int objectID,
-			Listener<String> inListener) throws WidgetError {
-		stringReturnMap.put(objectID, inListener);
+	public void setArmorText(String inText) {
+		armorText = inText;
 
 	}
 
 	@Override
-	public void setIntegerReturnListener(int objectID,
-			Listener<Integer> inListener) throws WidgetError {
-		integerReturnMap.put(objectID, inListener);
+	public void setBonusText(Integer inValue) {
+		bonusText = Integer.toString(inValue);
+
 	}
 
 }
