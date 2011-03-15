@@ -2,19 +2,18 @@
 <LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
-	android:orientation="vertical"
+	android:background="#3d1902"
 	android:layout_height="fill_parent"
-	android:background="#3d1902">
+	android:orientation="vertical">
 	<LinearLayout
 		android:layout_height="fill_parent"
 		android:gravity="center_horizontal"
 		android:layout_width="fill_parent"
 		android:orientation="vertical"
 		android:layout_weight="1"
-		android:background="#783003"
 		android:layout_marginBottom="2.5dip"
 		android:id="@+id/summary_fight_layout"
-		android:paddingBottom="2dip">
+		android:paddingBottom="2dip" style="@style/LightBrownTheme">
 		<TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -28,13 +27,15 @@
 			android:layout_weight="1"
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"
-			android:id="@+id/summary_fight_score" style="@style/TitleText"></TextView>
+			android:id="@+id/summary_fight_score"
+			style="@style/TitleText"></TextView>
 		<Button
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="Fight"
 			style="@style/ButtonText"
-			android:id="@+id/summary_fight_button" android:background="@drawable/buttons"></Button>
+			android:id="@+id/summary_fight_button"
+			android:background="@drawable/buttons"></Button>
 	</LinearLayout>
 	<LinearLayout
 		android:id="@+id/linearLayout1"
@@ -49,9 +50,8 @@
 			android:gravity="center_horizontal"
 			android:layout_weight="1"
 			android:layout_width="fill_parent"
-			android:background="#783003"
 			android:layout_marginRight="2.5dip"
-			android:layout_marginTop="2.5dip">
+			android:layout_marginTop="2.5dip" style="@style/LightBrownTheme">
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
@@ -64,19 +64,22 @@
 				android:gravity="center"
 				android:layout_width="fill_parent"
 				android:text="7"
-				android:id="@+id/summary_level_score" style="@style/TitleText"></TextView>
+				android:id="@+id/summary_level_score"
+				style="@style/TitleText"></TextView>
 			<LinearLayout
 				android:layout_height="wrap_content"
 				android:layout_width="fill_parent"
 				android:id="@+id/LinearLayout02"
-				android:gravity="center_horizontal" android:layout_margin="3dip">
+				android:gravity="center_horizontal"
+				android:layout_margin="3dip">
 				<Button
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					style="@style/ButtonText"
 					android:text="+"
 					android:id="@+id/summary_level_up"
-					android:layout_weight="1" android:background="@drawable/buttons"></Button>
+					android:layout_weight="1"
+					android:background="@drawable/buttons"></Button>
 				<View
 					android:id="@+id/view1"
 					android:layout_width="1dip"
@@ -88,7 +91,8 @@
 					style="@style/ButtonText"
 					android:text="-"
 					android:id="@+id/summary_level_down"
-					android:layout_weight="1" android:background="@drawable/buttons"></Button>
+					android:layout_weight="1"
+					android:background="@drawable/buttons"></Button>
 			</LinearLayout>
 		</LinearLayout>
 		<LinearLayout
@@ -98,9 +102,8 @@
 			android:gravity="center_horizontal"
 			android:layout_weight="1"
 			android:layout_width="fill_parent"
-			android:background="#783003"
 			android:layout_marginLeft="2.5dip"
-			android:layout_marginTop="2.5dip">
+			android:layout_marginTop="2.5dip" style="@style/LightBrownTheme">
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
@@ -112,13 +115,15 @@
 				android:layout_weight="1"
 				android:text="3"
 				android:layout_width="fill_parent"
-				android:id="@+id/summary_gear_score" style="@style/TitleText"></TextView>
+				android:id="@+id/summary_gear_score"
+				style="@style/TitleText"></TextView>
 			<LinearLayout
 				android:layout_height="wrap_content"
 				android:layout_width="fill_parent"
 				android:id="@+id/linearLayout3"
 				android:layout_gravity="center_horizontal"
-				android:gravity="center_horizontal" android:layout_margin="3dip">
+				android:gravity="center_horizontal"
+				android:layout_margin="3dip">
 				<Button
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
@@ -126,9 +131,23 @@
 					android:text="Add"
 					android:id="@+id/summary_add"
 					android:layout_marginRight="2dip"
-					android:gravity="center_vertical|center_horizontal" android:background="@drawable/buttons" android:layout_weight="1"></Button>
-				<View android:id="@+id/View04" android:layout_width="1dip" android:layout_height="1dip" android:layout_weight="1"></View>
-				<Button android:layout_marginLeft="2dip" android:layout_height="wrap_content" android:text="Edit" android:id="@+id/summary_edit" style="@style/ButtonText" android:layout_width="wrap_content" android:background="@drawable/buttons" android:layout_weight="1"></Button>
+					android:gravity="center_vertical|center_horizontal"
+					android:background="@drawable/buttons"
+					android:layout_weight="1"></Button>
+				<View
+					android:id="@+id/View04"
+					android:layout_width="1dip"
+					android:layout_height="1dip"
+					android:layout_weight="1"></View>
+				<Button
+					android:layout_marginLeft="2dip"
+					android:layout_height="wrap_content"
+					android:text="Edit"
+					android:id="@+id/summary_edit"
+					style="@style/ButtonText"
+					android:layout_width="wrap_content"
+					android:background="@drawable/buttons"
+					android:layout_weight="1"></Button>
 			</LinearLayout>
 		</LinearLayout>
 	</LinearLayout>

@@ -2,8 +2,7 @@
 	<style name="PowerText">
 		<item name="android:textColor">#AAA</item>
 		<item name="android:textSize">60dip</item>
-		<item
-			name="android:gravity">
+		<item name="android:gravity">
 			center_horizontal|center_vertical</item>
 	</style>
 	<style name="BaseText">
@@ -15,6 +14,15 @@
 		<item name="android:textColor">#ffd7c1</item>
 		<item name="android:gravity">center</item>
 	</style>
+	<style name="SmallText" parent="@style/BaseText">
+		<item name="android:textSize">18dip</item>
+	</style>
+	
+	<style name="SubHeading" parent="@style/BaseText">
+		<item name="android:textSize">24dip</item>
+	</style>
+
+
 	<style name="TitleText" parent="@style/BaseText">
 		<item name="android:textSize">45dip</item>
 	</style>
@@ -24,9 +32,12 @@
 
 	<style name="RollingText">
 		<item name="android:textColor">#AAA</item>
-                <item name="android:textSize">60dip</item>
-                <item name="android:gravity">
-                        center_horizontal|center_vertical</item>
+		<item name="android:textSize">60dip</item>
+		<item name="android:gravity">
+			center_horizontal|center_vertical</item>
+	</style>
+	<style name="LightBrownTheme">
+		<item name="android:background">#783003</item>
 	</style>
 	<style name="DiceText">
 		<item name="android:textColor">#AAA</item>
@@ -52,18 +63,18 @@
 		<item name="android:layout_marginRight">0.5dip</item>
 		<item name="android:layout_marginLeft">1dip</item>
 		<item name="android:layout_marginTop">1dip</item>
-                <item name="android:layout_marginBottom">1dip</item>
+		<item name="android:layout_marginBottom">1dip</item>
 	</style>
 	<style name="BottomMiddle" parent="@style/Bottom">
 		<item name="android:layout_marginLeft">0.5dip</item>
-                <item name="android:layout_marginRight">0.5dip</item>
+		<item name="android:layout_marginRight">0.5dip</item>
 		<item name="android:layout_marginTop">1dip</item>
 		<item name="android:layout_marginBottom">1dip</item>
 	</style>
 	<style name="BottomRight" parent="@style/Bottom">
-                <item name="android:layout_marginLeft">0.5dip</item>
-                <item name="android:layout_marginRight">1dip </item>
+		<item name="android:layout_marginLeft">0.5dip</item>
+		<item name="android:layout_marginRight">1dip </item>
 		<item name="android:layout_marginTop">1dip</item>
-                <item name="android:layout_marginBottom">1dip</item>
-        </style>
+		<item name="android:layout_marginBottom">1dip</item>
+	</style>
 </resources>
