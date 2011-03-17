@@ -113,7 +113,7 @@ public class SummaryViewImpl implements SummaryView<View> {
 			@Override
 			public void onClick(View arg0) {
 				fightReturn.onAction(null);
-
+				mover.moveToFight();
 			}
 		});
 

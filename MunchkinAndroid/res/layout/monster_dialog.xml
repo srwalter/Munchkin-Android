@@ -1,0 +1,49 @@
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/dialog_layout"
+	android:orientation="vertical"
+	android:padding="2dip"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+style="@style/LightBrownTheme">
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:layout_weight="1"
+		android:orientation="vertical"
+	>
+		<TextView
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="Set Monster Score"
+			android:gravity="center_horizontal"
+			android:layout_width="wrap_content"
+			android:layout_gravity="center" android:id="@+id/monster_dialog_title" style="@style/ButtonText"/>
+		<EditText
+			android:id="@+id/monster_dialog_bonus_text"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:inputType="numberSigned"/>
+	</LinearLayout>
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:layout_weight="1"
+		android:orientation="horizontal"
+	>
+		<Button
+			android:id="@+id/monster_dialog_set_button"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="Set"/>
+		<Button
+			android:id="@+id/monster_dialog_cancel_button"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="Cancel"
+			android:layout_weight="1"/>
+	</LinearLayout>
+
+</LinearLayout>

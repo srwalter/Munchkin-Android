@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.inject.Inject;
+import com.slinkman.munchkin.android.Mover;
 import com.slinkman.munchkin.android.R;
 import com.slinkman.munchkin.apis.Listener;
 import com.slinkman.munchkin.apis.Populator;
@@ -44,7 +45,7 @@ public class GearViewImpl implements GearView<View> {
 	Button clearButton;
 
 	@Inject
-	GearViewImpl(LayoutInflater inflator, Context context) {
+	GearViewImpl(LayoutInflater inflator, Context context, final Mover move) {
 		viewHandle = inflator.inflate(R.layout.gear_layout, null);
 		list = (ListView) viewHandle.findViewById(R.id.gear_list);
 		adapter = new GearAdapter();
@@ -56,6 +57,15 @@ public class GearViewImpl implements GearView<View> {
 		addButton.setTypeface(typeface);
 		clearButton = (Button) viewHandle.findViewById(R.id.gear_clear_gear);
 		clearButton.setTypeface(typeface);
+		ImageView backButton = (ImageView) viewHandle.findViewById(R.id.gear_back_button);
+		backButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				move.moveToSummary();
+				
+			}
+		});
 	}
 
 	public void displayGearWindow(int gearID) {

@@ -9,12 +9,14 @@ import com.google.inject.TypeLiteral;
 import com.slinkman.munchkin.android.data.DatabaseData;
 import com.slinkman.munchkin.android.view.CounterViewImpl;
 import com.slinkman.munchkin.android.view.DiceViewImpl;
+import com.slinkman.munchkin.android.view.FightViewImpl;
 import com.slinkman.munchkin.android.view.GearViewImpl;
 import com.slinkman.munchkin.android.view.SummaryViewImpl;
 import com.slinkman.munchkin.apis.data.GearData;
 import com.slinkman.munchkin.apis.data.Persistance;
 import com.slinkman.munchkin.apis.view.CounterView;
 import com.slinkman.munchkin.apis.view.DiceView;
+import com.slinkman.munchkin.apis.view.FightView;
 import com.slinkman.munchkin.apis.view.GearView;
 import com.slinkman.munchkin.apis.view.SummaryView;
 
@@ -50,6 +52,8 @@ public class AndroidGuice extends AbstractModule {
 		}).to(CounterViewImpl.class);
 		bind(new TypeLiteral<GearView<?>>() {
 		}).to(GearViewImpl.class);
+		bind(new TypeLiteral<FightView<?>>() {
+		}).to(FightViewImpl.class);
 		
 		bind(new TypeLiteral<SummaryView<?>>() {
 		}).to(SummaryViewImpl.class);

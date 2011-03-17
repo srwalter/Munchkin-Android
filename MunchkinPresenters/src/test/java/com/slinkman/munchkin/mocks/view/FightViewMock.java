@@ -5,18 +5,23 @@ import com.slinkman.munchkin.apis.view.FightView;
 
 public class FightViewMock implements FightView<Void> {
 	
-	public String playerfight;
-	public String playerModifier;
-	public String playerTotal;
-	public String monsterFight;
-	public String monsterModifier;
-	public String monsterTotal;
+	public String playerfight="";
+	public String playerModifier="";
+	public String playerTotal="";
+	public String monsterFight="";
+	public String monsterModifier="";
+	public String monsterTotal="";
+	public String winText="";
 	
 	public Listener<Void> backHandle;
 	public Listener<Void> playerDown;
 	public Listener<Void> playerUp;
 	public Listener<Void> monsterUp;
 	public Listener<Void> monsterDown;
+	
+	public Listener<Integer> monsterSetHandle;
+	public Listener<Void> monsterReset;
+	public Listener<Void> playerReset;
 	
 	public boolean backHit=false;
 
@@ -95,6 +100,29 @@ public class FightViewMock implements FightView<Void> {
 	public Void getHandle() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void setWinText(String winString) {
+		this.winText = winString;
+	}
+
+	@Override
+	public void setMonsterHandle(Listener<Integer> monsterHandle) {
+		this.monsterSetHandle = monsterHandle;
+		
+	}
+
+	@Override
+	public void setMonsterReset(Listener<Void> resetHandle) {
+		this.monsterReset = resetHandle;
+		
+	}
+
+	@Override
+	public void setPlayerReset(Listener<Void> resetHandle) {
+		this.playerReset = resetHandle;
+		
 	}
 
 }

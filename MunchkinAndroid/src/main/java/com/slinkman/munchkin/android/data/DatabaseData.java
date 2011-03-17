@@ -12,6 +12,7 @@ import com.slinkman.munchkin.apis.data.GearItemData;
 
 public class DatabaseData extends BaseData implements GearData {
 
+	public static final String LOGID = "DatabaseData";
 	DatabaseHelper helper;
 
 	@Inject
@@ -27,13 +28,19 @@ public class DatabaseData extends BaseData implements GearData {
 
 				@Override
 				protected Integer[] doInBackground(Void... arg0) {
-					Integer[] temp = helper.getIDs(); 
+					Integer[] temp = null;
+					try {
+						temp = helper.getIDs();
+					} catch (Exception ex) {
+						Log.i(LOGID, "Error in gear IDs");
+					}
 					return temp;
 				}
 
 				@Override
 				protected void onPostExecute(Integer[] result) {
-					callback.onAction(result);
+					if (result != null)
+						callback.onAction(result);
 				}
 
 			};
@@ -48,13 +55,19 @@ public class DatabaseData extends BaseData implements GearData {
 			AsyncTask<Integer, Void, String> tempTask = new AsyncTask<Integer, Void, String>() {
 				@Override
 				protected String doInBackground(Integer... arg0) {
-					String temp = helper.getArmorType(arg0[0]);
+					String temp = "";
+					try {
+						temp = helper.getArmorType(arg0[0]);
+					} catch (Exception ex) {
+						Log.i(LOGID, "Error in ArmorType");
+					}
 					return temp;
 				}
 
 				@Override
 				protected void onPostExecute(String result) {
-					callback.onAction(result);
+					if (result != "")
+						callback.onAction(result);
 				}
 			};
 			tempTask.execute(id);
@@ -67,7 +80,12 @@ public class DatabaseData extends BaseData implements GearData {
 			AsyncTask<Integer, Void, Integer> tempTask = new AsyncTask<Integer, Void, Integer>() {
 				@Override
 				protected Integer doInBackground(Integer... arg0) {
-					Integer temp = helper.getBonus(arg0[0]); 
+					Integer temp = null;
+					try {
+						temp = helper.getBonus(arg0[0]);
+					} catch (Exception ex) {
+						Log.i(LOGID, "Error in Bonus");
+					}
 					return temp;
 				}
 
@@ -81,17 +99,17 @@ public class DatabaseData extends BaseData implements GearData {
 	}
 
 	@Override
-	public void addGearItem(GearItemData inItem,
-			final Listener<Void> callback) {
+	public void addGearItem(GearItemData inItem, final Listener<Void> callback) {
 
 		if (callback != null) {
 			AsyncTask<GearItemData, Void, Void> tempTask = new AsyncTask<GearItemData, Void, Void>() {
 				@Override
 				protected Void doInBackground(GearItemData... arg0) {
-					Log.i("DatabaseData", "Add Async in action. ID: " + arg0[0].getID());
+					Log.i("DatabaseData",
+							"Add Async in action. ID: " + arg0[0].getID());
 					if (arg0[0].getID() == -1)
-						helper.addGear(arg0[0].getArmorType(), arg0[0]
-								.getBonus());
+						helper.addGear(arg0[0].getArmorType(),
+								arg0[0].getBonus());
 					else
 						helper.replace(arg0[0].getID(), arg0[0].getArmorType(),
 								arg0[0].getBonus());
@@ -155,16 +173,23 @@ public class DatabaseData extends BaseData implements GearData {
 				@Override
 				protected Integer doInBackground(Void... arg0) {
 					Integer total = 0;
-					Log.i("DatabaseData", "Get Total Bonus");
-					Integer[] ids = helper.getIDs();
-					for (Integer id : ids)
-						total += helper.getBonus(id);
+					try {
+
+						Log.i("DatabaseData", "Get Total Bonus");
+						Integer[] ids = helper.getIDs();
+						for (Integer id : ids)
+							total += helper.getBonus(id);
+					} catch (Exception ex) {
+						total = null;
+						Log.i(LOGID, "Error in TotalBonus");
+					}
 					return total;
 				}
 
 				@Override
 				protected void onPostExecute(Integer result) {
-					callback.onAction(result);
+					if (result != null)
+						callback.onAction(result);
 				}
 			};
 			tempTask.execute((Void) null);
@@ -174,7 +199,7 @@ public class DatabaseData extends BaseData implements GearData {
 	@Override
 	public void onDestroy() {
 		helper.close();
-		
+
 	}
-	
+
 }

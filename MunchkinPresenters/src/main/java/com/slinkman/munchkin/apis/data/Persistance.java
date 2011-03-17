@@ -13,6 +13,10 @@ public interface Persistance {
 	public final static String VAR_ITEM_EDIT_ARMOR = "Gear Edit Armor";
 	public final static String VAR_ITEM_EDIT_BONUS = "Gear Edit Bonus";
 	public final static String VAR_TOTAL_GEAR = "Total Gear Score";
+	public final static String VAR_LAST_MONSTER_MOD = "Last Monster Modifier";
+	public final static String VAR_LAST_MONSTER_FIGHT = "Last Monster Fight";
+	public final static String VAR_LAST_PLAYER_MOD = "Last Player Modifier";
+	
 
 	public void setVariable(String targetVar, String inVar);
 	public void setVariable(String targetVar, Integer inVar);

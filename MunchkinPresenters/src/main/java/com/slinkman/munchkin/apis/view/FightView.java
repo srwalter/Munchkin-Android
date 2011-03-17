@@ -16,6 +16,13 @@ public interface FightView<T> extends BaseView<T>{
 
 	public void setBackButton(Listener<Void> backHandle);
 	
+	public void setMonsterReset(Listener<Void> resetHandle);
+	
+	public void setPlayerReset(Listener<Void> resetHandle);
+	
+	/* Data handle */
+	public void setMonsterHandle(Listener<Integer> monsterHandle);
+	
 	/* Display Text */
 	
 	public void setPlayerFight(String fightScore);
@@ -29,4 +36,7 @@ public interface FightView<T> extends BaseView<T>{
 	public void setMonsterModifier(String modifier);
 	
 	public void setMonsterTotal(String total);
+	
+	public void setWinText(String winString);
+	
 }

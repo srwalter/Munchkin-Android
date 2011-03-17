@@ -105,5 +105,47 @@ public class FightTest {
 		view.backHandle.onAction(null);
 		assertTrue(view.backHit);
 	}
+	
+	@Test 
+	public void testMonsterWin(){
+		presenter.bind();
+		view.monsterUp.onAction(null);
+		view.monsterUp.onAction(null);
+		assertEquals("Monster Wins", view.winText);
+	}
+	
+	@Test
+	public void testPlayerWin(){
+		presenter.bind();
+		assertEquals("Player Wins", view.winText);
+		view.monsterUp.onAction(null);
+		view.monsterUp.onAction(null);
+		assertEquals("Monster Wins", view.winText);
+		view.playerUp.onAction(null);
+		view.playerUp.onAction(null);
+		assertEquals("Player Wins", view.winText);
+	}
+	
+	@Test
+	public void testPlayerReset(){
+		presenter.bind();
+		view.playerUp.onAction(null);
+		view.playerUp.onAction(null);
+		view.playerUp.onAction(null);
+		assertEquals("3", view.playerModifier);
+		view.playerReset.onAction(null);
+		assertEquals("0", view.playerModifier);
+	}
+	
+	@Test
+	public void testMonsterReset(){
+		presenter.bind();
+		view.monsterUp.onAction(null);
+		view.monsterUp.onAction(null);
+		view.monsterUp.onAction(null);
+		assertEquals("3", view.monsterModifier);
+		view.monsterReset.onAction(null);
+		assertEquals("0", view.monsterModifier);
+	}
 
 }

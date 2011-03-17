@@ -46,4 +46,5 @@
 			android:layout_weight="1"
 			android:text="Clear Gear" android:background="@drawable/buttons" style="@style/ButtonText"/>
 	</LinearLayout>
+	<ImageView android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_alignParentTop="true" android:layout_alignParentLeft="true" android:src="@drawable/back" android:id="@+id/gear_back_button"></ImageView>
 </RelativeLayout>

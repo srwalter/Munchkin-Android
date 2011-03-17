@@ -6,6 +6,7 @@ import com.google.inject.Injector;
 import com.slinkman.munchkin.apis.Presenter;
 import com.slinkman.munchkin.presenter.CounterPresenter;
 import com.slinkman.munchkin.presenter.DicePresenter;
+import com.slinkman.munchkin.presenter.FightPresenter;
 import com.slinkman.munchkin.presenter.GearPresenter;
 import com.slinkman.munchkin.presenter.SummaryPresenter;
 
@@ -25,7 +26,7 @@ public class AbstractActivity extends Activity {
 	protected LayoutInflater inflate;
 	Injector inject;
 	Presenter presenter;
-	int holder = 1;
+	int holder = 4;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,15 +40,23 @@ public class AbstractActivity extends Activity {
 				changeView();
 
 			}
+
+			@Override
+			public void moveToFight() {
+				holder = 5;
+				changeView();
+			}
+
+			@Override
+			public void moveToSummary() {
+				holder = 4;
+				changeView();
+
+			}
 		};
 		inject = Guice.createInjector(new AndroidGuice(this, move));
 		inflate = LayoutInflater.from(getApplicationContext());
 		totalLayout = new RelativeLayout(this);
-		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
-		params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-
-		totalLayout.addView(getBottomView(), params);
 
 		setContentView(totalLayout);
 	}
@@ -59,14 +68,25 @@ public class AbstractActivity extends Activity {
 		presenter = getPresenter();
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
 				LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
-		params.addRule(RelativeLayout.ABOVE, R.id.bottom_layout);
 		totalLayout.addView(getMainView(), params);
 		presenter.bind();
 	}
 
 	@Override
+	public void onBackPressed() {
+		if (holder == 4){
+			super.onBackPressed();
+		}
+		else{
+			holder =4;
+		}
+		changeView();
+	}
+
+	@Override
 	protected void onPause() {
 		super.onPause();
+		Log.i("Abstract", "onPause");
 		presenter.onPause();
 	}
 
@@ -87,8 +107,10 @@ public class AbstractActivity extends Activity {
 			return inject.getInstance(DicePresenter.class);
 		else if (holder == 3)
 			return inject.getInstance(GearPresenter.class);
-		else
+		else if (holder == 4)
 			return inject.getInstance(SummaryPresenter.class);
+		else
+			return inject.getInstance(FightPresenter.class);
 
 	}
 
@@ -103,46 +125,4 @@ public class AbstractActivity extends Activity {
 		presenter.bind();
 	}
 
-	private View getBottomView() {
-		View bottom = inflate.inflate(R.layout.bottom_layout, null);
-		TextView counter = (TextView) bottom.findViewById(R.id.bottom_counter);
-		counter.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				holder = 1;
-				changeView();
-			}
-		});
-		TextView dice = (TextView) bottom.findViewById(R.id.bottom_dice);
-		dice.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				holder = 2;
-				changeView();
-			}
-		});
-		TextView gear = (TextView) bottom.findViewById(R.id.bottom_gear);
-		gear.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				holder = 3;
-				changeView();
-			}
-		});
-
-		TextView summary = (TextView) bottom.findViewById(R.id.bottom_summary);
-		summary.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				holder = 4;
-				changeView();
-
-			}
-		});
-		return bottom;
-	}
 }

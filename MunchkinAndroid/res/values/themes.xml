@@ -10,12 +10,12 @@
 		<item name="android:shadowDx">1.4</item>
 		<item name="android:shadowDy">1.4</item>
 		<item name="android:shadowColor">#F000</item>
-		<item name="android:textSize">38dip</item>
+		<item name="android:textSize">44dip</item>
 		<item name="android:textColor">#ffd7c1</item>
 		<item name="android:gravity">center</item>
 	</style>
 	<style name="SmallText" parent="@style/BaseText">
-		<item name="android:textSize">18dip</item>
+		<item name="android:textSize">24dip</item>
 	</style>
 	
 	<style name="SubHeading" parent="@style/BaseText">
@@ -29,6 +29,10 @@
 	<style name="ButtonText" parent="@style/BaseText">
 		<item name="android:textSize">@dimen/button_size</item>
 	</style>
+	
+	<style name="SmallButtonText" parent="@style/BaseText">
+		<item name="android:textSize">50dip</item>
+	</style>
 
 	<style name="RollingText">
 		<item name="android:textColor">#AAA</item>
@@ -39,6 +43,11 @@
 	<style name="LightBrownTheme">
 		<item name="android:background">#783003</item>
 	</style>
+
+	<style name="DarkBrownTheme">
+		<item name="android:background">#3d1902</item>
+	</style>
+
 	<style name="DiceText">
 		<item name="android:textColor">#AAA</item>
 		<item name="android:textSize">120dip</item>

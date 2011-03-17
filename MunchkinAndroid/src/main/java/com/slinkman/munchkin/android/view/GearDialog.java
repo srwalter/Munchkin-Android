@@ -8,9 +8,11 @@ import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout.LayoutParams;
 import android.widget.Spinner;
 
 public class GearDialog extends Dialog {
@@ -68,6 +70,8 @@ public class GearDialog extends Dialog {
 			}
 		});
 		setTitle("Edit Gear Information");
+		Window window = getWindow();
+		window.setLayout(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
 	}
 
 }
