@@ -7,6 +7,7 @@
 		android:padding="10dip"
 		android:id="@+id/gear_item_bonus_text"
 		android:layout_width="wrap_content"
+		style="@style/SmallText"
 		android:layout_height="wrap_content"
 		android:layout_alignParentLeft="true"
 		android:textSize="23dip"
@@ -22,6 +23,7 @@
 	<TextView 
 		android:id="@+id/gear_item_armor_type"
 		android:layout_width="wrap_content"
+		style="@style/SmallText"
 		android:layout_height="wrap_content"
 		android:layout_centerVertical="true"
 		android:layout_toLeftOf="@id/gear_item_x"/>	

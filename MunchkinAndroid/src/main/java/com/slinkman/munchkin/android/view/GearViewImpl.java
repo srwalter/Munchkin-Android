@@ -39,10 +39,12 @@ public class GearViewImpl implements GearView<View> {
 	int countView = 0;
 
 	ListView list;
-	
+
 	Button addButton;
-	
+
 	Button clearButton;
+
+	Typeface typeface;
 
 	@Inject
 	GearViewImpl(LayoutInflater inflator, Context context, final Mover move) {
@@ -52,18 +54,20 @@ public class GearViewImpl implements GearView<View> {
 		list.setAdapter(adapter);
 		this.inflator = inflator;
 		this.context = context;
-		Typeface typeface = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.typeface));
+		typeface = Typeface.createFromAsset(context.getAssets(),
+				context.getString(R.string.typeface));
 		addButton = (Button) viewHandle.findViewById(R.id.gear_add_gear);
 		addButton.setTypeface(typeface);
 		clearButton = (Button) viewHandle.findViewById(R.id.gear_clear_gear);
 		clearButton.setTypeface(typeface);
-		ImageView backButton = (ImageView) viewHandle.findViewById(R.id.gear_back_button);
+		ImageView backButton = (ImageView) viewHandle
+				.findViewById(R.id.gear_back_button);
 		backButton.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
 				move.moveToSummary();
-				
+
 			}
 		});
 	}
@@ -89,11 +93,11 @@ public class GearViewImpl implements GearView<View> {
 	public void setClearGear(final Listener<Void> handle) {
 		Button clear = (Button) viewHandle.findViewById(R.id.gear_clear_gear);
 		clear.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
 				handle.onAction(null);
-				
+
 			}
 		});
 	}
@@ -143,8 +147,9 @@ public class GearViewImpl implements GearView<View> {
 			final View adaView = inflator.inflate(R.layout.gear_item, null);
 			final GearItemView<View> tempView = new GearItemView<View>() {
 
-				String bonus="";
-				String armor="";
+				String bonus = "";
+				String armor = "";
+
 				@Override
 				public View getHandle() {
 					return adaView;
@@ -173,7 +178,7 @@ public class GearViewImpl implements GearView<View> {
 							handle.onAction(null);
 						}
 					});
-					
+
 				}
 
 				@Override
@@ -181,6 +186,7 @@ public class GearViewImpl implements GearView<View> {
 					bonus = inString;
 					TextView item = (TextView) adaView
 							.findViewById(R.id.gear_item_bonus_text);
+					item.setTypeface(typeface);
 					item.setText(inString);
 					if (!armor.equals(""))
 						adaView.setVisibility(View.VISIBLE);
@@ -191,6 +197,7 @@ public class GearViewImpl implements GearView<View> {
 					armor = inString;
 					TextView armor = (TextView) adaView
 							.findViewById(R.id.gear_item_armor_type);
+					armor.setTypeface(typeface);
 					armor.setText(inString);
 					if (!bonus.equals(""))
 						adaView.setVisibility(View.VISIBLE);

@@ -3,7 +3,9 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:background="#3d1902"
-	android:orientation="vertical" android:layout_height="fill_parent">
+	android:orientation="vertical"
+	android:layout_height="fill_parent"
+>
 	<LinearLayout
 		android:layout_height="fill_parent"
 		android:gravity="center_horizontal"
@@ -17,28 +19,29 @@
 	>
 		<TextView
 			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
 			android:layout_marginTop="5dip"
 			style="@style/BaseText"
 			android:id="@+id/summary_fight_title"
 			android:text="@string/fight_text"
+			android:layout_height="wrap_content"
 		></TextView>
 		<TextView
 			android:layout_centerInParent="true"
 			android:text="10"
-			android:layout_weight="1"
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"
 			android:id="@+id/summary_fight_score"
 			style="@style/TitleText"
+			android:layout_weight="1"
 		></TextView>
 		<Button
 			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
 			android:text="Fight"
 			style="@style/ButtonText"
 			android:id="@+id/summary_fight_button"
 			android:background="@drawable/buttons"
+			android:layout_height="fill_parent"
+			android:layout_weight="2"
 		></Button>
 	</LinearLayout>
 	<LinearLayout
@@ -90,7 +93,9 @@
 					android:layout_weight="1"
 					android:background="@drawable/buttons"
 					android:layout_height="fill_parent"
-				style="@style/SmallButtonText" android:gravity="center"></Button>
+					style="@style/SmallButtonText"
+					android:gravity="center"
+				></Button>
 				<View
 					android:id="@+id/view1"
 					android:layout_width="1dip"
@@ -104,7 +109,8 @@
 					android:background="@drawable/buttons"
 					android:layout_height="fill_parent"
 					android:layout_width="wrap_content"
-				style="@style/SmallButtonText"></Button>
+					style="@style/SmallButtonText"
+				></Button>
 			</LinearLayout>
 		</LinearLayout>
 		<LinearLayout
@@ -151,7 +157,8 @@
 					android:gravity="center_vertical|center_horizontal"
 					android:background="@drawable/buttons"
 					android:layout_weight="1"
-				android:layout_height="fill_parent"></Button>
+					android:layout_height="fill_parent"
+				></Button>
 				<View
 					android:id="@+id/View04"
 					android:layout_width="1dip"
@@ -166,7 +173,8 @@
 					android:layout_width="wrap_content"
 					android:background="@drawable/buttons"
 					android:layout_weight="1"
-				android:layout_height="fill_parent"></Button>
+					android:layout_height="fill_parent"
+				></Button>
 			</LinearLayout>
 		</LinearLayout>
 	</LinearLayout>
