@@ -174,7 +174,6 @@ public class DatabaseData extends BaseData implements GearData {
 				protected Integer doInBackground(Void... arg0) {
 					Integer total = 0;
 					try {
-
 						Log.i("DatabaseData", "Get Total Bonus");
 						Integer[] ids = helper.getIDs();
 						for (Integer id : ids)
@@ -198,7 +197,11 @@ public class DatabaseData extends BaseData implements GearData {
 
 	@Override
 	public void onDestroy() {
+		try{
 		helper.close();
+		} catch (Exception ex){
+			Log.i(LOGID, "onDestroy Fail");
+		}
 
 	}
 

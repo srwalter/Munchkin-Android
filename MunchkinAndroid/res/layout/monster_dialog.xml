@@ -5,7 +5,8 @@
 	android:padding="2dip"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
-style="@style/LightBrownTheme">
+	style="@style/LightBrownTheme"
+>
 	<LinearLayout
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
@@ -18,7 +19,9 @@ style="@style/LightBrownTheme">
 			android:text="Set Monster Score"
 			android:gravity="center_horizontal"
 			android:layout_width="wrap_content"
-			android:layout_gravity="center" android:id="@+id/monster_dialog_title" style="@style/ButtonText"/>
+			android:layout_gravity="center"
+			android:id="@+id/monster_dialog_title"
+			style="@style/ButtonText"/>
 		<EditText
 			android:id="@+id/monster_dialog_bonus_text"
 			android:layout_width="fill_parent"

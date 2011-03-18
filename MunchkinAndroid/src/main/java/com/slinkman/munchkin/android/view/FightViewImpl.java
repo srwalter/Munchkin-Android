@@ -22,10 +22,10 @@ public class FightViewImpl implements FightView<View> {
 	ImageView playerDown;
 	ImageView monsterDown;
 	ImageView monsterUp;
-	
+
 	ImageView monsterReset;
 	ImageView playerReset;
-	
+
 	TextView playerChange;
 	TextView playerScore;
 	TextView playerTotal;
@@ -80,8 +80,9 @@ public class FightViewImpl implements FightView<View> {
 
 		winText = (TextView) viewHandle.findViewById(R.id.fight_win_text);
 		winText.setTypeface(tf);
-		
-		monsterReset = (ImageView) viewHandle.findViewById(R.id.fight_monster_reset);
+
+		monsterReset = (ImageView) viewHandle
+				.findViewById(R.id.fight_monster_reset);
 
 		// Typeface calls for objects we'll just need now
 		TextView temp = (TextView) viewHandle
@@ -117,17 +118,18 @@ public class FightViewImpl implements FightView<View> {
 		temp = (TextView) viewHandle
 				.findViewById(R.id.fight_player_total_title);
 		temp.setTypeface(tf);
-		
+
 		temp = (TextView) viewHandle.findViewById(R.id.fight_top_title);
 		temp.setTypeface(tf);
-		
-		LinearLayout monsterLayout = (LinearLayout) viewHandle.findViewById(R.id.fight_monster_InfoLayout);
+
+		LinearLayout monsterLayout = (LinearLayout) viewHandle
+				.findViewById(R.id.fight_monster_InfoLayout);
 		monsterLayout.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
 				new MonsterDialog(inContext, monsterHandle).show();
-				
+
 			}
 		});
 	}
@@ -246,34 +248,35 @@ public class FightViewImpl implements FightView<View> {
 	@Override
 	public void setMonsterHandle(Listener<Integer> monsterHandle) {
 		this.monsterHandle = monsterHandle;
-		
+
 	}
 
 	@Override
 	public void setMonsterReset(final Listener<Void> resetHandle) {
 		monsterReset.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
 				resetHandle.onAction(null);
-				
+
 			}
 		});
-		
+
 	}
 
 	@Override
 	public void setPlayerReset(final Listener<Void> resetHandle) {
-		ImageView resetImage = (ImageView) viewHandle.findViewById(R.id.fight_player_reset);
+		ImageView resetImage = (ImageView) viewHandle
+				.findViewById(R.id.fight_player_reset);
 		resetImage.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
 				resetHandle.onAction(null);
-				
+
 			}
 		});
-		
+
 	}
 
 }

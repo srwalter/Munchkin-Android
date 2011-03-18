@@ -81,22 +81,19 @@ public class SummaryTest {
 		data.intHash.put(Persistance.VAR_PLAYER_LEVEL_LAST, 3);
 		data.intHash.put(Persistance.VAR_TOTAL_GEAR, 4);
 		data.dataMap.put(1, new GearItemData() {
-			
+
 			@Override
 			public int getID() {
-				// TODO Auto-generated method stub
 				return 1;
 			}
-			
+
 			@Override
 			public int getBonus() {
-				// TODO Auto-generated method stub
 				return 4;
 			}
-			
+
 			@Override
 			public String getArmorType() {
-				// TODO Auto-generated method stub
 				return "Arm";
 			}
 		});
@@ -160,31 +157,90 @@ public class SummaryTest {
 		});
 		assertEquals("1", view.gearScore);
 		assertEquals("2", view.fightScore);
-		
+
 	}
-	
+
 	@Test
-	public void testLoadDisable(){
+	public void testLoadDisable() {
 		data.intHash.put(Persistance.VAR_PLAYER_LEVEL_LAST, 10);
 		presenter.bind();
 		assertFalse(view.upEnabled);
 		assertEquals("10", view.levelScore);
 	}
-	
+
 	@Test
-	public void testLevelLimitUp(){
+	public void testLevelLimitUp() {
 		data.intHash.put(Persistance.VAR_PLAYER_LEVEL_LAST, 9);
 		presenter.bind();
+		assertTrue(view.upEnabled);
 		view.up.onAction(null);
 		assertFalse(view.upEnabled);
 		assertEquals("10", view.levelScore);
 	}
-	
+
 	@Test
-	public void testLevelLimitDown(){
+	public void testLevelLimitDown() {
 		presenter.bind();
 		assertFalse(view.downEnabled);
 		assertEquals("1", view.levelScore);
 	}
-	
+
+	@Test
+	public void testTopLevelChange() {
+		data.intHash.put(Persistance.VAR_PLAYER_LEVEL_LAST, 9);
+		presenter.bind();
+		assertEquals("9", view.levelScore);
+		// Change top level
+		view.topHandle.onAction(15);
+		assertTrue(view.upEnabled);
+		view.up.onAction(null);
+		assertTrue(view.upEnabled);
+		view.up.onAction(null);
+		assertEquals("11", view.levelScore);
+		view.up.onAction(null);
+		view.up.onAction(null);
+		view.up.onAction(null);
+		view.up.onAction(null);
+		assertEquals(false, view.upEnabled);
+		assertEquals(true, view.downEnabled);
+	}
+
+	@Test
+	public void testTopLevelMaxChange() {
+		data.intHash.put(Persistance.VAR_PLAYER_LEVEL_LAST, 10);
+		presenter.bind();
+		assertFalse(view.upEnabled);
+		assertTrue(view.downEnabled);
+		view.topHandle.onAction(12);
+		assertTrue(view.upEnabled);
+		assertTrue(view.downEnabled);
+	}
+
+	@Test
+	public void testSetLevelHandle() {
+		data.intHash.put(Persistance.VAR_TOTAL_GEAR, 2);
+		data.dataMap.put(1, new GearItemData() {
+
+			@Override
+			public int getID() {
+				return 1;
+			}
+
+			@Override
+			public int getBonus() {
+				return 2;
+			}
+
+			@Override
+			public String getArmorType() {
+				return "Arm";
+			}
+		});
+		presenter.bind();
+		assertEquals("3", view.fightScore);
+		view.levelHandle.onAction(4);
+		assertEquals("4", view.levelScore);
+		assertEquals("6", view.fightScore);
+	}
+
 }

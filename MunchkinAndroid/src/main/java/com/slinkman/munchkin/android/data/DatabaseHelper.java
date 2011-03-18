@@ -47,12 +47,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 
 	@Override
-	public synchronized void close() {
-		Log.i("DatabaseHelper", "Closing Databases");
-		super.close();
-	}
-	
-	@Override
 	public void onCreate(SQLiteDatabase arg0) {
 		Log.i("DatabaseHelper", "Database Created");
 		arg0.execSQL(createTable);
@@ -94,7 +88,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public Integer[] getIDs() {
 		SQLiteDatabase DB = getReadDB();
 		Integer[] retVal;
-		if (!DB.isOpen())
+		if (DB.isDbLockedByCurrentThread())
 			return null;
 		Cursor cursor = DB.query(TABLENAME, new String[] { ID }, null, null,
 				null, null, ID + " ASC");

@@ -14,10 +14,15 @@ public class SummaryViewMock implements SummaryView<Void> {
 	public Listener<GearItemData> dataHandle;
 
 	public Listener<GearItemData> newHandle;
+	public Listener<Integer> topHandle;
+	public Listener<Integer> levelHandle;
 
 	public String fightScore;
 	public String gearScore;
 	public String levelScore;
+	
+	public int topLevelShown;
+	public int curLevelShown;
 
 	public boolean upEnabled = false;
 	public boolean downEnabled = false;
@@ -106,6 +111,25 @@ public class SummaryViewMock implements SummaryView<Void> {
 	@Override
 	public void setUpLevelEnabled(boolean inEnabled) {
 		upEnabled = inEnabled;
+	}
+
+	@Override
+	public void setLevelHandles(Listener<Integer> topHandle,
+			Listener<Integer> levelHandle, Listener<Void> actionHandle) {
+		this.topHandle = topHandle;
+		this.levelHandle = levelHandle;
+	}
+
+	@Override
+	public void showLevel(int topLevel, int curLevel) {
+		topLevelShown = topLevel;
+		curLevelShown = curLevel;
+	}
+
+	@Override
+	public void setLevelShow(Listener<Void> levelShow) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

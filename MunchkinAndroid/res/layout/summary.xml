@@ -5,6 +5,7 @@
 	android:background="#3d1902"
 	android:orientation="vertical"
 	android:layout_height="fill_parent"
+	android:gravity="center"
 >
 	<LinearLayout
 		android:layout_height="fill_parent"
@@ -70,6 +71,12 @@
 				android:text="@string/level_text"
 			></TextView>
 			<TextView
+				android:id="@+id/textView1"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Press to set"
+			></TextView>
+			<TextView
 				android:layout_weight="1"
 				android:gravity="center"
 				android:layout_width="fill_parent"
@@ -94,7 +101,6 @@
 					android:background="@drawable/buttons"
 					android:layout_height="fill_parent"
 					style="@style/SmallButtonText"
-					android:gravity="center"
 				></Button>
 				<View
 					android:id="@+id/view1"
@@ -130,6 +136,13 @@
 				style="@style/BaseText"
 				android:id="@+id/summary_gear_title"
 				android:text="@string/gear_text"
+			></TextView>
+			<TextView
+				android:id="@+id/textView2"
+				android:visibility="invisible"
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:text="TextView"
 			></TextView>
 			<TextView
 				android:text="3"

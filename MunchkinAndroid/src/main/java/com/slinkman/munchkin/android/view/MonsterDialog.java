@@ -25,11 +25,13 @@ public class MonsterDialog extends Dialog {
 		setContentView(viewHandle);
 		Button setButton = (Button) viewHandle
 				.findViewById(R.id.monster_dialog_set_button);
-		
-		Typeface tf = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.typeface));
-		TextView titleView = (TextView) viewHandle.findViewById(R.id.monster_dialog_title);
+
+		Typeface tf = Typeface.createFromAsset(context.getAssets(),
+				context.getString(R.string.typeface));
+		TextView titleView = (TextView) viewHandle
+				.findViewById(R.id.monster_dialog_title);
 		titleView.setTypeface(tf);
-		
+
 		final EditText inValue = (EditText) viewHandle
 				.findViewById(R.id.monster_dialog_bonus_text);
 		setButton.setOnClickListener(new View.OnClickListener() {
@@ -45,15 +47,15 @@ public class MonsterDialog extends Dialog {
 		Button cancelButton = (Button) viewHandle
 				.findViewById(R.id.monster_dialog_cancel_button);
 		cancelButton.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
 				dismiss();
-				
+
 			}
 		});
 		Window window = getWindow();
 		window.setLayout(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-		
+
 	}
 }

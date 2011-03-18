@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+	style="@style/LightBrownTheme"
+>
+	<LinearLayout
+		android:id="@+id/linearLayout1"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+	>
+		<TextView
+			android:id="@+id/textView1"
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"
+			android:layout_weight="1"
+			android:text="Current Level"
+		></TextView>
+		<EditText
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"
+			android:layout_weight="1"
+			android:id="@+id/level_dialog_cur_level"
+			android:inputType="numberSigned"
+		></EditText>
+	</LinearLayout>
+	<LinearLayout
+		android:id="@+id/linearLayout2"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+	>
+		<TextView
+			android:id="@+id/textView2"
+			android:layout_width="fill_parent"
+			android:layout_weight="1"
+			android:layout_height="wrap_content"
+			android:text="Top Level"
+		></TextView>
+		<EditText
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"
+			android:layout_weight="1"
+			android:id="@+id/level_dialog_top_level"
+			android:inputType="numberSigned"
+		></EditText>
+	</LinearLayout>
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:id="@+id/linearLayout3"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+	>
+		<Button
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:text="Set"
+			android:layout_weight="1"
+			android:id="@+id/level_dialog_set"
+		></Button>
+		<Button
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:text="Cancel"
+			android:layout_weight="1"
+			android:id="@+id/level_dialog_cancel"
+		></Button>
+	</LinearLayout>
+</LinearLayout>

@@ -1,5 +1,7 @@
 package com.slinkman.munchkin.android;
 
+import java.util.Random;
+
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
@@ -11,9 +13,14 @@ import com.slinkman.munchkin.presenter.GearPresenter;
 import com.slinkman.munchkin.presenter.SummaryPresenter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
@@ -27,10 +34,12 @@ public class AbstractActivity extends Activity {
 	Injector inject;
 	Presenter presenter;
 	int holder = 4;
+	Random mRand ;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		mRand = new Random(System.currentTimeMillis());
 		Log.i("Abstract", "onCreate");
 		Mover move = new Mover() {
 
@@ -59,6 +68,36 @@ public class AbstractActivity extends Activity {
 		totalLayout = new RelativeLayout(this);
 
 		setContentView(totalLayout);
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflate = getMenuInflater();
+		inflate.inflate(R.menu.overmenu, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()){
+		case R.id.menu_dice_item:
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage("Rolled "+Integer.toString(mRand.nextInt(6)+1))
+			       .setCancelable(false)
+			       .setPositiveButton("Done", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface arg0, int arg1) {
+						arg0.dismiss();
+						
+					}
+				});
+			AlertDialog alert = builder.create();
+			alert.show();
+			return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
 	}
 
 	@Override

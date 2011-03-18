@@ -28,6 +28,106 @@ public class SummaryPresenter implements Presenter {
 	@Override
 	public void bind() {
 
+		view.setGearText(Integer.toString(curGear));
+
+		view.setLevelText(Integer.toString(curLevel));
+
+		view.setFightScore(Integer.toString(curGear + curLevel));
+
+		view.setUpLevelEnabled(true);
+
+		view.setDownLevelEnabled(false);
+
+		view.setUpLevel(new Listener<Void>() {
+
+			@Override
+			public void onAction(Void inObject) {
+				if (curLevel == topLevel)
+					return;
+				view.setLevelText(Integer.toString(++curLevel));
+				view.setFightScore(Integer.toString(curGear + curLevel));
+				view.setDownLevelEnabled(true);
+				if (curLevel == topLevel)
+					view.setUpLevelEnabled(false);
+
+			}
+		});
+		view.setDownLevel(new Listener<Void>() {
+			@Override
+			public void onAction(Void inObject) {
+				if (curLevel == 1)
+					return;
+
+				view.setLevelText(Integer.toString(--curLevel));
+				view.setFightScore(Integer.toString(curGear + curLevel));
+				view.setUpLevelEnabled(true);
+				if (curLevel == 1)
+					view.setDownLevelEnabled(false);
+			}
+		});
+		view.setAddHandle(new Listener<Void>() {
+			@Override
+			public void onAction(Void inObject) {
+				view.showAdd();
+
+			}
+		}, new Listener<GearItemData>() {
+			@Override
+			public void onAction(final GearItemData inObject) {
+				data.addGearItem(inObject, new Listener<Void>() {
+					@Override
+					public void onAction(Void inObject2) {
+						curGear += inObject.getBonus();
+						view.setGearText(Integer.toString(curGear));
+						view.setFightScore(Integer.toString(curGear + curLevel));
+					}
+				});
+
+			}
+		});
+		view.setEditGear(new Listener<Void>() {
+
+			@Override
+			public void onAction(Void inObject) {
+				view.showGearEdit();
+			}
+		});
+		view.setFightAction(new Listener<Void>() {
+
+			@Override
+			public void onAction(Void inObject) {
+				view.showFightScreen();
+			}
+		});
+
+		view.setLevelHandles(new Listener<Integer>() {
+
+			@Override
+			public void onAction(Integer inObject) {
+				topLevel = inObject;
+				view.setUpLevelEnabled(true);
+				view.setDownLevelEnabled(true);
+				if (topLevel == curLevel)
+					view.setUpLevelEnabled(false);
+				else if (curLevel == 1)
+					view.setDownLevelEnabled(false);
+			}
+		}, new Listener<Integer>() {
+
+			@Override
+			public void onAction(Integer inObject) {
+				curLevel = inObject;
+				view.setLevelText(Integer.toString(curLevel));
+				view.setFightScore(Integer.toString(curLevel + curGear));
+			}
+		}, new Listener<Void>() {
+			@Override
+			public void onAction(Void inObject) {
+				view.showLevel(topLevel, curLevel);
+
+			}
+		});
+
 		data.getInt(Persistance.VAR_PLAYER_LEVEL_LAST, new Listener<Integer>() {
 			@Override
 			public void onAction(Integer inObject) {
@@ -35,6 +135,8 @@ public class SummaryPresenter implements Presenter {
 					return;
 				curLevel = inObject;
 				view.setLevelText(Integer.toString(curLevel));
+				view.setUpLevelEnabled(true);
+				view.setDownLevelEnabled(true);
 				if (topLevel == curLevel)
 					view.setUpLevelEnabled(false);
 				else if (curLevel == 1)
@@ -63,71 +165,10 @@ public class SummaryPresenter implements Presenter {
 			}
 		});
 
-		view.setGearText(Integer.toString(curGear));
-
-		view.setLevelText(Integer.toString(curLevel));
-
-		view.setFightScore(Integer.toString(curGear + curLevel));
-
-		view.setUpLevel(new Listener<Void>() {
-
+		data.getInt(Persistance.VAR_TOPLEVEL, new Listener<Integer>() {
 			@Override
-			public void onAction(Void inObject) {
-				if (curLevel == topLevel)
-					return;
-				view.setLevelText(Integer.toString(++curLevel));
-				view.setFightScore(Integer.toString(curGear + curLevel));
-				view.setDownLevelEnabled(true);
-				if (curLevel == topLevel)
-					view.setUpLevelEnabled(false);
-				
-			}
-		});
-		view.setDownLevel(new Listener<Void>() {
-			@Override
-			public void onAction(Void inObject) {
-				if (curLevel == 1)
-					return;
-				
-				view.setLevelText(Integer.toString(--curLevel));
-				view.setFightScore(Integer.toString(curGear + curLevel));
-				view.setUpLevelEnabled(true);
-				if (curLevel ==1)
-					view.setDownLevelEnabled(false);
-			}
-		});
-		view.setAddHandle(new Listener<Void>() {
-			@Override
-			public void onAction(Void inObject) {
-				view.showAdd();
-
-			}
-		}, new Listener<GearItemData>() {
-			@Override
-			public void onAction(final GearItemData inObject) {
-				data.addGearItem(inObject, new Listener<Void>() {
-					@Override
-					public void onAction(Void inObject2) {
-						curGear += inObject.getBonus();
-						view.setGearText(Integer.toString(curGear));
-						view.setFightScore(Integer.toString(curGear + curLevel));
-					}
-				});
-				
-			}
-		});
-		view.setEditGear(new Listener<Void>() {
-
-			@Override
-			public void onAction(Void inObject) {
-				view.showGearEdit();
-			}
-		});
-		view.setFightAction(new Listener<Void>() {
-
-			@Override
-			public void onAction(Void inObject) {
-				view.showFightScreen();
+			public void onAction(Integer inObject) {
+				topLevel = inObject;
 			}
 		});
 	}
@@ -172,7 +213,7 @@ public class SummaryPresenter implements Presenter {
 				@Override
 				public void onAction(Integer inObject) {
 					curGear = inObject;
-					view.setGearText(Integer.toString(inObject));
+					view.setGearText(Integer.toString(curGear));
 					view.setFightScore(Integer.toString(curGear + curLevel));
 					data.setVariable(Persistance.VAR_TOTAL_GEAR, inObject);
 				}

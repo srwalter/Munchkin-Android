@@ -11,6 +11,7 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
@@ -26,11 +27,14 @@ public class SummaryViewImpl implements SummaryView<View> {
 	Button levelDown;
 	Button gearAdd;
 	Button gearEdit;
-	
+
 	Listener<GearItemData> dataHandle;
-	
+
+	Listener<Integer> topHandle;
+	Listener<Integer> levelHandle;
+
 	Mover mover;
-	
+
 	Context appContext;
 
 	@Inject
@@ -182,7 +186,7 @@ public class SummaryViewImpl implements SummaryView<View> {
 
 	@Override
 	public void showAdd() {
-		GearDialog dialog = new GearDialog(appContext,dataHandle , -1);
+		GearDialog dialog = new GearDialog(appContext, dataHandle, -1);
 		dialog.show();
 	}
 
@@ -194,6 +198,39 @@ public class SummaryViewImpl implements SummaryView<View> {
 	@Override
 	public void setUpLevelEnabled(boolean inEnabled) {
 		levelUp.setEnabled(inEnabled);
+	}
+
+	@Override
+	public void setLevelHandles(Listener<Integer> topHandle,
+			Listener<Integer> levelHandle, final Listener<Void> actionHandle) {
+		this.topHandle = topHandle;
+		this.levelHandle = levelHandle;
+		levelScore.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				actionHandle.onAction(null);
+			}
+		});
+	}
+
+	@Override
+	public void showLevel(int topLevel, int curLevel) {
+		new LevelDialog(appContext, topLevel, curLevel, topHandle, levelHandle)
+				.show();
+	}
+
+	@Override
+	public void setLevelShow(final Listener<Void> levelShow) {
+		levelScore.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				levelShow.onAction(null);
+
+			}
+		});
+
 	}
 
 }
