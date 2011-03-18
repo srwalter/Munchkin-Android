@@ -15,8 +15,10 @@ public class GearViewMock implements GearView<Void> {
 	public Listener<Populator<GearItemView<?>>> populator;
 	
 	public int passedId=-1;
-	
 	public int lastTotal = 0;
+	
+	public String passedArmor;
+	public String passedBonus;
 
 	public Listener<Integer> refreshHandle = new Listener<Integer>() {
 		public void onAction(Integer inObject) {
@@ -48,15 +50,18 @@ public class GearViewMock implements GearView<Void> {
 
 	}
 
-	@Override
-	public void displayGearWindow(int gearID) {
-		passedId = gearID;
-		
-	}
 
 	@Override
 	public Void getHandle() {
 		return null;
+	}
+
+	@Override
+	public void displayGearWindow(int inItem, String bonusText, String armorText) {
+		passedId = inItem;
+		passedArmor = armorText;
+		passedBonus = bonusText;
+		
 	}
 
 

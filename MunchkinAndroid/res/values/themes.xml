@@ -29,10 +29,6 @@
 	<style name="ButtonText" parent="@style/BaseText">
 		<item name="android:textSize">@dimen/button_size</item>
 	</style>
-	
-	<style name="SmallButtonText" parent="@style/BaseText">
-		<item name="android:textSize">50dip</item>
-	</style>
 
 	<style name="RollingText">
 		<item name="android:textColor">#AAA</item>

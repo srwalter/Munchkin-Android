@@ -18,16 +18,19 @@ import android.widget.Spinner;
 public class GearDialog extends Dialog {
 
 	public GearDialog(Context context, final Listener<GearItemData> inGear,
-			final int gearID) {
+			final int gearID, String bonusText, String armorText) {
 		super(context);
 		LayoutInflater inflator = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View viewHandle = inflator.inflate(R.layout.gear_dialog, null);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(viewHandle);
 		Button addButton = (Button) viewHandle
 				.findViewById(R.id.gear_dialog_add_button);
 		final EditText bonus = (EditText) viewHandle
 				.findViewById(R.id.gear_dialog_bonus_text);
+		if (!bonusText.equals(""))
+			bonus.setText(bonusText);
 		final Spinner armor = (Spinner) viewHandle
 				.findViewById(R.id.gear_dialog_armor_type);
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
@@ -35,6 +38,9 @@ public class GearDialog extends Dialog {
 				android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		armor.setAdapter(adapter);
+		if (!armorText.equals("")){
+			armor.setSelection(adapter.getPosition(armorText));
+		}
 		addButton.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -69,7 +75,6 @@ public class GearDialog extends Dialog {
 				dismiss();
 			}
 		});
-		setTitle("Edit Gear Information");
 		Window window = getWindow();
 		window.setLayout(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
 	}

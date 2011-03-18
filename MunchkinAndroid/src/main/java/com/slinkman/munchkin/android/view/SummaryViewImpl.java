@@ -186,7 +186,7 @@ public class SummaryViewImpl implements SummaryView<View> {
 
 	@Override
 	public void showAdd() {
-		GearDialog dialog = new GearDialog(appContext, dataHandle, -1);
+		GearDialog dialog = new GearDialog(appContext, dataHandle, -1, "", "");
 		dialog.show();
 	}
 

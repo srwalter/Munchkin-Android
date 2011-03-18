@@ -95,13 +95,11 @@
 			>
 				<Button
 					android:layout_width="wrap_content"
-					android:text="+"
 					android:id="@+id/summary_level_up"
 					android:layout_weight="1"
 					android:background="@drawable/buttons"
 					android:layout_height="fill_parent"
-					style="@style/SmallButtonText"
-				></Button>
+					android:gravity="center_vertical|center_horizontal" android:text="+1" style="@style/ButtonText"></Button>
 				<View
 					android:id="@+id/view1"
 					android:layout_width="1dip"
@@ -109,14 +107,12 @@
 					android:layout_weight="1"
 				></View>
 				<Button
-					android:text="-"
 					android:id="@+id/summary_level_down"
 					android:layout_weight="1"
 					android:background="@drawable/buttons"
 					android:layout_height="fill_parent"
 					android:layout_width="wrap_content"
-					style="@style/SmallButtonText"
-				></Button>
+					android:gravity="center_vertical|center_horizontal" android:text="-1" style="@style/ButtonText"></Button>
 			</LinearLayout>
 		</LinearLayout>
 		<LinearLayout

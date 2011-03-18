@@ -73,14 +73,14 @@ public class GearPresenter implements Presenter {
 		data.getArmorType(inItem.id, new Listener<String>() {
 			@Override
 			public void onAction(String inObject) {
-				setArmor( inObject, inItem);
+				setArmor(inObject, inItem);
 			}
 		});
 
 		data.getBonus(inItem.id, new Listener<Integer>() {
 			@Override
 			public void onAction(Integer inObject) {
-				setBonus( inObject, inItem);
+				setBonus(inObject, inItem);
 			}
 		});
 
@@ -99,10 +99,36 @@ public class GearPresenter implements Presenter {
 		inItem.viewHandle.setEditListner(new Listener<Void>() {
 			@Override
 			public void onAction(Void inObject) {
-				view.displayGearWindow(inItem.id);
-
+				new DialogPasser(inItem.id);
 			}
 		});
+	}
+
+	class DialogPasser {
+		String armorText=null;
+		String bonusText=null;
+		int id;
+
+		public DialogPasser(int inId) {
+			this.id = inId;
+			System.out.println("Pulling information for ID: " + inId);
+			data.getArmorType(id, new Listener<String>() {
+				@Override
+				public void onAction(String inObject) {
+					armorText = inObject;
+					if (bonusText != null)
+						view.displayGearWindow(id, bonusText, armorText);
+				}
+			});
+			data.getBonus(id, new Listener<Integer>() {
+				@Override
+				public void onAction(Integer inObject) {
+					bonusText = Integer.toString(inObject);
+					if (armorText != null)
+						view.displayGearWindow(id, bonusText, armorText);
+				}
+			});
+		}
 	}
 
 	class GearPopulator implements Listener<Populator<GearItemView<?>>> {

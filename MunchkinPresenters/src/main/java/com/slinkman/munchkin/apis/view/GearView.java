@@ -13,7 +13,7 @@ public interface GearView<T> extends BaseView<T>{
 	 * @param gearData
 	 *            If not null the information will populate the window.
 	 */
-	public void displayGearWindow(int gearID);
+	public void displayGearWindow(int inItem, String bonusText, String armorText);
 
 	/**
 	 * Set the handle for displaying the gear item.

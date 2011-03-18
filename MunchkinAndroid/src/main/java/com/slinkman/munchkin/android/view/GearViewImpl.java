@@ -72,11 +72,6 @@ public class GearViewImpl implements GearView<View> {
 		});
 	}
 
-	public void displayGearWindow(int gearID) {
-		GearDialog dialog = new GearDialog(context, displayHandle, gearID);
-		dialog.show();
-	}
-
 	public void setDisplayHandle(Listener<GearItemData> handle) {
 		displayHandle = handle;
 		Button addButton = (Button) viewHandle.findViewById(R.id.gear_add_gear);
@@ -84,7 +79,7 @@ public class GearViewImpl implements GearView<View> {
 
 			@Override
 			public void onClick(View arg0) {
-				displayGearWindow(-1);
+				displayGearWindow(-1, "", "");
 
 			}
 		});
@@ -217,6 +212,14 @@ public class GearViewImpl implements GearView<View> {
 			});
 			return adaView;
 		}
+
+	}
+
+	@Override
+	public void displayGearWindow(int inItem, String bonusText, String armorText) {
+		GearDialog dialog = new GearDialog(context, displayHandle, inItem,
+				bonusText, armorText);
+		dialog.show();
 
 	}
 }
