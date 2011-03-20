@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.slinkman.munchkin.android</groupId>
   <artifactId>MunchkinAndroid</artifactId>
-  <version>2.0-SNAPSHOT</version>
+  <version>2.0</version>
   <packaging>apk</packaging>
   <name>MunchkinAndroid</name>
   
@@ -16,7 +16,7 @@
     <dependency>
     	<groupId>com.slinkman.munchkin.presenter</groupId>
     	<artifactId>MunchkinPresenters</artifactId>
-    	<version>1.0-SNAPSHOT</version>
+    	<version>1.0</version>
     	<type>jar</type>
     </dependency>
     <dependency>
@@ -97,4 +97,73 @@
       </plugin>
     </plugins>
   </build>
+
+<profiles>
+ <profile>
+ <id>sign</id>
+ <build>
+ <plugins>
+ <plugin>
+ <groupId>org.apache.maven.plugins</groupId>
+ <artifactId>maven-jarsigner-plugin</artifactId>
+ <version>1.2</version>
+ <executions>
+ <execution>
+ <id>signing</id>
+ <goals>
+ <goal>sign</goal>
+ </goals>
+ <phase>package</phase>
+ <inherited>true</inherited>
+ <configuration>
+ <archiveDirectory></archiveDirectory>
+ <includes>
+ <include>target/*.apk</include>
+ </includes>
+ <keystore>/Users/chrisslinkman/Dropbox/ChrisKeystore</keystore>
+ <storepass>chris6b34fe24</storepass>
+ <keypass>slink6b34fe24</keypass>
+ <alias>slinkkay</alias>
+ </configuration>
+ </execution>
+ </executions>
+ </plugin>
+ <plugin>
+ <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+ <artifactId>maven-android-plugin</artifactId>
+ <inherited>true</inherited>
+ <configuration>
+ <sign>
+ <debug>false</debug>
+ </sign>
+ </configuration>
+ </plugin>
+<plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.1.1</version>
+                        <executions>
+                            <execution>
+                                <id>zipalign</id>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <phase>install</phase>
+                                <configuration>
+                                    <executable>${ANDROID_HOME}/tools/zipalign</executable>
+                                     <arguments>
+                                        <argument>-f</argument>
+                                        <argument>4</argument>
+                                        <argument>target/${project.build.finalName}.apk</argument>
+                                        <argument>target/${project.build.finalName}-zipped.apk</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+ </plugins>
+ </build>
+ </profile>
+</profiles>
+
 </project>

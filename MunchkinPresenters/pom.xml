@@ -4,7 +4,7 @@
   <groupId>com.slinkman.munchkin.presenter</groupId>
   <artifactId>MunchkinPresenters</artifactId>
   <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
   <name>MunchkinPresenters</name>
   <url>http://maven.apache.org</url>
   <build>
