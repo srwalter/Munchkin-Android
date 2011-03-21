@@ -242,5 +242,16 @@ public class SummaryTest {
 		assertEquals("4", view.levelScore);
 		assertEquals("6", view.fightScore);
 	}
+	
+	@Test
+	public void testMaxChangeTooLow(){
+		data.intHash.put(Persistance.VAR_TOPLEVEL, 9);
+		data.intHash.put(Persistance.VAR_PLAYER_LEVEL_LAST, 7);
+		presenter.bind();
+		view.topHandle.onAction(6);
+		assertEquals("6", view.levelScore);
+		
+		assertEquals("6", view.fightScore);
+	}
 
 }

@@ -111,6 +111,11 @@ public class SummaryPresenter implements Presenter {
 					view.setUpLevelEnabled(false);
 				else if (curLevel == 1)
 					view.setDownLevelEnabled(false);
+				if (topLevel < curLevel){
+					curLevel = topLevel;
+					view.setLevelText(Integer.toString(curLevel));
+					view.setFightScore(Integer.toString(curGear+curLevel));
+				}
 			}
 		}, new Listener<Integer>() {
 
@@ -168,7 +173,8 @@ public class SummaryPresenter implements Presenter {
 		data.getInt(Persistance.VAR_TOPLEVEL, new Listener<Integer>() {
 			@Override
 			public void onAction(Integer inObject) {
-				topLevel = inObject;
+				if (inObject != -1)
+					topLevel = inObject;
 			}
 		});
 	}
@@ -189,6 +195,7 @@ public class SummaryPresenter implements Presenter {
 	public void onPause() {
 		data.setVariable(Persistance.VAR_PLAYER_LEVEL_LAST, curLevel);
 		data.setVariable(Persistance.VAR_TOTAL_GEAR, curGear);
+		data.setVariable(Persistance.VAR_TOPLEVEL, topLevel);
 		data.onDestroy();
 	}
 
