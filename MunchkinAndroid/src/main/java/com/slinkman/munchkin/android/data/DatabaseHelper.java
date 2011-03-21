@@ -57,6 +57,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		Log.i("DatabaseHelper", "Upgrade attempt");
 
 	}
+	
+	@Override
+	public synchronized void close() {
+		super.close();
+		if (readDB != null)
+			readDB.close();
+		
+		if (writeDB != null)
+			writeDB.close();
+	}
 
 	private SQLiteDatabase getReadDB() {
 		if (readDB == null)

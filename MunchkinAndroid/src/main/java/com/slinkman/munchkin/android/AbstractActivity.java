@@ -130,7 +130,11 @@ public class AbstractActivity extends Activity {
 
 	@Override
 	protected void onDestroy() {
+		try{
 		super.onDestroy();
+		} catch (Exception ex){
+			Log.i("Abstract", "Destroy Failed");
+		}
 		presenter = null;
 	}
 

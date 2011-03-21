@@ -197,9 +197,9 @@ public class DatabaseData extends BaseData implements GearData {
 
 	@Override
 	public void onDestroy() {
-		try{
-		helper.close();
-		} catch (Exception ex){
+		try {
+			helper.close();
+		} catch (Exception ex) {
 			Log.i(LOGID, "onDestroy Fail");
 		}
 
