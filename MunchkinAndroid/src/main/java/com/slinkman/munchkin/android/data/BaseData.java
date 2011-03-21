@@ -28,7 +28,7 @@ public class BaseData implements Persistance {
 	}
 
 	public void getInt(String targetVar, Listener<Integer> handle) {
-		handle.onAction(pref.getInt(targetVar, 0));
+		handle.onAction(pref.getInt(targetVar, -1));
 	}
 
 	public void getString(String targetVar, Listener<String> handle) {

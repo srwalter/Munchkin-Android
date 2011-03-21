@@ -51,9 +51,9 @@ public class LevelDialog extends Dialog {
 					if (levelIn != null && topIn != null){
 						currentHandle.onAction(levelIn);
 						topHandle.onAction(topIn);
+						dismiss();
 					}
 				}
-				dismiss();
 			}
 		});
 		Button cancelButton = (Button) viewHandle
