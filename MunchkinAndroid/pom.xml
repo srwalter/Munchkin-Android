@@ -121,8 +121,8 @@
  <include>target/*.apk</include>
  </includes>
  <keystore>/Users/chrisslinkman/Dropbox/ChrisKeystore</keystore>
- <storepass>chris6b34fe24</storepass>
- <keypass>slink6b34fe24</keypass>
+ <storepass></storepass>
+ <keypass></keypass>
  <alias>slinkkay</alias>
  </configuration>
  </execution>
