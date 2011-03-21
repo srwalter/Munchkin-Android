@@ -1,8 +1,8 @@
 package com.slinkman.munchkin.android.view;
 
 import com.google.inject.Inject;
+import com.slinkman.munchkin.R;
 import com.slinkman.munchkin.android.Mover;
-import com.slinkman.munchkin.android.R;
 import com.slinkman.munchkin.apis.Listener;
 import com.slinkman.munchkin.apis.data.GearItemData;
 import com.slinkman.munchkin.apis.view.SummaryView;

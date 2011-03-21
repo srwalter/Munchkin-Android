@@ -14,8 +14,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.inject.Inject;
+import com.slinkman.munchkin.R;
 import com.slinkman.munchkin.android.Mover;
-import com.slinkman.munchkin.android.R;
 import com.slinkman.munchkin.apis.Listener;
 import com.slinkman.munchkin.apis.Populator;
 import com.slinkman.munchkin.apis.data.GearItemData;

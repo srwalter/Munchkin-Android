@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.inject.Inject;
-import com.slinkman.munchkin.android.R;
+import com.slinkman.munchkin.R;
 import com.slinkman.munchkin.apis.Listener;
 import com.slinkman.munchkin.apis.view.CounterView;
 
