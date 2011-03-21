@@ -1,6 +1,6 @@
 package com.slinkman.munchkin.android.view;
 
-import com.slinkman.munchkin.android.R;
+import com.slinkman.munchkin.R;
 import com.slinkman.munchkin.apis.Listener;
 
 import android.app.Dialog;
@@ -35,12 +35,24 @@ public class LevelDialog extends Dialog {
 
 			@Override
 			public void onClick(View arg0) {
-				if (currentHandle != null )
-					currentHandle.onAction(Integer.parseInt(curLevelEdit
-							.getText().toString()));
-				if (topHandle != null )
-					topHandle.onAction(Integer.parseInt(topLevelEdit.getText()
-							.toString()));
+				Integer levelIn = null;
+				Integer topIn = null;
+				try {
+					if (currentHandle != null)
+						levelIn = Integer.parseInt(curLevelEdit.getText()
+								.toString());
+					if (topHandle != null)
+						topIn = Integer.parseInt(topLevelEdit
+								.getText().toString());
+				} catch (NumberFormatException ex) {
+					curLevelEdit.setText("");
+					topLevelEdit.setText("");
+				} finally {
+					if (levelIn != null && topIn != null){
+						currentHandle.onAction(levelIn);
+						topHandle.onAction(topIn);
+					}
+				}
 				dismiss();
 			}
 		});

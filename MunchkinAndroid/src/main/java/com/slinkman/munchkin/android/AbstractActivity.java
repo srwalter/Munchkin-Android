@@ -5,6 +5,7 @@ import java.util.Random;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
+import com.slinkman.munchkin.R;
 import com.slinkman.munchkin.apis.Presenter;
 import com.slinkman.munchkin.presenter.CounterPresenter;
 import com.slinkman.munchkin.presenter.DicePresenter;
@@ -22,9 +23,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.RelativeLayout.LayoutParams;
 
 public class AbstractActivity extends Activity {
